@@ -1,0 +1,103 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Http\Requests\ClientsRequest;
+use App\Http\Requests\FilterRequest;
+use App\Models\ClientsModel;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Builder;
+
+
+class ClientsController extends Controller{
+
+    public function submit(ClientsRequest $req){
+        $client = new ClientsModel();
+        $client -> name = $req -> input('name');
+        $client -> phone = $req -> input('phone');
+        $client -> email = $req -> input('email');
+        $client -> source = $req -> input('source');
+        $client -> status = $req -> input('status');
+        $client -> lawyer = $req -> input('lawyer');
+
+        $client -> save();
+
+        return redirect() -> route('clients') -> with('success', 'Все в порядке, клиент добавлен');
+
+    }
+
+
+    public function AllClients(Request $request){
+
+  /*query to DB ClientsModel has user
+            $request = $req -> status;
+            $clients =  ClientsModel::whereHas('userFunc', function ($query) use ($request) {
+                  $query->where('id', $request);
+              })->get();
+            return $clients;
+  */
+    $client = new ClientsModel();
+
+      $findclient = $request->input('findclient');
+      $statusclient = $request->input('status');
+
+      if(($statusclient=='1')&&($findclient !== NULL)){
+        return view ('clients', ['data' => ClientsModel::with('userFunc')
+        -> where('name', 'like', '%'.$findclient.'%')
+        -> where('status', 1)
+        -> get()],
+        ['datalawyers' =>  User::all()]);
+      }
+      elseif($statusclient=='1'){
+        return view ('clients', ['data' => ClientsModel::with('userFunc')
+        -> where('status', 1)
+        -> get()],
+        ['datalawyers' =>  User::all()]);
+        }
+      elseif($findclient !== NULL){
+        return view ('clients', ['data' => ClientsModel::with('userFunc')
+        -> where('name', 'like', '%'.$findclient.'%')
+        -> get()],
+        ['datalawyers' =>  User::all()]);
+      }
+        else{
+          return view ('clients', ['data' => ClientsModel::with('userFunc') -> get()], ['datalawyers' =>  User::all()]);
+        }
+          return $client->get();
+
+    }
+
+    public function showClientById($id){
+      $client = new ClientsModel();
+      return view ('clientbyid', ['data' => ClientsModel::with('userFunc')->find($id)], ['datalawyers' =>  User::all()]);
+    }
+
+    public function updateClient($id){
+      $client = new ClientsModel();
+      return view ('updateClient', ['data' => $client->find($id)], ['datalawyers' =>  User::all()]);
+    }
+
+    public function updateClientSubmit($id, ClientsRequest $req){
+        $client = ClientsModel::find($id);
+        $client -> name = $req -> input('name');
+        $client -> phone = $req -> input('phone');
+        $client -> email = $req -> input('email');
+        $client -> source = $req -> input('source');
+        $client -> status = $req -> input('status');
+        $client -> lawyer = $req -> input('lawyer');
+
+        $client -> save();
+
+        return redirect() -> route('showClientById', $id) -> with('success', 'Все в порядке, клиент обновлен');
+
+    }
+
+    public function ClientDelete($id){
+        ClientsModel::find($id)->delete();
+        return redirect() -> route('clients') -> with('success', 'Все в порядке, клиент удален');
+
+    }
+
+}
