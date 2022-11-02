@@ -42,28 +42,61 @@ class ClientsController extends Controller{
 
       $findclient = $request->input('findclient');
       $statusclient = $request->input('status');
+      $checkedlawyer  = $request->input('checkedlawyer');
 
-      if(($statusclient=='1')&&($findclient !== NULL)){
-        return view ('clients', ['data' => ClientsModel::with('userFunc')
-        -> where('name', 'like', '%'.$findclient.'%')
-        -> where('status', 1)
-        -> get()],
-        ['datalawyers' =>  User::all()]);
-      }
-      elseif($statusclient=='1'){
-        return view ('clients', ['data' => ClientsModel::with('userFunc')
-        -> where('status', 1)
-        -> get()],
-        ['datalawyers' =>  User::all()]);
+      if(($statusclient=='1') || ($findclient !== NULL) || ($checkedlawyer !== NULL)){
+
+          if(($statusclient=='1') && ($findclient !== NULL) && ($checkedlawyer !== NULL)){
+            return view ('clients', ['data' => ClientsModel::with('userFunc')
+            -> where('name', 'like', '%'.$findclient.'%')
+            -> where('lawyer', $checkedlawyer)
+            -> where('status', 1)
+            -> paginate(10)],
+            ['datalawyers' =>  User::all()]);
         }
-      elseif($findclient !== NULL){
-        return view ('clients', ['data' => ClientsModel::with('userFunc')
-        -> where('name', 'like', '%'.$findclient.'%')
-        -> get()],
-        ['datalawyers' =>  User::all()]);
+
+          elseif(($statusclient=='1') && ($checkedlawyer !== NULL)){
+              return view ('clients', ['data' => ClientsModel::with('userFunc')
+              -> where('lawyer', $checkedlawyer)
+              -> where('status', 1)
+              -> paginate(10)],
+              ['datalawyers' =>  User::all()]);
+          }
+
+          elseif(($findclient !== NULL) && ($checkedlawyer !== NULL)){
+              return view ('clients', ['data' => ClientsModel::with('userFunc')
+              -> where('lawyer', $checkedlawyer)
+              -> where('name', 'like', '%'.$findclient.'%')
+              -> paginate(10)],
+              ['datalawyers' =>  User::all()]);
+          }
+
+        elseif($statusclient=='1'){
+            return view ('clients', ['data' => ClientsModel::with('userFunc')
+            -> where('status', 1)
+            -> paginate(10)],
+            ['datalawyers' =>  User::all()]);
+          }
+
+        elseif($findclient !== NULL){
+            return view ('clients', ['data' => ClientsModel::with('userFunc')
+            -> where('name', 'like', '%'.$findclient.'%')
+            -> paginate(10)],
+            ['datalawyers' =>  User::all()]);
+          }
+
+        elseif($checkedlawyer !== NULL){
+            return view ('clients', ['data' => ClientsModel::with('userFunc')
+            -> where('name', 'like', '%'.$findclient.'%')
+            -> where('lawyer', $checkedlawyer)
+            -> paginate(10)],
+            ['datalawyers' =>  User::all()]);
+          }
+
       }
+
         else{
-          return view ('clients', ['data' => ClientsModel::with('userFunc') -> get()], ['datalawyers' =>  User::all()]);
+          return view ('clients', ['data' => ClientsModel::with('userFunc')-> paginate(10)], ['datalawyers' =>  User::all()]);
         }
           return $client->get();
 
