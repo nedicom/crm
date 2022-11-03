@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClientsController;
+use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\LawyersController;
 use App\Http\Controllers\PaymentsController;
 use App\Http\Controllers\GetclientAJAXController;
@@ -31,6 +32,8 @@ Route::get('/contacts', function () {return view('contacts');})->middleware('aut
 
 Route::get('/meetings', function () {return view('meetings');})->middleware('auth');
 
+
+Route::get('/services', [ServicesController::class, 'showservices'])->name('showservices')->middleware('auth');
 
 
 Route::get('/payments', [PaymentsController::class, 'showpayments'])->name('payments')->middleware('auth');
