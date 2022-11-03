@@ -46,7 +46,7 @@
                @endif
 
               @include('inc/messages')
-              
+
             @endauth
 
     @yield('content') {{--user register form--}}

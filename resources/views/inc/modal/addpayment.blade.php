@@ -28,7 +28,8 @@
 
     });
 
-    </script>
+
+        </script>
 
   {{-- end ajax payments--}}
 
@@ -63,17 +64,30 @@
 
               <div class="form-group mb-3">
                 <label for="service">Укажите услугу</label>
-                <input type = "text" name="service" placeholder="" id="service" value="{{ old('service') }}"class="form-control">
+                <select class="form-select" name="service" id="service" class="form-control">
+                      @foreach($dataservices as $el)
+                        <option value="{{$el -> id}}">{{$el -> name}}</option>
+                      @endforeach
+                </select>
               </div>
 
               <div class="form-group mb-3">
                 <label for="nameOfAttractioner">Укажите кто привлек клиента</label>
-                <input type = "text" name="nameOfAttractioner" placeholder="" id="nameOfAttractioner" class="form-control">
+                <select class="form-select" name="nameOfAttractioner" id="nameOfAttractioner" class="form-control">
+                      @foreach($datalawyers as $el)
+                        <option value="{{$el -> id}}">{{$el -> name}}</option>
+                      @endforeach
+                </select>
               </div>
+
 
               <div class="form-group mb-3">
                 <label for="nameOfSeller">Укажите кто продал услугу</label>
-                <input type = "text" name="nameOfSeller" placeholder="" id="nameOfSeller" class="form-control">
+                <select class="form-select" name="nameOfSeller" id="nameOfSeller" class="form-control">
+                      @foreach($datalawyers as $el)
+                        <option value="{{$el -> id}}">{{$el -> name}}</option>
+                      @endforeach
+                </select>
               </div>
 
               <div class="form-group mb-3">

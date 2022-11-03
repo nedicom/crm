@@ -38,7 +38,7 @@
                                                     <th>Привлек</th>
                                                     <th>Оплата за привлечение</th>
                                                     <th>Продал</th>
-                                                    <th>Оплата за консультацию</th>
+                                                    <th>Оплата за продажу</th>
                                                     <th>Оплачено</th>
                                                     <th>Куда поступили</th>
 
@@ -51,9 +51,16 @@
                                                       <tr>
                                                           <td>{{$el -> created_at}}</td>
                                                           <td>{{$el -> client}}</td>
-                                                          <td>{{$el -> calculation}}</td>
                                                           <td>{{$el -> service}}</td>
+                                                          <td>цена услуги</td>
                                                           <td>{{$el -> nameOfAttractioner}}</td>
+                                                          <td>оплата за привлечение</td>
+                                                          <td>{{$el -> nameOfSeller}}</td>
+                                                          <td>оплата за продажу</td>
+                                                          <td>{{$el -> summ}}</td>
+
+
+                                                            <td>{{$el -> calculation}}</td>
                                                           <td>
                                                           <a class="btn btn-primary" href="{{ route ('showPaymentById', $el->id) }}" role="button">Подробнее</a>
                                                           </td>

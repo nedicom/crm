@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\User;
+use App\Models\Services;
 use Illuminate\Http\Request;
 use App\Models\Payments;
 use App\Http\Requests\PaymentsRequest;
@@ -29,7 +30,7 @@ class PaymentsController extends Controller{
 
 
     public function showpayments(){
-          return view ('payments', ['data' => Payments::all()], ['datalawyers' =>  User::all()]);
+          return view ('payments', ['data' => Payments::all()], ['datalawyers' =>  User::all(), 'dataservices' =>  Services::all()]);
       }
 
     public function showPaymentById($id){
