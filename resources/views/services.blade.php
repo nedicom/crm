@@ -7,7 +7,7 @@
 
     @section('leftmenuone')
       <li class="nav-item text-center p-3">
-        <a class="text-white text-decoration-none" href="#" data-bs-toggle="modal" data-bs-target="#servicesModal">Добавить услугу</a>
+        <a class="text-white text-decoration-none" href="#" data-bs-toggle="modal" data-bs-target="#serviceModal">Добавить услугу</a>
       </li>
     @endsection
 
@@ -28,6 +28,8 @@
 
 
                                                           {{$el -> created_at}}
+                                                          {{$el -> name}}
+                                                          {{$el -> price}}
 
                                                           <td>
                                                           <a class="btn btn-primary" href="#" role="button">Подробнее</a>

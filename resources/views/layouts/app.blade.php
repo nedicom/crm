@@ -18,7 +18,7 @@
             @endguest
 
             @auth
-            
+
               @include('inc.leftmenu')
               @include('inc.navauth')
               @include('inc/messages')
@@ -31,6 +31,10 @@
 
               @if (request()->is('clients/*'))
                 @include('inc./modal/editclient')
+              @endif
+
+              @if (request()->is('services'))
+                @include('inc./modal/addservice')
               @endif
 
                @if (request()->is('lawyers*'))

@@ -35,6 +35,8 @@ Route::get('/meetings', function () {return view('meetings');})->middleware('aut
 
 Route::get('/services', [ServicesController::class, 'showservices'])->name('showservices')->middleware('auth');
 
+Route::post('/services/add', [ServicesController::class, 'addservice'])->name('addservice')->middleware('auth');
+
 
 Route::get('/payments', [PaymentsController::class, 'showpayments'])->name('payments')->middleware('auth');
 

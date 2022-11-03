@@ -2,21 +2,18 @@
 
 namespace App\Http\Controllers;
 use App\Models\Services;
+use App\Http\Requests\ServicesRequest;
 
 class ServicesController extends Controller{
 
-    /*public function addservice(PaymentsRequest $req){
-        $payment = new Services();
+    public function addservice(ServicesRequest $req){
+        $service = new Services();
+        $service -> name = $req -> input('name');
+        $service -> price = $req -> input('price');
+        $service -> save();
 
-
-        $payment -> calculation = $req -> input('calculation');
-        $payment -> client = $req -> input('client');
-        $payment -> service = $req -> input('service');
-        $payment -> nameOfAttractioner = $req -> input('nameOfAttractioner');
-        $payment -> save();
-
-        return redirect() -> route('payments') -> with('success', 'Все в порядке, платеж добавлен');
-    }*/
+        return redirect() -> route('showservices') -> with('success', 'Все в порядке, услуга добавлена');
+    }
 
 
     public function showservices(){
