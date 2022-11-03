@@ -10,8 +10,6 @@ class GetclientAJAXController extends Controller{
     //for create controller - php artisan make:controller AutocompleteController
 
     function getclient(Request $request)
-
-
     {
      if($request->get('query'))
      {
@@ -23,7 +21,7 @@ class GetclientAJAXController extends Controller{
       foreach($data as $row)
         {
          $output .= '
-         <li class="list-group-item"><a href="#" class="text-decoration-none">'.$row->name.'</a></li>
+         <li class="list-group-item clientList"><a href="#" class="text-decoration-none">'.$row->name.'</a></li>
          ';
         }
       $output .= '</ul>';

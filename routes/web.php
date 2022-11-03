@@ -35,7 +35,7 @@ Route::get('/meetings', function () {return view('meetings');})->middleware('aut
 
 Route::get('/payments', [PaymentsController::class, 'showpayments'])->name('payments')->middleware('auth');
 
-Route::post('/payments/add', [PaymentsController::class, 'submit'])->name('add-payment')->middleware('auth');
+Route::post('/payments/add', [PaymentsController::class, 'addpayment'])->name('addpayment')->middleware('auth');
 
 Route::get('/payments/{id}', [PaymentsController::class, 'showPaymentById'])->name('showPaymentById')->middleware('auth');
 

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Payments;
 use App\Http\Requests\PaymentsRequest;
@@ -9,8 +9,9 @@ use Illuminate\Support\Facades\DB;
 
 class PaymentsController extends Controller{
 
-    public function submit(PaymentsRequest $req){
+    public function addpayment(PaymentsRequest $req){
         $payment = new Payments();
+
         if(strstr($req -> input('summ'), ',', true)){
           $payment -> summ = strstr($req -> input('summ'), ',', true);
         }
@@ -28,7 +29,7 @@ class PaymentsController extends Controller{
 
 
     public function showpayments(){
-          return view ('payments', ['data' => Payments::all()]);
+          return view ('payments', ['data' => Payments::all()], ['datalawyers' =>  User::all()]);
       }
 
     public function showPaymentById($id){

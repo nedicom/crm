@@ -1,11 +1,11 @@
 <div class="modal fade" id="editModal">
   <div class="modal-dialog">
-        <div class="modal-content">
-    <div class ="modal-header">
-      <h2>Редактировать клиента</h2>
-    </div>
+    <div class="modal-content">
+        <div class ="modal-header">
+          <h2>Редактировать клиента</h2>
+        </div>
 
-    <div class ="modal-body">
+        <div class ="modal-body">
       <form action="{{route('Client-Update-Submit', $data -> id)}}" method="post">
         @csrf
         <div class="form-group mb-3">
@@ -47,6 +47,7 @@
         <button type="submit" class="btn btn-primary">Обновить</button>
       </form>
     </div>
+
     </div>
   </div>
 </div>

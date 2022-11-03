@@ -18,6 +18,7 @@
             @endguest
 
             @auth
+            
               @include('inc.leftmenu')
               @include('inc.navauth')
               @include('inc/messages')
@@ -35,9 +36,11 @@
                @if (request()->is('lawyers*'))
                  @include('inc.sidebarleftlawyers')
                @endif
+
                @if (request()->is('payments'))
-                 @include('inc.sidebarleftpayments')
+                 @include('inc./modal/addpayment')
                @endif
+
             @endauth
 
     @yield('content') {{--user register form--}}
