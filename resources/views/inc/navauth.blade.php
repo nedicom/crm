@@ -6,6 +6,7 @@
         <li class="nav-item"><a href="/leads" class="nav-link ">Лиды</a></li>
         <li class="nav-item"><a href="/tasks" class="nav-link">Задачи</a></li>
         <li class="nav-item"><a href="/meetings" class="nav-link">Заседания</a></li>
+        <li class="nav-item"><a href="{{route('showservices')}}" class="nav-link {{ (request()->is('services*')) ? 'active' : '' }}">Услуги</a></li>
         <li class="nav-item"><a href="{{route('payments')}}" class="nav-link {{ (request()->is('payments*')) ? 'active' : '' }}">Платежи</a></li>
         <li class="nav-item"><a href="{{route('lawyers')}}" class="nav-link {{ (request()->is('lawyers*')) ? 'active' : '' }}">Юристы</a></li>
       </ul>

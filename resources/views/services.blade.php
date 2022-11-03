@@ -16,40 +16,38 @@
 
     {{-- start views for all services--}}
 
-    <div class="row">
-                            <div class="col-12">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h4 class="header-title mb-3">Услуги</h4>
+        <div class="col-12">
+        </div>
 
 
 
-                                                  @foreach($data as $el)
+          @foreach($data as $el)
+        <div class="col-3 my-3">
+          <div class="card border-light">
+              <div class="card-body">
+                <h5 class="card-title">{{$el -> name}}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{$el -> price}}</h6>
+                  <h4 class="header-title mb-3"></h4>
+
+                   <span class="badge bg-success"> +5.35% </span>
+
+                  <p>{{$el -> created_at}}</p>
 
 
-                                                          {{$el -> created_at}}
-                                                          {{$el -> name}}
-                                                          {{$el -> price}}
-
-                                                          <td>
-                                                          <a class="btn btn-primary" href="#" role="button">Подробнее</a>
-                                                          </td>
-                                                      </tr>
-
-                                                  @endforeach
-
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <!-- end table-responsive -->
-
-                                    </div>
-                                </div>
-                            </div> <!-- end col -->
+                  <div class="mt-3 row d-flex justify-content-center">
+                          <div class="col-4 mb-3">
+                            <a class="btn btn-light w-100" href="#">
+                            <i class="bi-three-dots"></i></a>
+                          </div>
+                  </div>
+                </div>
+              </div>
+          </div>
 
 
-                        </div>
 
+
+          @endforeach
 
 
     {{-- end views for all services--}}

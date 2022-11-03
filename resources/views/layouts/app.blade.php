@@ -21,7 +21,7 @@
 
               @include('inc.leftmenu')
               @include('inc.navauth')
-              @include('inc/messages')
+
 
               @include('inc.maincontent')
 
@@ -45,6 +45,8 @@
                  @include('inc./modal/addpayment')
                @endif
 
+              @include('inc/messages')
+              
             @endauth
 
     @yield('content') {{--user register form--}}
