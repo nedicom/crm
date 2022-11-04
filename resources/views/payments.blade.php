@@ -22,63 +22,62 @@
     {{-- start views for all payments--}}
 
     <div class="row">
-                            <div class="col-12">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h4 class="header-title mb-3">Платежи</h4>
+        <div class="col-12">
+          <h4 class="header-title mb-3">Платежи</h4>
+            <table class="table table-striped table-hover align-middle">
+                <thead>
+                <tr>
+                    <th scope="col">дата</th>
+                    <th scope="col">Клиент</th>
+                    <th scope="col">Услуга</th>
+                    <th scope="col">Цена услуги</th>
+                    <th scope="col">Привлек</th>
+                    <th scope="col">Оплата за привлечение</th>
+                    <th scope="col">Продал</th>
+                    <th scope="col">Оплата за продажу</th>
+                    <th scope="col">Оплачено</th>
+                    <th scope="col">Куда поступили</th>
+                </tr>
+                </thead>
 
-                                        <div class="table-responsive">
-                                            <table class="table mb-0">
-                                                <thead class="table-light">
-                                                <tr>
-                                                    <th>дата</th>
-                                                    <th>Клиент</th>
-                                                    <th>Услуга</th>
-                                                    <th>Цена услуги</th>
-                                                    <th>Привлек</th>
-                                                    <th>Оплата за привлечение</th>
-                                                    <th>Продал</th>
-                                                    <th>Оплата за продажу</th>
-                                                    <th>Оплачено</th>
-                                                    <th>Куда поступили</th>
+                <tbody>
+                  @foreach($data as $el)
+                      <tr >
+                          <td>{{$el -> created_at}}</td>
+                          <td scope="row">{{$el -> client}}</td>
+                          <td>{{$el -> service}}</td>
+                          <td>цена услуги</td>
+                          <td>{{$el -> nameOfAttractioner}}</td>
+                          <td>оплата за привлечение</td>
+                          <td>{{$el -> nameOfSeller}}</td>
+                          <td>оплата за продажу</td>
+                          <td>{{$el -> summ}}</td>
+                          <td>
+                          <span class="badge py-3 px-4
+                          @if ($el -> calculation == 'ГЕНБАНК') bg-primary
+                          @elseif ($el -> calculation == 'РНКБ') bg-info
+                          @elseif ($el -> calculation == 'НАЛИЧНЫЕ') bg-secondary
+                          @elseif ($el -> calculation == 'СБЕРБАНК') bg-succes
+                          @else bg-light
+                          @endif
+                          ">{{$el -> calculation}}</span></td>
+                          <td>
+                            <a class="btn btn-light w-100" href="{{ route ('showPaymentById', $el->id) }}">
+                              <i class="bi-three-dots"></i></a>
+                          </td>
+                      </tr>
 
-                                                </tr>
-                                                </thead>
-                                                <tbody>
+                  @endforeach
 
-                                                  @foreach($data as $el)
+                </tbody>
+            </table>
 
-                                                      <tr>
-                                                          <td>{{$el -> created_at}}</td>
-                                                          <td>{{$el -> client}}</td>
-                                                          <td>{{$el -> service}}</td>
-                                                          <td>цена услуги</td>
-                                                          <td>{{$el -> nameOfAttractioner}}</td>
-                                                          <td>оплата за привлечение</td>
-                                                          <td>{{$el -> nameOfSeller}}</td>
-                                                          <td>оплата за продажу</td>
-                                                          <td>{{$el -> summ}}</td>
-
-
-                                                            <td>{{$el -> calculation}}</td>
-                                                          <td>
-                                                          <a class="btn btn-primary" href="{{ route ('showPaymentById', $el->id) }}" role="button">Подробнее</a>
-                                                          </td>
-                                                      </tr>
-
-                                                  @endforeach
-
-                                                </tbody>
-                                            </table>
-                                        </div>
                                         <!-- end table-responsive -->
 
-                                    </div>
-                                </div>
+
+
                             </div> <!-- end col -->
-
-
-                        </div>
+    </div>
 
 
 
