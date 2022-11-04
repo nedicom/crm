@@ -14,15 +14,41 @@ class PaymentsController extends Controller{
         $payment = new Payments();
 
         if(strstr($req -> input('summ'), ',', true)){
-          $payment -> summ = strstr($req -> input('summ'), ',', true);
+          $summ = strstr($req -> input('summ'), ',', true);
+          $payment -> summ = $summ;
+
         }
         else{
-          $payment -> summ = $req -> input('summ');
+          $summ = $req -> input('summ');
+          $payment -> summ = $summ;
         }
+
+        $serviceid = $req -> input('service');//get id of service
+        $payment -> service = $serviceid;
+        $service = DB::table('services')->find($serviceid);//get service of payment's
+
+        if(($service -> price)>($summ)){
+          $payment -> SallerSalary = ($service -> price)/100*5;
+          $payment -> AttaractionerSalary = ($service -> price)/100*10;
+
+        }
+        elseif(($service -> price)<($summ)){
+          $payment -> SallerSalary = ($service -> price)/100*13;
+          $payment -> AttaractionerSalary = ($service -> price)/100*20;
+          $payment -> modifyAttraction = ($summ - ($service -> price))/100*33;
+          $payment -> modifySeller = ($summ - ($service -> price))/100*17;
+        }
+        else{
+          $payment -> SallerSalary = ($service -> price)/100*13;
+          $payment -> AttaractionerSalary = ($service -> price)/100*20;
+        }
+
+
         $payment -> calculation = $req -> input('calculation');
         $payment -> client = $req -> input('client');
-        $payment -> service = $req -> input('service');
+
         $payment -> nameOfAttractioner = $req -> input('nameOfAttractioner');
+        $payment -> nameOfSeller = $req -> input('nameOfSeller');
         $payment -> save();
 
         return redirect() -> route('payments') -> with('success', 'Все в порядке, платеж добавлен');
@@ -30,12 +56,17 @@ class PaymentsController extends Controller{
 
 
     public function showpayments(){
-          return view ('payments', ['data' => Payments::all()], ['datalawyers' =>  User::all(), 'dataservices' =>  Services::all()]);
+          return view ('payments', ['data' => Payments::with('serviceFunc', 'AttractionerFunc', 'sellerFunc')->get()], ['datalawyers' =>  User::all(), 'dataservices' =>  Services::all()]);
       }
 
+      public function test(){
+            return view ('test', ['data' => Payments::with('serviceFunc')->get()]);
+        }
+
+
+
     public function showPaymentById($id){
-          $payment = new Payments();
-          return view ('showPaymentById', ['data' => $payment->find($id)]);
+          return view ('showPaymentById', ['data' => Payments::with('serviceFunc', 'AttractionerFunc', 'sellerFunc')->find($id)], ['datalawyers' =>  User::all(), 'dataservices' =>  Services::all()]);
       }
 
       public function PaymentUpdate($id){
@@ -55,6 +86,7 @@ class PaymentsController extends Controller{
           $payment -> client = $req -> input('client');
           $payment -> service = $req -> input('service');
           $payment -> nameOfAttractioner = $req -> input('nameOfAttractioner');
+          $payment -> nameOfSeller = $req -> input('nameOfSeller');
           $payment -> save();
 
           return redirect() -> route('showPaymentById', $id) -> with('success', 'Все в порядке, платеж обновлен');

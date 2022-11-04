@@ -45,6 +45,10 @@
                  @include('inc./modal/addpayment')
                @endif
 
+               @if (request()->is('payments/*'))
+                 @include('inc./modal/editpayment')
+               @endif
+
               @include('inc/messages')
 
             @endauth

@@ -51,6 +51,7 @@ Route::post('/payments/{id}/edit', [PaymentsController::class, 'PaymentUpdateSub
 Route::get('/payments/{id}/delete', [PaymentsController::class, 'PaymentDelete'])->name('PaymentDelete')->middleware('auth');
 
 
+Route::get('/test', [PaymentsController::class, 'test'])->name('test')->middleware('auth');
 
 
 Route::get('ajax',function() {

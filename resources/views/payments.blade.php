@@ -33,8 +33,10 @@
                     <th scope="col">Цена услуги</th>
                     <th scope="col">Привлек</th>
                     <th scope="col">Оплата за привлечение</th>
+                    <th scope="col">Повышение привлечения</th>
                     <th scope="col">Продал</th>
                     <th scope="col">Оплата за продажу</th>
+                    <th scope="col">Повышение за продажу</th>
                     <th scope="col">Оплачено</th>
                     <th scope="col">Куда поступили</th>
                 </tr>
@@ -45,19 +47,21 @@
                       <tr >
                           <td>{{$el -> created_at}}</td>
                           <td scope="row">{{$el -> client}}</td>
-                          <td>{{$el -> service}}</td>
-                          <td>цена услуги</td>
-                          <td>{{$el -> nameOfAttractioner}}</td>
-                          <td>оплата за привлечение</td>
-                          <td>{{$el -> nameOfSeller}}</td>
-                          <td>оплата за продажу</td>
-                          <td>{{$el -> summ}}</td>
+                          <td>{{$el -> serviceFunc -> name}}</td>
+                          <td><span class="badge bg-primary py-3 px-4">{{$el -> serviceFunc -> price}}</span></td>
+                          <td>{{$el -> AttractionerFunc -> name}}</td>
+                          <td>{{$el -> AttaractionerSalary}}</td>
+                          <td>{{$el -> modifyAttraction}}</td>
+                          <td>{{$el -> sellerFunc -> name}}</td>
+                          <td>{{$el -> SallerSalary}}</td>
+                          <td>{{$el -> modifySeller}}</td>
+                          <td><span class="badge bg-primary py-3 px-4">{{$el -> summ}}</span></td>
                           <td>
                           <span class="badge py-3 px-4
                           @if ($el -> calculation == 'ГЕНБАНК') bg-primary
                           @elseif ($el -> calculation == 'РНКБ') bg-info
                           @elseif ($el -> calculation == 'НАЛИЧНЫЕ') bg-secondary
-                          @elseif ($el -> calculation == 'СБЕРБАНК') bg-succes
+                          @elseif ($el -> calculation == 'СБЕР') bg-success
                           @else bg-light
                           @endif
                           ">{{$el -> calculation}}</span></td>

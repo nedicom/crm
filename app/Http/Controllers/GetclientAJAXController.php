@@ -21,7 +21,7 @@ class GetclientAJAXController extends Controller{
       foreach($data as $row)
         {
          $output .= '
-         <li class="list-group-item clientList"><a href="#" class="text-decoration-none">'.$row->name.'</a></li>
+         <li class="list-group-item clientList" id="clientAJAX"><a href="#" class="text-decoration-none">'.$row->name.'</a></li>
          ';
         }
       $output .= '</ul>';

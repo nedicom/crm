@@ -30,6 +30,7 @@ return new class extends Migration
             $table->string('companyAdmission');
             $table->timestamps();
         });
+
     }
 
     /**
