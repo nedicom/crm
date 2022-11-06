@@ -37,9 +37,7 @@
                 @include('inc./modal/addservice')
               @endif
 
-               @if (request()->is('lawyers*'))
-                 @include('inc.sidebarleftlawyers')
-               @endif
+
 
                @if (request()->is('payments'))
                  @include('inc./modal/addpayment')
