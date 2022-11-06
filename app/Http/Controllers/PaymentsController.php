@@ -30,17 +30,20 @@ class PaymentsController extends Controller{
         if(($service -> price)>($summ)){
           $payment -> SallerSalary = ($service -> price)/100*5;
           $payment -> AttaractionerSalary = ($service -> price)/100*10;
+          $payment -> DeveloperSalary = ($service -> price)/100*10;
 
         }
         elseif(($service -> price)<($summ)){
           $payment -> SallerSalary = ($service -> price)/100*13;
           $payment -> AttaractionerSalary = ($service -> price)/100*20;
+          $payment -> DeveloperSalary = ($service -> price)/100*17;
           $payment -> modifyAttraction = ($summ - ($service -> price))/100*33;
           $payment -> modifySeller = ($summ - ($service -> price))/100*17;
         }
         else{
           $payment -> SallerSalary = ($service -> price)/100*13;
           $payment -> AttaractionerSalary = ($service -> price)/100*20;
+          $payment -> DeveloperSalary = ($service -> price)/100*17;
         }
 
 
@@ -49,6 +52,8 @@ class PaymentsController extends Controller{
 
         $payment -> nameOfAttractioner = $req -> input('nameOfAttractioner');
         $payment -> nameOfSeller = $req -> input('nameOfSeller');
+        $payment -> directionDevelopment = $req -> input('directionDevelopment');
+
         $payment -> save();
 
         return redirect() -> route('payments') -> with('success', 'Все в порядке, платеж добавлен');
@@ -56,7 +61,8 @@ class PaymentsController extends Controller{
 
 
     public function showpayments(){
-          return view ('payments', ['data' => Payments::with('serviceFunc', 'AttractionerFunc', 'sellerFunc')->get()], ['datalawyers' =>  User::all(), 'dataservices' =>  Services::all()]);
+          return view ('payments', ['data' => Payments::with('serviceFunc', 'AttractionerFunc', 'sellerFunc', 'developmentFunc')
+          ->get()], ['datalawyers' =>  User::all(), 'dataservices' =>  Services::all()]);
       }
 
       public function test(){
@@ -66,27 +72,52 @@ class PaymentsController extends Controller{
 
 
     public function showPaymentById($id){
-          return view ('showPaymentById', ['data' => Payments::with('serviceFunc', 'AttractionerFunc', 'sellerFunc')->find($id)], ['datalawyers' =>  User::all(), 'dataservices' =>  Services::all()]);
+          return view ('showPaymentById', ['data' => Payments::with('serviceFunc', 'AttractionerFunc', 'sellerFunc', 'developmentFunc')
+          ->find($id)], ['datalawyers' =>  User::all(), 'dataservices' =>  Services::all()]);
       }
 
-      public function PaymentUpdate($id){
-        $payment = new Payments();
-        return view ('PaymentUpdate', ['data' => $payment->find($id)]);
-      }
+  //    public function PaymentUpdate($id){
+  //      $payment = new Payments();
+  //      return view ('PaymentUpdate', ['data' => $payment->find($id)]);
+  //    }
 
       public function PaymentUpdateSubmit($id, PaymentsRequest $req){
           $payment = Payments::find($id);
-          if(strstr($req -> input('summ'), ',', true)){
-            $payment -> summ = strstr($req -> input('summ'), ',', true);
+          $summ = $req -> input('summ');
+          $payment -> summ = $summ;
+
+          $serviceid = $req -> input('service');//get id of service
+          $payment -> service = $serviceid;
+          $service = DB::table('services')->find($serviceid);//get service of payment's
+
+          if(($service -> price)>($summ)){
+            $payment -> SallerSalary = ($service -> price)/100*5;
+            $payment -> AttaractionerSalary = ($service -> price)/100*10;
+            $payment -> DeveloperSalary = ($service -> price)/100*10;
+            $payment -> modifyAttraction = 0;
+            $payment -> modifySeller = 0;
+
+          }
+          elseif(($service -> price)<($summ)){
+            $payment -> SallerSalary = ($service -> price)/100*13;
+            $payment -> AttaractionerSalary = ($service -> price)/100*20;
+            $payment -> DeveloperSalary = ($service -> price)/100*17;
+            $payment -> modifyAttraction = ($summ - ($service -> price))/100*33;
+            $payment -> modifySeller = ($summ - ($service -> price))/100*17;
           }
           else{
-            $payment -> summ = $req -> input('summ');
+            $payment -> SallerSalary = ($service -> price)/100*13;
+            $payment -> AttaractionerSalary = ($service -> price)/100*20;
+            $payment -> DeveloperSalary = ($service -> price)/100*17;
           }
+
+
           $payment -> calculation = $req -> input('calculation');
           $payment -> client = $req -> input('client');
-          $payment -> service = $req -> input('service');
           $payment -> nameOfAttractioner = $req -> input('nameOfAttractioner');
           $payment -> nameOfSeller = $req -> input('nameOfSeller');
+          $payment -> directionDevelopment = $req -> input('directionDevelopment');
+
           $payment -> save();
 
           return redirect() -> route('showPaymentById', $id) -> with('success', 'Все в порядке, платеж обновлен');

@@ -22,4 +22,8 @@ class Payments extends Model
         public function sellerFunc(){
         return $this->belongsTo(USER::class, 'nameOfSeller');
     }
+
+    public function developmentFunc(){
+    return $this->belongsTo(USER::class, 'directionDevelopment');
+}
   }

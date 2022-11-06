@@ -44,7 +44,7 @@ Route::post('/payments/add', [PaymentsController::class, 'addpayment'])->name('a
 
 Route::get('/payments/{id}', [PaymentsController::class, 'showPaymentById'])->name('showPaymentById')->middleware('auth');
 
-Route::get('/payments/{id}/edit', [PaymentsController::class, 'PaymentUpdate'])->name('PaymentUpdate')->middleware('auth');
+//Route::get('/payments/{id}/edit', [PaymentsController::class, 'PaymentUpdate'])->name('PaymentUpdate')->middleware('auth');
 
 Route::post('/payments/{id}/edit', [PaymentsController::class, 'PaymentUpdateSubmit'])->name('PaymentUpdateSubmit')->middleware('auth');
 

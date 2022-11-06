@@ -31,14 +31,14 @@
                     <th scope="col">Клиент</th>
                     <th scope="col">Услуга</th>
                     <th scope="col">Цена услуги</th>
-                    <th scope="col">Привлек</th>
-                    <th scope="col">Оплата за привлечение</th>
-                    <th scope="col">Повышение привлечения</th>
-                    <th scope="col">Продал</th>
-                    <th scope="col">Оплата за продажу</th>
-                    <th scope="col">Повышение за продажу</th>
                     <th scope="col">Оплачено</th>
                     <th scope="col">Куда поступили</th>
+                    <th scope="col">Привлек</th>
+                    <th scope="col">Оплата + повышение</th>
+                    <th scope="col">Продал</th>
+                    <th scope="col">Оплата + повышение</th>
+                    <th scope="col">Развитие направления</th>
+                    <th scope="col">Оплата</th>
                 </tr>
                 </thead>
 
@@ -49,12 +49,6 @@
                           <td scope="row">{{$el -> client}}</td>
                           <td>{{$el -> serviceFunc -> name}}</td>
                           <td><span class="badge bg-primary py-3 px-4">{{$el -> serviceFunc -> price}}</span></td>
-                          <td>{{$el -> AttractionerFunc -> name}}</td>
-                          <td>{{$el -> AttaractionerSalary}}</td>
-                          <td>{{$el -> modifyAttraction}}</td>
-                          <td>{{$el -> sellerFunc -> name}}</td>
-                          <td>{{$el -> SallerSalary}}</td>
-                          <td>{{$el -> modifySeller}}</td>
                           <td><span class="badge bg-primary py-3 px-4">{{$el -> summ}}</span></td>
                           <td>
                           <span class="badge py-3 px-4
@@ -65,6 +59,12 @@
                           @else bg-light
                           @endif
                           ">{{$el -> calculation}}</span></td>
+                          <td>{{$el -> AttractionerFunc -> name}}</td>
+                          <td><span class="badge bg-success py-3 px-4">{{$el -> AttaractionerSalary}} + {{$el -> modifyAttraction}}</span></td>
+                          <td>{{$el -> sellerFunc -> name}}</td>
+                          <td><span class="badge bg-success py-3 px-4">{{$el -> SallerSalary}} + {{$el -> modifySeller}}</span></td>
+                          <td>{{$el -> developmentFunc -> name}}</td>
+                          <td><span class="badge bg-success py-3 px-4">{{$el -> DeveloperSalary}}</span></td>
                           <td>
                             <a class="btn btn-light w-100" href="{{ route ('showPaymentById', $el->id) }}">
                               <i class="bi-three-dots"></i></a>
@@ -80,7 +80,7 @@
 
 
 
-                            </div> <!-- end col -->
+        </div> <!-- end col -->
     </div>
 
 

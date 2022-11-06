@@ -91,6 +91,15 @@
               </div>
 
               <div class="form-group mb-3">
+                <label for="directionDevelopment">Укажите кто развивал направление</label>
+                <select class="form-select" name="directionDevelopment" id="directionDevelopment" class="form-control">
+                      @foreach($datalawyers as $el)
+                        <option value="{{$el -> id}}">{{$el -> name}}</option>
+                      @endforeach
+                </select>
+              </div>
+
+              <div class="form-group mb-3">
                 <label for="calculation">Куда поступили деньги</label>
                 <select class="form-select" name="calculation" id="calculation" aria-label="Default select example">
                   <option value="РНКБ" selected>РНКБ</option>
