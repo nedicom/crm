@@ -41,7 +41,9 @@
                 @include('inc./modal/addlead')
               @endif
 
-
+              @if (request()->is('leads/*'))
+                @include('inc./modal/editlead')
+              @endif
 
                @if (request()->is('payments'))
                  @include('inc./modal/addpayment')

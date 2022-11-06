@@ -34,7 +34,7 @@
 
                   <div class="mt-3 row d-flex justify-content-center">
                           <div class="col-4 mb-3">
-                            <a class="btn btn-light w-100" href="#">
+                            <a class="btn btn-light w-100" href="{{ route ('showLeadById', $el->id) }}">
                             <i class="bi-three-dots"></i></a>
                           </div>
                   </div>

@@ -27,10 +27,6 @@
             <option value="Рекомендация" @if($data->source == "Рекомендация") selected @endif>Рекомендация</option>
             <option value="С улицы" @if($data->source == "С улицы") selected @endif>С улицы</option>
           </select>
-
-
-
-
         </div>
         <div class="form-group mb-3">
           <label for="lawyer">Укажите юриста</label>

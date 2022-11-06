@@ -31,6 +31,13 @@ Route::get('/leads', [LeadsController::class, 'showleads'])->name('leads')->midd
 
 Route::post('/leads/add', [LeadsController::class, 'addlead'])->name('addlead')->middleware('auth');
 
+Route::get('/leads/{id}', [LeadsController::class, 'showLeadById'])->name('showLeadById')->middleware('auth');
+
+Route::post('/leads/{id}/edit', [LeadsController::class, 'LeadUpdateSubmit'])->name('LeadUpdateSubmit')->middleware('auth');
+
+Route::get('/leads/{id}/delete', [LeadsController::class, 'LeadDelete'])->name('LeadDelete')->middleware('auth');
+
+
 
 Route::get('/tasks', function () {return view('tasks');})->middleware('auth');
 
