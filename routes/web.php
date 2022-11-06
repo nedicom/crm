@@ -5,11 +5,13 @@ use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\LawyersController;
 use App\Http\Controllers\PaymentsController;
+use App\Http\Controllers\LeadsController;
 use App\Http\Controllers\GetclientAJAXController;
 
 Route::get('/', function () {
     return view('home');
 })->name('home')->middleware('auth');
+
 
 Route::get('/clients', [ClientsController::class, 'AllClients'])->name('clients')->middleware('auth');
 
@@ -24,7 +26,11 @@ Route::post('/clients/{id}/edit', [ClientsController::class, 'updateClientSubmit
 Route::get('/clients/{id}/delete', [ClientsController::class, 'ClientDelete'])->name('Client-Delete')->middleware('auth');
 
 
-Route::get('/leads', function () {return view('leads');})->middleware('auth');
+
+Route::get('/leads', [LeadsController::class, 'showleads'])->name('leads')->middleware('auth');
+
+Route::post('/leads/add', [LeadsController::class, 'addlead'])->name('addlead')->middleware('auth');
+
 
 Route::get('/tasks', function () {return view('tasks');})->middleware('auth');
 
@@ -33,9 +39,11 @@ Route::get('/contacts', function () {return view('contacts');})->middleware('aut
 Route::get('/meetings', function () {return view('meetings');})->middleware('auth');
 
 
+
 Route::get('/services', [ServicesController::class, 'showservices'])->name('showservices')->middleware('auth');
 
 Route::post('/services/add', [ServicesController::class, 'addservice'])->name('addservice')->middleware('auth');
+
 
 
 Route::get('/payments', [PaymentsController::class, 'showpayments'])->name('payments')->middleware('auth');
@@ -51,12 +59,15 @@ Route::post('/payments/{id}/edit', [PaymentsController::class, 'PaymentUpdateSub
 Route::get('/payments/{id}/delete', [PaymentsController::class, 'PaymentDelete'])->name('PaymentDelete')->middleware('auth');
 
 
+
 Route::get('/test', [PaymentsController::class, 'test'])->name('test')->middleware('auth');
+
 
 
 Route::get('ajax',function() {
    return view('message');
 });
+
 
 Route::POST('/getclient', [GetclientAJAXController::class, 'getclient'])->name('getclient')->middleware('auth');
 
@@ -65,6 +76,8 @@ Route::POST('/getclient', [GetclientAJAXController::class, 'getclient'])->name('
 Route::get('/lawyers', [LawyersController::class, 'Alllawyers'])->name('lawyers');
 
 Route::post('/lawyers/add', [LawyersController::class, 'submit'])->name('add-lawyer');
+
+
 
 Auth::routes();
 

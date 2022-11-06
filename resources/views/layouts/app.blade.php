@@ -37,6 +37,10 @@
                 @include('inc./modal/addservice')
               @endif
 
+              @if (request()->is('leads'))
+                @include('inc./modal/addlead')
+              @endif
+
 
 
                @if (request()->is('payments'))
