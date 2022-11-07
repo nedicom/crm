@@ -6,6 +6,7 @@ use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\LawyersController;
 use App\Http\Controllers\PaymentsController;
 use App\Http\Controllers\LeadsController;
+use App\Http\Controllers\MeetingsController;
 use App\Http\Controllers\GetclientAJAXController;
 
 Route::get('/', function () {
@@ -43,7 +44,14 @@ Route::get('/tasks', function () {return view('tasks');})->middleware('auth');
 
 Route::get('/contacts', function () {return view('contacts');})->middleware('auth');
 
-Route::get('/meetings', function () {return view('meetings');})->middleware('auth');
+
+Route::get('/meetings', [MeetingsController::class, 'index'])->name('meetings')->middleware('auth');
+
+Route::post('/meetings/add', [MeetingsController::class, 'create'])->name('addmeetings')->middleware('auth');
+
+//Route::get('/meetings', function () {return view('meetings/meetings');})->middleware('auth');
+
+
 
 
 
