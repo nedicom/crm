@@ -31,9 +31,9 @@
         <div class="form-group mb-3">
           <label for="lawyer">Укажите юриста</label>
           <select class="form-select" name="lawyer" id="lawyer">
-                @foreach($datalawyers as $el)
-                  <option value="{{$el -> id}}">{{$el -> name}}</option>
-                @endforeach
+            @foreach($datalawyers as $el)
+              <option value="{{$el -> id}}"  @if ($data->lawyer == $el -> id) selected @endif>{{$el -> name}}</option>
+            @endforeach
           </select>
         </div>
         <div class="form-check form-switch">

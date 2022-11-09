@@ -13,7 +13,7 @@
 
 @section('main')
 
-        <td>{{$data}}</td>
+        <td>{{$checkedlawyer}}</td>
 
 
 @endsection

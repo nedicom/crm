@@ -49,8 +49,11 @@ Route::get('/meetings', [MeetingsController::class, 'index'])->name('meetings')-
 
 Route::post('/meetings/add', [MeetingsController::class, 'create'])->name('addmeetings')->middleware('auth');
 
-//Route::get('/meetings', function () {return view('meetings/meetings');})->middleware('auth');
+Route::get('/meetings/{id}', [MeetingsController::class, 'showMeetengById'])->name('showMeetengById')->middleware('auth');
 
+Route::post('/meetings/{id}/edit', [MeetingsController::class, 'editMeetengById'])->name('editMeetengById')->middleware('auth');
+
+Route::get('/meetings/{id}/delete', [MeetingsController::class, 'MeetingDelete'])->name('MeetingDelete')->middleware('auth');
 
 
 
@@ -75,8 +78,7 @@ Route::get('/payments/{id}/delete', [PaymentsController::class, 'PaymentDelete']
 
 
 
-Route::get('/test', [PaymentsController::class, 'test'])->name('test')->middleware('auth');
-
+Route::get('/test', [MeetingsController::class, 'index'])->name('test')->middleware('auth');
 
 
 Route::get('ajax',function() {

@@ -26,20 +26,19 @@
               @if (app('request')->input('calendar') == 'day') checked @endif
               onchange="this.form.submit()">
             <label class="btn btn-outline-success" for="day">День</label>
-
             <input type="radio" class="btn-check" value="week" name="calendar" id="week"
               @if (app('request')->input('calendar') == 'week') checked @endif
               onchange="this.form.submit()">
             <label class="btn btn-outline-success" for="week">Неделя</label>
-
             <input type="radio" class="btn-check" value="month" name="calendar" id="month"
               @if (app('request')->input('calendar') == 'month') checked @endif
               onchange="this.form.submit()">
             <label class="btn btn-outline-success" for="month">Месяц</label>
-            </div>
+          </div>
 
             <div class="">
               <select class="form-select" name="checkedlawyer" id="checkedlawyer">
+                <option value=''>не выбрано</option>
                     @foreach($datalawyers as $el)
                       <option value="{{$el -> id}}" @if (($el -> id) == (app('request')->input('checkedlawyer'))) selected @endif>
                         {{$el -> name}}
@@ -52,43 +51,67 @@
               <button type="submit" class="btn btn-primary">Применить</button>
               <a href='meetings' class='button btn btn-secondary'>Сбросить</a>
             </div>
-
         </div>
-
       </form>
   </div>
   {{-- end filter meetings--}}
 
 
 
-{{-- start views for all meetings--}}
-    <div class="col-12">
-    </div>
-      @foreach($data as $el)
-    <div class="col-3 my-3">
-      <div class="card border-light">
-          <div class="card-body">
-            <h5 class="card-title">{{$el -> description}}</h5>
-            <h6 class="card-subtitle mb-2 text-muted">{{$el -> client}}</h6>
-              <h4 class="header-title mb-3">{{$el -> name}}</h4>
-               <span class="badge bg-success"> {{$el['date']}}</span>
-              <p>
-                @foreach($datalawyers as $ellawyer)
-                  @if ($ellawyer -> id == $el -> lawyer)  {{$ellawyer -> name}} @endif
-                @endforeach
-              </p>
+  {{-- start views for all meetings--}}
+      <div class="row">
 
+        @php
+          $weekMap = [0 => 'Понедельник', 1 => 'Вторник', 2 => 'Среда', 3 => 'Четерг', 4 => 'Пятница', 5 => 'Суббота', 6 => 'Воскресенье']
+        @endphp
 
-              <div class="mt-3 row d-flex justify-content-center">
-                      <div class="col-4 mb-3">
-                        <a class="btn btn-light w-100" href="#">
-                        <i class="bi-three-dots"></i></a>
-                      </div>
-              </div>
+        @if (app('request')->input('calendar') == '')
+        <h2 class="">Заседания</h2>
+          @foreach($data as $el)
+            <div class="col-2 my-3">
+              @include('inc.calendar.meeting')
             </div>
-          </div>
+          @endforeach
+        @endif
+
+        @if (app('request')->input('calendar') == 'week')
+        <h2 class="">Неделя</h2>
+          @for ($i = 0; $i < 7; $i++)
+            <div class="col my-3" style="max-width: 14%;">
+            <h1 class="badge bg-secondary">{{$weekMap[$i];}}</h1>
+              @foreach($data as $el)
+                @if($el['date']['day'] == $weekMap[$i])
+                  @include('inc.calendar.meeting')
+                @endif
+              @endforeach
+            </div>
+          @endfor
+        @endif
+
+        @if (app('request')->input('calendar') == 'day')
+        <h2 class="">Сегодня</h2>
+            @foreach($data as $el)
+            <div class="col-2 my-3">
+                @include('inc.calendar.meeting')
+            </div>
+            @endforeach
+        @endif
+
+        @if (app('request')->input('calendar') == 'month')
+          <h2 class="">Месяц</h2>
+          @for ($i = 1; $i <= (cal_days_in_month(CAL_GREGORIAN, date('m'), date('Y'))); $i++)
+            <div class="my-3 col" style="min-width: 14%; max-width: 15%; min-height: 100px">
+              {{$i}}
+                @foreach($data as $el)
+                  @if($el['date']['currentDay'] == $i)
+                    @include('inc.calendar.meeting')
+                  @endif
+              @endforeach
+            </div>
+          @endfor
+        @endif
+
       </div>
-      @endforeach
-{{-- end views for all meetings--}}
+  {{-- end views for all meetings--}}
 
 @endsection

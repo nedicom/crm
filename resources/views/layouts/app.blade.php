@@ -14,7 +14,7 @@
 
   </head>
 
-  <body>
+  <body class="fw-light text-muted">
             @guest
               @include('inc.navguest')
             @endguest
@@ -57,6 +57,10 @@
 
                @if (request()->is('meetings'))
                  @include('inc./modal/addmeeting')
+               @endif
+
+               @if (request()->is('meetings/*'))
+                 @include('inc./modal/editmeeting')
                @endif
 
 
