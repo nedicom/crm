@@ -3,16 +3,16 @@
 
       <ul class="nav nav-pills">
         <li class="nav-item"><a href="{{route('clients')}}" class="nav-link {{ (request()->is('clients*')) ? 'active' : '' }}">Клиенты</a></li>
-        <li class="nav-item"><a href="/leads" class="nav-link ">Лиды</a></li>
-        <li class="nav-item"><a href="/tasks" class="nav-link">Задачи</a></li>
-        <li class="nav-item"><a href="/meetings" class="nav-link">Заседания</a></li>
+        <li class="nav-item"><a href="{{route('leads')}}" class="nav-link {{ (request()->is('leads*')) ? 'active' : '' }}">Лиды</a></li>
+        <li class="nav-item"><a href="{{route('tasks')}}" class="nav-link {{ (request()->is('tasks*')) ? 'active' : '' }}">Задачи</a></li>
+        <li class="nav-item"><a href="{{route('meetings')}}" class="nav-link {{ (request()->is('meetings*')) ? 'active' : '' }}">Заседания</a></li>
         <li class="nav-item"><a href="{{route('showservices')}}" class="nav-link {{ (request()->is('services*')) ? 'active' : '' }}">Услуги</a></li>
         <li class="nav-item"><a href="{{route('payments')}}" class="nav-link {{ (request()->is('payments*')) ? 'active' : '' }}">Платежи</a></li>
         <li class="nav-item"><a href="{{route('lawyers')}}" class="nav-link {{ (request()->is('lawyers*')) ? 'active' : '' }}">Юристы</a></li>
       </ul>
 
       <ul class="nav nav-pills ">
-        <li class="nav-item"><a href="#"  class="nav-link">{{ Auth::user()->name }}</a></li>
+        <li class="nav-item"><a href="\" class="nav-link {{(request()->is('home*')) ? 'active' : '' }}">{{ Auth::user()->name }}</a></li>
       </ul>
 
       <ul class="nav nav-pills ">

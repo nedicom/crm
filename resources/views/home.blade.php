@@ -8,12 +8,7 @@
   @endsection
 
   @section('leftmenuone')
-    <li class="nav-item text-center p-3">
-      <a class="text-white text-decoration-none" href="#" data-bs-toggle="modal" data-bs-target="#taskModal">ссылка меню</a>
-    </li>
-    <li class="nav-item text-center p-3">
-      <a class="text-white text-decoration-none" href="#" data-bs-toggle="modal" data-bs-target="#taskModal">еще одна ссылка</a>
-  @endsection
+      @endsection
 
   @section('main')
    <div class = "row p-5">
@@ -154,7 +149,7 @@
              </div>
 
              <div class="d-flex align-items-center">
-                 <div class="col-3 text-left"><i class="bi bi-list-task " style="font-size: 3rem; color: indigo;"></i></div>
+                 <div class="col-3 text-left"><i class="bi bi-wallet2 " style="font-size: 3rem; color: indigo;"></i></div>
 
              <div class="col-9 d-flex justify-content-center text-center">
                  <div class="col d-flex flex-column justify-content-center">
