@@ -18,4 +18,5 @@
 @section('main')
 тут будут представления и инструкция
 тест git
+false
 @endsection
