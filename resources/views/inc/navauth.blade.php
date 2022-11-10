@@ -12,6 +12,10 @@
       </ul>
 
       <ul class="nav nav-pills ">
+        <li class="nav-item"><a href="#"  class="nav-link">{{ Auth::user()->name }}</a></li>
+      </ul>
+
+      <ul class="nav nav-pills ">
         <li class="nav-item"><a href="{{ route('logout') }}"  class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Выйти</a></li>
       </ul>
           <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

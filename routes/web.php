@@ -11,8 +11,16 @@ use App\Http\Controllers\MeetingsController;
 use App\Http\Controllers\GetclientAJAXController;
 
 Route::get('/', function () {
-    return view('home');
-})->name('home')->middleware('auth');
+    return redirect('/home');
+});
+Route::get('/logout', function () {
+    return redirect('/login');
+});
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
+
+
+Route::get('/clients', [ClientsController::class, 's'])->name('home')->middleware('auth');
 
 
 Route::get('/clients', [ClientsController::class, 'AllClients'])->name('clients')->middleware('auth');
@@ -54,15 +62,27 @@ Route::get('/tasks/{id}/delete', [TasksController::class, 'TaskDelete'])->name('
 Route::get('/contacts', function () {return view('contacts');})->middleware('auth');
 
 
-Route::get('/meetings', [MeetingsController::class, 'index'])->name('meetings')->middleware('auth');
 
-Route::post('/meetings/add', [MeetingsController::class, 'create'])->name('addmeetings')->middleware('auth');
 
-Route::get('/meetings/{id}', [MeetingsController::class, 'showMeetengById'])->name('showMeetengById')->middleware('auth');
+  Route::middleware(['auth'])->group(function () {
+    Route::controller(MeetingsController::class)->group(function () {
+      Route::get('/meetings', 'index')->name('meetings');
+      Route::post('/meetings/add', 'create')->name('addmeetings');
+      Route::get('/meetings/{id}', 'showMeetengById')->name('showMeetengById');
+      Route::post('/meetings/{id}/edit', 'editMeetengById')->name('editMeetengById');
+      Route::get('/meetings/{id}/delete', 'MeetingDelete')->name('MeetingDelete');
+    });
 
-Route::post('/meetings/{id}/edit', [MeetingsController::class, 'editMeetengById'])->name('editMeetengById')->middleware('auth');
+    Route::controller(TasksController::class)->group(function () {
+      Route::get('/tasks', 'index')->name('tasks');
+      Route::post('/tasks/add', 'create')->name('addtask');
+      Route::get('/tasks/{id}', 'showTaskById')->name('showTaskById');
+      Route::post('/tasks/{id}/edit', 'editTaskById')->name('editTaskById');
+      Route::get('/tasks/{id}/delete', 'TaskDelete')->name('TaskDelete');
+    });
+  });
 
-Route::get('/meetings/{id}/delete', [MeetingsController::class, 'MeetingDelete'])->name('MeetingDelete')->middleware('auth');
+
 
 
 
@@ -104,7 +124,4 @@ Route::get('/lawyers', [LawyersController::class, 'Alllawyers'])->name('lawyers'
 Route::post('/lawyers/add', [LawyersController::class, 'submit'])->name('add-lawyer');
 
 
-
 Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
