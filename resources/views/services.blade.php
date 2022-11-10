@@ -12,7 +12,7 @@
     @endsection
 
 @section('main')
-
+    <h2 class="px-3">Услуги</h2>
 
     {{-- start views for all services--}}
 

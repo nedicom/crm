@@ -13,7 +13,7 @@
 
 @section('main')
 
-
+    <h2 class="px-3">Лиды</h2>
 {{-- start views for all services--}}
 
     <div class="col-12">

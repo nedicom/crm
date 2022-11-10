@@ -14,9 +14,10 @@
 @endsection
 
 @section('main')
-
+    <h2 class="px-3">Задачи</h2>
 {{-- start filter meetings--}}
   <div class = "row p-4">
+
       <form class = "row" action="" method="GET">
 
         <div class="col-8 d-flex justify-content-evenly">
@@ -65,7 +66,6 @@
         @endphp
 
         @if (app('request')->input('calendar') == '')
-        <h2 class="">Задачи</h2>
           @foreach($data as $el)
             <div class="col-2 my-3">
               @include('inc.calendar.task')

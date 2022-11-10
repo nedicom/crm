@@ -11,6 +11,7 @@
       @endsection
 
   @section('main')
+      <h2 class="px-3">Мои показатели</h2>
    <div class = "row p-5">
 
    <div class = "row">

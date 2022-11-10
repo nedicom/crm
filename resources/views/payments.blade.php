@@ -12,7 +12,7 @@
     @endsection
 
 @section('main')
-
+    <h2 class="px-3">Платежи</h2>
     {{-- start filter payments--}}
 
     {{-- end filter payments--}}
@@ -23,7 +23,6 @@
 
     <div class="row">
         <div class="col-12">
-          <h4 class="header-title mb-3">Платежи</h4>
             <table class="table table-striped table-hover align-middle">
                 <thead>
                 <tr>

@@ -11,10 +11,8 @@
 @endsection
 
 @section('main')
-
+    <h2 class="px-3">Клиенты</h2>
   {{-- start filter clients--}}
-
-
   <div>
     <div class = "row p-4">
       <div class = "col-10 d-flex justify-content-center">
