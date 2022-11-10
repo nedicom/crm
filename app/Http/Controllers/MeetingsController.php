@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\MeetingsRequest;
-//use App\Http\Requests\UpdateMeetingsRequest;
 use App\Models\Meetings;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -26,8 +25,7 @@ class MeetingsController extends Controller{
               ->where('lawyer', '=', $checkedlawyer)
               ->orderBy('date', 'asc')
               ->get()],
-              ['datalawyers' =>  User::all(), 'testdata' =>
-              Meetings::All()]);
+              ['datalawyers' =>  User::all()]);
             }
 
             elseif($calendar == 'day'){
@@ -104,8 +102,7 @@ class MeetingsController extends Controller{
 
     }
 
-    public function create(MeetingsRequest $req)
-    {
+    public function create(MeetingsRequest $req){
         $meeting = new Meetings();
 
         $meeting -> name = $req -> name;

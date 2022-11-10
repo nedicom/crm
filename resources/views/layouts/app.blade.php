@@ -63,6 +63,14 @@
                  @include('inc./modal/editmeeting')
                @endif
 
+               @if (request()->is('tasks'))
+                 @include('inc./modal/addtask')
+               @endif
+
+               @if (request()->is('tasks/*'))
+                 @include('inc./modal/edittask')
+               @endif
+
 
               @include('inc/messages')
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\LawyersController;
 use App\Http\Controllers\PaymentsController;
 use App\Http\Controllers\LeadsController;
+use App\Http\Controllers\TasksController;
 use App\Http\Controllers\MeetingsController;
 use App\Http\Controllers\GetclientAJAXController;
 
@@ -39,8 +40,16 @@ Route::post('/leads/{id}/edit', [LeadsController::class, 'LeadUpdateSubmit'])->n
 Route::get('/leads/{id}/delete', [LeadsController::class, 'LeadDelete'])->name('LeadDelete')->middleware('auth');
 
 
+Route::get('/tasks', [TasksController::class, 'index'])->name('tasks')->middleware('auth');
 
-Route::get('/tasks', function () {return view('tasks');})->middleware('auth');
+Route::post('/tasks/add', [TasksController::class, 'create'])->name('addtask')->middleware('auth');
+
+Route::get('/tasks/{id}', [TasksController::class, 'showTaskById'])->name('showTaskById')->middleware('auth');
+
+Route::post('/tasks/{id}/edit', [TasksController::class, 'editTaskById'])->name('editTaskById')->middleware('auth');
+
+Route::get('/tasks/{id}/delete', [TasksController::class, 'TaskDelete'])->name('TaskDelete')->middleware('auth');
+
 
 Route::get('/contacts', function () {return view('contacts');})->middleware('auth');
 

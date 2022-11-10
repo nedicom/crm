@@ -27,34 +27,39 @@
   });
 </script>
 
-  <div class="modal fade" id="editmeetingModal">
+  <div class="modal fade" id="taskModal">
     <div class="modal-dialog">
       <div class="modal-content">
           <div class ="modal-header">
-            <h2>Изменить заседание</h2>
+            <h2>Добавить задачу</h2>
           </div>
 
           <div class ="modal-body d-flex justify-content-center">
 
           <div class ="col-10">
-            <form action="{{route('editMeetengById', $data -> id)}}" autocomplete="off" method="post">
+            <form action="{{route('addtask')}}" autocomplete="off" method="post">
               @csrf
 
               <div class="form-group mb-3">
-                <label for="name">Укажите название</label>
-                <input type = "text" name="name" placeholder="" id="name" value="{{$data->name}}" class="form-control" required>
+                <label for="name">Укажите название задачи</label>
+                <input type = "text" name="name" placeholder="" id="name" class="form-control" required>
               </div>
 
               <div class="form-group mb-3">
                 <label for="date">Укажите время:</label>
-
-                <input type="datetime-local" id="date" value="{{$data->date['value']}}" class="form-control" name="date"
+                <input type="datetime-local" id="date" class="form-control" name="date"
                       min="{{ date('Y-m-d H:i') }}">
+              </div>
+
+              <div class="input-group form-group mb-3">
+                <label class="input-group-text" for="duration"><i class="bi bi-stopwatch"></i></label>
+                <input type = "number" name="duration" min="0.5" max="25" step="0.5" id="duration" class="form-control">
+                <span class="input-group-text">час</span>
               </div>
 
               <div class="form-group mb-3">
                 <label for="client">Укажите клиента</label>
-                <input type = "text" name="client" id="client" value="{{$data->client}}" class="form-control">
+                <input type = "text" name="client" id="client" class="form-control">
                 <div id="clientList">
                   </div>
               </div>
@@ -62,9 +67,9 @@
               <div class="form-group mb-3">
                 <label for="lawyer">Укажите юриста</label>
                 <select class="form-select" name="lawyer" id="lawyer" class="form-control">
-                  @foreach($datalawyers as $el)
-                    <option value="{{$el -> id}}"  @if ($data->lawyer == $el -> id) selected @endif>{{$el -> name}}</option>
-                  @endforeach
+                      @foreach($datalawyers as $el)
+                        <option value="{{$el -> id}}">{{$el -> name}}</option>
+                      @endforeach
                 </select>
               </div>
 
