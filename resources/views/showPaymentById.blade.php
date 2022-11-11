@@ -1,7 +1,5 @@
 @extends('layouts.app')
 
-test
-
 @section('title')
   платеж
 @endsection
