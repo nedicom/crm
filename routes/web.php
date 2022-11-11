@@ -66,6 +66,8 @@ Route::get('/contacts', function () {return view('contacts');})->middleware('aut
 
 
 
+
+
   Route::middleware(['auth'])->group(function () {
     Route::controller(MeetingsController::class)->group(function () {
       Route::get('/meetings', 'index')->name('meetings');
