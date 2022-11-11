@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+testlocal
+s
 @section('title')
   платеж
 @endsection
