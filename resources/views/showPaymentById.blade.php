@@ -11,6 +11,9 @@
 @endsection
 
 @section('main')
+
+<h2 class="px-3">Платеж</h2>
+
   <div class="col-md-6 my-3 mx-3">
         <div class="card border-light">
             <table class="table table-hover align-middle">

@@ -12,6 +12,8 @@
 
 @section('main')
 
+<h2 class="px-3">Клиент</h2>
+
     <div class= 'col-md-6 col-xxl-3 my-3'>
       <div class= 'card border-light'>
         <div class= 'd-inline-flex justify-content-end px-2'>
