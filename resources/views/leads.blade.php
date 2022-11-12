@@ -27,7 +27,7 @@
 
                   <h4 class="header-title mb-3"></h4>
 
-                   <span class="badge bg-success"> +5.35% </span>
+                   <span class="badge bg-success">{{$el -> status}} </span>
 
                   <p>{{$el -> created_at}}</p>
 

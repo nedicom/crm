@@ -13,17 +13,17 @@
 
               <div class="form-group mb-3">
                 <label for="name">Введите ФИО</label>
-                <input type = "text" name="name" id="name" class="form-control" required>
+                <input type = "text" name="name" id="name" class="form-control" value="{{ old('name') }}">
               </div>
 
               <div class="form-group mb-3">
                 <label for="phone">Введите телефон</label>
-                <input type = "phone" name="phone" placeholder="+7" id="phone" class="form-control">
+                <input type = "phone" name="phone" placeholder="+7" id="phone" value="{{ old('phone') }}" class="form-control">
               </div>
 
               <div class="form-group mb-3">
                 <label for="description">Описание проблемы</label>
-                <textarea rows="3" name="description" placeholder="Не увольняют военнослужащего" id="phone" class="form-control" required></textarea>
+                <textarea rows="3" name="description" value="{{ old('description') }}" placeholder="Не увольняют военнослужащего" id="phone" class="form-control"></textarea>
               </div>
 
               <div class="form-group mb-3">
@@ -62,6 +62,15 @@
                       @endforeach
                 </select>
               </div>
+
+              <div class="form-group mb-3">
+                <label for="status">Укажите статус</label>
+                <select class="form-select" name="status" id="status" class="form-control">
+                    <option value="поступил">поступил</option>
+                    <option value="в работе">в работе</option>
+                </select>
+              </div>
+
 
               <button type="submit" id='submit' class="btn btn-primary">Сохранить</button>
             </form>

@@ -1,9 +1,9 @@
-<div class="col-10 p-3">
+<div class="col-10 p-3 shadow-sm">
     <header class="d-flex justify-content-evenly">
 
       <ul class="nav nav-pills">
-        <li class="nav-item"><a href="{{route('clients')}}" class="nav-link {{ (request()->is('clients*')) ? 'active' : '' }}">Клиенты</a></li>
         <li class="nav-item"><a href="{{route('leads')}}" class="nav-link {{ (request()->is('leads*')) ? 'active' : '' }}">Лиды</a></li>
+        <li class="nav-item"><a href="{{route('clients')}}" class="nav-link {{ (request()->is('clients*')) ? 'active' : '' }}">Клиенты</a></li>
         <li class="nav-item"><a href="{{route('tasks')}}" class="nav-link {{ (request()->is('tasks*')) ? 'active' : '' }}">Задачи</a></li>
         <li class="nav-item"><a href="{{route('meetings')}}" class="nav-link {{ (request()->is('meetings*')) ? 'active' : '' }}">Заседания</a></li>
         <li class="nav-item"><a href="{{route('showservices')}}" class="nav-link {{ (request()->is('services*')) ? 'active' : '' }}">Услуги</a></li>

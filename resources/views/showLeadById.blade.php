@@ -15,8 +15,9 @@
 
   <div class="col-md-6 my-3 mx-3">
         <div class="card border-light">
-          <div class="card-header">
-              <h2 class="h3 mb-0">Инфорация о лиде</h2>
+          <div class="card-header d-flex justify-content-between">
+              <h2 class="h3 mb-0 col-8">Инфорация о лиде</h2>
+              <div><span class="badge bg-success">{{$data -> status}} </span></div>
           </div>
           <div class="card-body row mb-4 d-flex justify-content-center">
 
@@ -75,7 +76,19 @@
                       <i class="bi-pen"></i></a>
                     </div>
                     <div class="col-2 mb-3">
-                      <a class="btn btn-light w-100 disabled" href="{{ route ('PaymentDelete', $data->id) }}">
+                      <a class="btn btn-light w-100" href="{{ route ('leadToWork', $data->id) }}">
+                      <i class="bi-briefcase"></i></a>
+                    </div>
+                    <div class="col-2 mb-3">
+                      <a class="btn btn-light w-100" href="{{ route ('leadToClient', $data->id) }}">
+                      <i class="bi-person-check"></i></a>
+                    </div>
+                    <div class="col-2 mb-3">
+                      <a class="btn btn-light w-100
+                      @if ($data -> status == 'конвертирован')
+                      disabled
+                      @endif
+                      " href="{{ route ('leadDelete', $data->id) }}">
                       <i class="bi-trash"></i></a>
                     </div>
                   </div>

@@ -6,6 +6,8 @@ use App\Models\User;
 use App\Models\Services;
 use Illuminate\Http\Request;
 use App\Http\Requests\LeadsRequest;
+use App\Models\ClientsModel;
+use App\Http\Requests\ClientsRequest;
 
 class LeadsController extends Controller{
 
@@ -18,6 +20,7 @@ class LeadsController extends Controller{
           $lead -> lawyer = $req -> input('lawyer');
           $lead -> responsible = $req -> input('responsible');
           $lead -> service = $req -> input('service');
+          $lead -> status = $req -> input('status');
 
           $lead -> save();
 
@@ -42,16 +45,46 @@ class LeadsController extends Controller{
           $lead -> lawyer = $req -> input('lawyer');
           $lead -> responsible = $req -> input('responsible');
           $lead -> service = $req -> input('service');
-          
+
           $lead -> save();
 
           return redirect() -> route('showLeadById', $id) -> with('success', 'Все в порядке, лид обновлен');
 
       }
 
-      public function LeadDelete($id){
-          ClientsModel::find($id)->delete();
-          return redirect() -> route('leads') -> with('success', 'Все в порядке, лид удален');
+      public function leadToWork($id){
+          $lead = Leads::find($id);
+          $lead -> status = 'в работе';
+          $lead -> save();
+          return redirect() -> route('showLeadById', $id) -> with('success', 'Все в порядке, лид в работе');
+      }
+
+      public function leadToClient($id){
+          $lead = Leads::find($id);
+          $lead -> status = 'конвертирован';
+          $lead -> save();
+
+          $client = new ClientsModel();
+          $client -> name = $lead -> name;
+          $client -> phone = $lead -> phone;
+          $client -> email = 'email';
+          $client -> source = $lead -> source;
+          $client -> status = 1;
+          $client -> lawyer = $lead -> lawyer;
+          $client -> save();
+
+          $clientid = $client -> id;
+          return redirect() -> route('showClientById', $clientid) -> with('success', 'Поздравляем, лид стал клиентом');
+
+
+
+      }
+
+      public function leadDelete($id){
+          $lead = Leads::find($id);
+          $lead -> status = 'удален';
+          $lead -> save();
+          return redirect() -> route('showLeadById', $id) -> with('success', 'Все в порядке, лид удален');
 
       }
 

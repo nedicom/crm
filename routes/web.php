@@ -64,11 +64,18 @@ Route::get('/tasks/{id}/delete', [TasksController::class, 'TaskDelete'])->name('
 Route::get('/contacts', function () {return view('contacts');})->middleware('auth');
 
 
-
-
-
-
   Route::middleware(['auth'])->group(function () {
+
+    Route::controller(LeadsController::class)->group(function () {
+      Route::get('/leads', 'showleads')->name('leads');
+      Route::post('/leads/add', 'addlead')->name('addlead');
+      Route::get('/leads/{id}', 'showLeadById')->name('showLeadById');
+      Route::post('/leads/{id}/edit', 'LeadUpdateSubmit')->name('LeadUpdateSubmit');
+      Route::get('/leads/{id}/delete', 'leadDelete')->name('leadDelete');
+      Route::get('/leads/{id}/towork', 'leadToWork')->name('leadToWork');
+      Route::get('/leads/{id}/toclient', 'leadToClient')->name('leadToClient');
+    });
+
     Route::controller(MeetingsController::class)->group(function () {
       Route::get('/meetings', 'index')->name('meetings');
       Route::post('/meetings/add', 'create')->name('addmeetings');
