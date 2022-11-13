@@ -28,9 +28,30 @@ class LeadsController extends Controller{
       }
 
 
-      public function showleads(){
+    /*  public function showleads(){
           return view ('leads', ['data' => Leads::where('status', '!=' , 'удален')->get()], ['datalawyers' =>  User::all(), 'dataservices' =>  Services::all()]);
-      }
+      }*/
+
+      public function showleads(Request $req){
+      $lawyer = null;
+      $status = null;
+      $source = null;
+      $responsible = null;
+
+
+      if (!empty($req->checkedlawyer)){$lawyer='lawyer';}
+      if (!empty($req->checkedstatus)){$status='status';}
+      if (!empty($req->checkedsources)){$source='source';}
+      if (!empty($req->checkedresponsible)){$responsible='responsible';}
+
+          return view ('leads', ['data' => Leads::
+          where($lawyer, $req->checkedlawyer)
+          ->where($status, $req->checkedstatus)
+          ->where($source, $req->checkedsources)
+          ->where($responsible, $req->checkedresponsible)
+          ->get()], ['datalawyers' =>  User::all(), 'dataservices' =>  Services::all()]);
+        }
+
 
       public function showLeadById($id){
         return view ('showLeadById', ['data' => Leads::with('userFunc', 'responsibleFunc' , 'servicesFunc')->find($id)], ['datalawyers' =>  User::all(), 'dataservices' =>  Services::all()]);

@@ -15,8 +15,8 @@
     <h2 class="px-3">Лиды</h2>
 {{-- start views for all services--}}
 
-    <div class="col-12">
-    </div>
+
+  @include('inc/filter.filter')
 
       @foreach($data as $el)
         <div class="col-3 my-3">
