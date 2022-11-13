@@ -34,19 +34,24 @@ class LeadsController extends Controller{
 
       public function showleads(Request $req){
       $lawyer = null;
-      $status = null;
       $source = null;
       $responsible = null;
+      $status=$req->input('checkedstatus');
 
 
       if (!empty($req->checkedlawyer)){$lawyer='lawyer';}
-      if (!empty($req->checkedstatus)){$status='status';}
+      if (empty($req->checkedstatus)){$deleting='удален';}
+      else{$deleting='';}
       if (!empty($req->checkedsources)){$source='source';}
       if (!empty($req->checkedresponsible)){$responsible='responsible';}
 
           return view ('leads', ['data' => Leads::
           where($lawyer, $req->checkedlawyer)
-          ->where($status, $req->checkedstatus)
+          //->where($status, $req->checkedstatus)
+          ->when($status, function ($query, $status) {
+                    $query->where('status', $status);
+                })
+          ->where('status', '!=', $deleting)
           ->where($source, $req->checkedsources)
           ->where($responsible, $req->checkedresponsible)
           ->get()], ['datalawyers' =>  User::all(), 'dataservices' =>  Services::all()]);
