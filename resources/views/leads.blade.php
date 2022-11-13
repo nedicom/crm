@@ -22,13 +22,20 @@
         <div class="col-3 my-3">
           <div class="card border-light">
               <div class="card-body">
-                <h5 class="card-title">{{$el -> name}}</h5>
+                <div class ="d-flex justify-content-between">
+                  <h6 class="card-title">{{$el -> name}}</h6>
+                  <div>
+                    <span class="badge bg-success">{{$el -> status}} </span>
+                  </div>
+                </div>
 
-                  <h4 class="header-title mb-3"></h4>
+                 <h4 class="header-title mb-3">{{$el -> phone}}</h4>
 
-                   <span class="badge bg-success">{{$el -> status}} </span>
+               <div class ="d-flex justify-content-left">
+                 <p class ="px-2">{{$el -> created_at}}</p>
+                 <p class ="px-2">{{$el -> source}}</p>
+               </div>
 
-                  <p>{{$el -> created_at}}</p>
 
 
                   <div class="mt-3 row d-flex justify-content-center">
