@@ -11,6 +11,13 @@
 @endsection
 
 @section('main')
+
+<script>
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
+
   <h2 class="px-3">Лид</h2>
 
   <div class="col-md-6 my-3 mx-3">
@@ -72,15 +79,15 @@
             <div class="mt-3 row d-flex justify-content-center">
                 <div class="mt-3 row d-flex justify-content-center">
                     <div class="col-2 mb-3">
-                      <a class="btn btn-light w-100" href="#" data-bs-toggle="modal" data-bs-target="#editleadModal">
+                      <a class="btn btn-light w-100" href="#" data-bs-toggle="modal" data-bs-target="#editleadModal" data-toggle="tooltip" data-placement="top" title="Редактировать">
                       <i class="bi-pen"></i></a>
                     </div>
                     <div class="col-2 mb-3">
-                      <a class="btn btn-light w-100" href="{{ route ('leadToWork', $data->id) }}">
+                      <a class="btn btn-light w-100" href="{{ route ('leadToWork', $data->id) }}" data-toggle="tooltip" data-placement="top" title="Перевести в работу">
                       <i class="bi-briefcase"></i></a>
                     </div>
                     <div class="col-2 mb-3">
-                      <a class="btn btn-light w-100" href="{{ route ('leadToClient', $data->id) }}">
+                      <a class="btn btn-light w-100" href="{{ route ('leadToClient', $data->id) }}" data-toggle="tooltip" data-placement="top" title="Перевести в клиента">
                       <i class="bi-person-check"></i></a>
                     </div>
                     <div class="col-2 mb-3">
@@ -88,7 +95,7 @@
                       @if ($data -> status == 'конвертирован')
                       disabled
                       @endif
-                      " href="{{ route ('leadDelete', $data->id) }}">
+                      " href="{{ route ('leadDelete', $data->id) }}" data-toggle="tooltip" data-placement="top" title="Удалить">
                       <i class="bi-trash"></i></a>
                     </div>
                   </div>
