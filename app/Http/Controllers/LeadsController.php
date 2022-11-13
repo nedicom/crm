@@ -29,7 +29,7 @@ class LeadsController extends Controller{
 
 
       public function showleads(){
-          return view ('leads', ['data' => Leads::all()], ['datalawyers' =>  User::all(), 'dataservices' =>  Services::all()]);
+          return view ('leads', ['data' => Leads::where('status', '!=' , 'удален')->get()], ['datalawyers' =>  User::all(), 'dataservices' =>  Services::all()]);
       }
 
       public function showLeadById($id){
