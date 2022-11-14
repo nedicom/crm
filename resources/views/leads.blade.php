@@ -16,7 +16,7 @@
 {{-- start views for all services--}}
 
 
-  @include('inc/filter.filter')
+  @include('inc/filter.leadfilter')
 
       @foreach($data as $el)
         <div class="col-3 my-3">
