@@ -28,11 +28,6 @@ class LeadsController extends Controller{
           return redirect() -> route('leads') -> with('success', 'Все в порядке, лид добавлен');
       }
 
-
-    /*  public function showleads(){
-          return view ('leads', ['data' => Leads::where('status', '!=' , 'удален')->get()], ['datalawyers' =>  User::all(), 'dataservices' =>  Services::all()]);
-      }*/
-
       public function showleads(Request $req){
       $lawyer = null;
       $source = null;
@@ -87,9 +82,10 @@ class LeadsController extends Controller{
           return redirect() -> route('showLeadById', $id) -> with('success', 'Все в порядке, лид в работе');
       }
 
-      public function leadToClient($id){
+      public function leadToClient($id, Request $req){
           $lead = Leads::find($id);
           $lead -> status = 'конвертирован';
+          $lead -> successreason = $req -> input('successreason');
           $lead -> save();
 
           $client = new ClientsModel();
@@ -108,12 +104,12 @@ class LeadsController extends Controller{
 
       }
 
-      public function leadDelete($id){
+      public function leadDelete($id, Request $req){
           $lead = Leads::find($id);
           $lead -> status = 'удален';
+          $lead -> failurereason = $req -> input('failurereason');
           $lead -> save();
-          return redirect() -> route('showLeadById', $id) -> with('success', 'Все в порядке, лид удален');
-
+          return redirect() -> route('leads') -> with('success', 'Все в порядке, лид удален');
       }
 
 }

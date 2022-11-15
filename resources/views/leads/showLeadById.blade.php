@@ -52,14 +52,24 @@
                   </div>
               </div>
 
-              <div class="row my-5">
+              <div class="row my-2">
                   <div class="col-3">Описание</div>
                   <div class="col-9">{{$data -> description}}</div>
               </div>
 
-              <div class="row my-5">
+              <div class="row my-2">
                   <div class="col-3">Что делаем с лидом</div>
                   <div class="col-9">{{$data -> action}}</div>
+              </div>
+
+              <div class="row my-2">
+                  <div class="col-3">Причина успеха</div>
+                  <div class="col-9">{{$data -> successreason}}</div>
+              </div>
+
+              <div class="row my-2">
+                  <div class="col-3">Причина неудачи</div>
+                  <div class="col-9">{{$data -> failurereason}}</div>
               </div>
 
               <div class="row">
@@ -92,7 +102,9 @@
                       <i class="bi-briefcase"></i></a>
                     </div>
                     <div class="col-2 mb-3">
-                      <a class="btn btn-light w-100" href="{{ route ('leadToClient', $data->id) }}" data-toggle="tooltip" data-placement="top" title="Перевести в клиента">
+                      <a class="btn btn-light w-100" href="#"
+                      data-toggle="tooltip" data-placement="top" title="Перевести в клиента"
+                      data-bs-toggle="modal" data-bs-target="#modalleadtoclient">
                       <i class="bi-person-check"></i></a>
                     </div>
                     <div class="col-2 mb-3">
@@ -100,7 +112,8 @@
                       @if ($data -> status == 'конвертирован')
                       disabled
                       @endif
-                      " href="{{ route ('leadDelete', $data->id) }}" data-toggle="tooltip" data-placement="top" title="Удалить">
+                      " href="#" data-toggle="tooltip" data-placement="top" title="Удалить"
+                      data-bs-toggle="modal" data-bs-target="#modalleaddelete">
                       <i class="bi-trash"></i></a>
                     </div>
                   </div>
@@ -113,4 +126,6 @@
   @section('modals')
     @include('inc./modal/leadsmodal/editlead')
     @include('inc./modal/leadsmodal/leadtowork')
+    @include('inc./modal/leadsmodal/leadtoclient')
+    @include('inc./modal/leadsmodal/leaddelete')
   @endsection

@@ -71,9 +71,9 @@ Route::get('/contacts', function () {return view('contacts');})->middleware('aut
       Route::post('/leads/add', 'addlead')->name('addlead');
       Route::get('/leads/{id}', 'showLeadById')->name('showLeadById');
       Route::post('/leads/{id}/edit', 'LeadUpdateSubmit')->name('LeadUpdateSubmit');
-      Route::get('/leads/{id}/delete', 'leadDelete')->name('leadDelete');
+      Route::post('/leads/{id}/delete', 'leadDelete')->name('leadDelete');
       Route::post('/leads/{id}/towork', 'leadToWork')->name('leadToWork');
-      Route::get('/leads/{id}/toclient', 'leadToClient')->name('leadToClient');
+      Route::post('/leads/{id}/toclient', 'leadToClient')->name('leadToClient');
     });
 
     Route::controller(MeetingsController::class)->group(function () {
