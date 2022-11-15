@@ -28,7 +28,6 @@
 
               <div class="form-group mb-3">
                 <label for="source">Укажите источник</label>
-
                 <select class="form-select" name="source" id="source" class="form-control">
                       @foreach($datasource as $el)
                         <option value="{{$el -> name}}"

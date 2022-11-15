@@ -20,14 +20,18 @@
           <label for="phone">Введите email</label>
           <input type = "email" name="email" placeholder="ivanov@yandex.ru" id="email" value='{{$data->email}}' class="form-control">
         </div>
+
         <div class="form-group mb-3">
-          <select class="form-select" name="source" id="source" aria-label="Default select example">
-            <option value="Не знаю источник" @if($data->source == "Не знаю источник") selected @endif>Не знаю источник</option>
-            <option value="сайт" @if($data->source == "сайт") selected @endif>Сайт</option>
-            <option value="Рекомендация" @if($data->source == "Рекомендация") selected @endif>Рекомендация</option>
-            <option value="С улицы" @if($data->source == "С улицы") selected @endif>С улицы</option>
+          <label for="source">Укажите источник</label>
+          <select class="form-select" name="source" id="source" class="form-control">
+                @foreach($datasource as $el)
+                  <option value="{{$el -> name}}"
+                     @if($data->source == $el -> name) selected @endif
+                     >{{$el -> name}}</option>
+                @endforeach
           </select>
         </div>
+
         <div class="form-group mb-3">
           <label for="lawyer">Укажите юриста</label>
           <select class="form-select" name="lawyer" id="lawyer">

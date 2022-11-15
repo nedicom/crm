@@ -22,11 +22,10 @@
         </div>
         <div class="form-group mb-3">
           <label for="source">Укажите источник</label>
-          <select class="form-select" name="source" id="source">
-            <option value="Не знаю источник" selected>Не знаю источник</option>
-            <option value="сайт">Сайт</option>
-            <option value="Рекомендация">Рекомендация</option>
-            <option value="С улицы">С улицы</option>
+          <select class="form-select" name="source" id="source" class="form-control">
+                @foreach($datasource as $el)
+                  <option value="{{$el -> name}}">{{$el -> name}}</option>
+                @endforeach
           </select>
         </div>
 

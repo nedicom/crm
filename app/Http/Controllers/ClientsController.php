@@ -8,6 +8,7 @@ use App\Http\Requests\FilterRequest;
 use App\Models\ClientsModel;
 use App\Models\User;
 use App\Models\Tasks;
+use App\Models\Source;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -28,7 +29,6 @@ class ClientsController extends Controller{
         return redirect() -> route('clients') -> with('success', 'Все в порядке, клиент добавлен');
 
     }
-
 
     public function AllClients(Request $request){
 
@@ -97,7 +97,8 @@ class ClientsController extends Controller{
       }
 
         else{
-          return view ('clients', ['data' => ClientsModel::with('userFunc')-> paginate(10)], ['datalawyers' =>  User::all(), 'datatasks' => Tasks::all()]);
+          return view ('clients', ['data' => ClientsModel::with('userFunc')-> paginate(10)],
+          ['datalawyers' =>  User::all(), 'datatasks' => Tasks::all(), 'datasource' => Source::all()]);
         }
           return $client->get();
 
@@ -107,7 +108,8 @@ class ClientsController extends Controller{
 
     public function showClientById($id){
       $client = new ClientsModel();
-      return view ('clientbyid', ['data' => ClientsModel::with('userFunc')->find($id)], ['datalawyers' =>  User::all()]);
+      return view ('clientbyid', ['data' => ClientsModel::with('userFunc')->find($id)],
+      ['datalawyers' =>  User::all(), 'datasource' => Source::all()]);
     }
 
     public function updateClient($id){
