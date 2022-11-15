@@ -1,3 +1,15 @@
-body{
+    .badge-postupil{
+      background-color: LightSkyBlue;
+    }
 
-}
+    .badge-vrabote {
+      background-color: MediumSlateBlue;
+    }
+
+    .badge-convertirovan {
+      background-color: MediumBlue;
+    }
+
+    .badge-udalen {
+      background-color: Gray;
+    }

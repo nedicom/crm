@@ -25,7 +25,12 @@
                 <div class ="d-flex justify-content-between">
                   <h6 class="card-title">{{$el -> name}}</h6>
                   <div>
-                    <span class="badge bg-success">{{$el -> status}} </span>
+                    <span class="badge
+                    @if ($el -> status == 'поступил') badge-postupil
+                    @elseif ($el -> status == 'в работе') badge-vrabote
+                    @elseif ($el -> status == 'конвертирован') badge-convertirovan
+                    @else badge-udalen
+                    @endif">{{$el -> status}} </span>
                   </div>
                 </div>
 
