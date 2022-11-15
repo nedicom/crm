@@ -21,6 +21,7 @@ class LeadsController extends Controller{
           $lead -> responsible = $req -> input('responsible');
           $lead -> service = $req -> input('service');
           $lead -> status = $req -> input('status');
+          $lead -> action = $req -> input('action');
 
           $lead -> save();
 
@@ -45,7 +46,7 @@ class LeadsController extends Controller{
       if (!empty($req->checkedsources)){$source='source';}
       if (!empty($req->checkedresponsible)){$responsible='responsible';}
 
-          return view ('leads', ['data' => Leads::
+          return view ('leads/leads', ['data' => Leads::
           where($lawyer, $req->checkedlawyer)
           //->where($status, $req->checkedstatus)
           ->when($status, function ($query, $status) {
@@ -59,7 +60,7 @@ class LeadsController extends Controller{
 
 
       public function showLeadById($id){
-        return view ('showLeadById', ['data' => Leads::with('userFunc', 'responsibleFunc' , 'servicesFunc')->find($id)], ['datalawyers' =>  User::all(), 'dataservices' =>  Services::all()]);
+        return view ('leads/showLeadById', ['data' => Leads::with('userFunc', 'responsibleFunc' , 'servicesFunc')->find($id)], ['datalawyers' =>  User::all(), 'dataservices' =>  Services::all()]);
       }
 
       public function LeadUpdateSubmit($id, LeadsRequest $req){
@@ -75,12 +76,13 @@ class LeadsController extends Controller{
           $lead -> save();
 
           return redirect() -> route('showLeadById', $id) -> with('success', 'Все в порядке, лид обновлен');
-
       }
 
-      public function leadToWork($id){
+
+      public function leadToWork($id, Request $req){
           $lead = Leads::find($id);
           $lead -> status = 'в работе';
+          $lead -> action = $req -> input('action');
           $lead -> save();
           return redirect() -> route('showLeadById', $id) -> with('success', 'Все в порядке, лид в работе');
       }

@@ -24,7 +24,7 @@
         <div class="card border-light">
           <div class="card-header d-flex justify-content-between">
               <h2 class="h3 mb-0 col-8">Инфорация о лиде</h2>
-              <div><span class="badge bg-success">{{$data -> status}} </span></div>
+              <h3>{{$data -> status}}</h3>
           </div>
           <div class="card-body row mb-4 d-flex justify-content-center">
 
@@ -39,15 +39,15 @@
 
               <div class="row mt-5">
                 <div class="col-4">
-                    <h4>создан</h4>
+                    <h5>создан</h5>
                     <p>{{$data -> created_at}}</p>
                   </div>
                   <div class="col-4">
-                    <h4>изменен</h4>
+                    <h5>изменен</h5>
                     <p>{{$data -> updated_at}}</p>
                   </div>
                   <div class="col-4">
-                    <h4>Что предлагаем</h4>
+                    <h5>Что предлагаем</h5>
                     <p>{{$data -> servicesFunc -> name}}</p>
                   </div>
               </div>
@@ -55,6 +55,11 @@
               <div class="row my-5">
                   <div class="col-3">Описание</div>
                   <div class="col-9">{{$data -> description}}</div>
+              </div>
+
+              <div class="row my-5">
+                  <div class="col-3">Что делаем с лидом</div>
+                  <div class="col-9">{{$data -> action}}</div>
               </div>
 
               <div class="row">
@@ -83,7 +88,7 @@
                       <i class="bi-pen"></i></a>
                     </div>
                     <div class="col-2 mb-3">
-                      <a class="btn btn-light w-100" href="{{ route ('leadToWork', $data->id) }}" data-toggle="tooltip" data-placement="top" title="Перевести в работу">
+                      <a class="btn btn-light w-100" href="#" data-bs-toggle="modal" data-bs-target="#modalleadtowork" data-toggle="tooltip" data-placement="top" title="Перевести в работу">
                       <i class="bi-briefcase"></i></a>
                     </div>
                     <div class="col-2 mb-3">
@@ -104,3 +109,8 @@
       </div>
 
 @endsection
+
+  @section('modals')
+    @include('inc./modal/leadsmodal/editlead')
+    @include('inc./modal/leadsmodal/leadtowork')
+  @endsection

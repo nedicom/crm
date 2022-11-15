@@ -38,7 +38,7 @@ Route::post('/clients/{id}/edit', [ClientsController::class, 'updateClientSubmit
 Route::get('/clients/{id}/delete', [ClientsController::class, 'ClientDelete'])->name('Client-Delete')->middleware('auth');
 
 
-
+/*
 Route::get('/leads', [LeadsController::class, 'showleads'])->name('leads')->middleware('auth');
 
 Route::post('/leads/add', [LeadsController::class, 'addlead'])->name('addlead')->middleware('auth');
@@ -48,7 +48,7 @@ Route::get('/leads/{id}', [LeadsController::class, 'showLeadById'])->name('showL
 Route::post('/leads/{id}/edit', [LeadsController::class, 'LeadUpdateSubmit'])->name('LeadUpdateSubmit')->middleware('auth');
 
 Route::get('/leads/{id}/delete', [LeadsController::class, 'LeadDelete'])->name('LeadDelete')->middleware('auth');
-
+*/
 
 Route::get('/tasks', [TasksController::class, 'index'])->name('tasks')->middleware('auth');
 
@@ -72,7 +72,7 @@ Route::get('/contacts', function () {return view('contacts');})->middleware('aut
       Route::get('/leads/{id}', 'showLeadById')->name('showLeadById');
       Route::post('/leads/{id}/edit', 'LeadUpdateSubmit')->name('LeadUpdateSubmit');
       Route::get('/leads/{id}/delete', 'leadDelete')->name('leadDelete');
-      Route::get('/leads/{id}/towork', 'leadToWork')->name('leadToWork');
+      Route::post('/leads/{id}/towork', 'leadToWork')->name('leadToWork');
       Route::get('/leads/{id}/toclient', 'leadToClient')->name('leadToClient');
     });
 

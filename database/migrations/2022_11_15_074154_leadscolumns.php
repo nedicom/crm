@@ -13,7 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        //
+      Schema::table('leads', function (Blueprint $table) {
+          $table->string('action');
+          $table->string('failurereason');
+          $table->string('successreason');
+      });
     }
 
     /**

@@ -34,21 +34,21 @@
                   </div>
                 </div>
 
-                 <h4 class="header-title mb-3">{{$el -> phone}}</h4>
+               <h4 class="header-title mb-3">{{$el -> phone}}</h4>
 
-               <div class ="d-flex justify-content-left">
-                 <p class ="px-2">{{$el -> created_at}}</p>
-                 <p class ="px-2">{{$el -> source}}</p>
+               <div class ="d-flex justify-content-between">
+                 <p class ="">{{$el -> created_at}}</p>
+                 <p class ="">{{$el -> source}}</p>
                </div>
 
+               <p class="header-title mb-3 text-truncate">что делаем: {{$el -> action}}</p>
 
-
-                  <div class="mt-3 row d-flex justify-content-center">
-                          <div class="col-4 mb-3">
-                            <a class="btn btn-light w-100" href="{{ route ('showLeadById', $el->id) }}">
-                            <i class="bi-three-dots"></i></a>
-                          </div>
-                  </div>
+               <div class="mt-3 row d-flex justify-content-center">
+                <div class="col-4 mb-3">
+                  <a class="btn btn-light w-100" href="{{ route ('showLeadById', $el->id) }}">
+                  <i class="bi-three-dots"></i></a>
+                </div>
+              </div>
                 </div>
               </div>
           </div>
@@ -57,4 +57,8 @@
 
 {{-- end views for all services--}}
 
-@endsection
+  @endsection
+
+  @section('modals')
+    @include('inc./modal/leadsmodal/addlead')
+  @endsection

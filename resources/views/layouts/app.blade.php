@@ -29,6 +29,7 @@
                background: linear-gradient(to top right, #f9f4ff, #FFF);">
                 @include('inc.navauth')
                 @include('inc.maincontent')
+                @include('inc.modals')
 
               @if (request()->is('clients'))
                  @include('inc./modal/addclient')
@@ -40,14 +41,6 @@
 
               @if (request()->is('services'))
                 @include('inc./modal/addservice')
-              @endif
-
-              @if (request()->is('leads'))
-                @include('inc./modal/addlead')
-              @endif
-
-              @if (request()->is('leads/*'))
-                @include('inc./modal/editlead')
               @endif
 
                @if (request()->is('payments'))
