@@ -8,6 +8,9 @@
   <li class="nav-item text-center p-3">
     <a class="text-white text-decoration-none" href="#" data-bs-toggle="modal" data-bs-target="#leadsModal">Добавить лид</a>
   </li>
+  <li class="nav-item text-center p-3">
+    <a class="text-white text-decoration-none" href="#" data-bs-toggle="modal" data-bs-target="#SourcesModal">Источники лидов</a>
+  </li>
 @endsection
 
 @section('main')
@@ -61,4 +64,5 @@
 
   @section('modals')
     @include('inc./modal/leadsmodal/addlead')
+    @include('inc./modal/leadsmodal/sources')
   @endsection

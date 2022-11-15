@@ -10,6 +10,7 @@ use App\Http\Controllers\PaymentsController;
 use App\Http\Controllers\LeadsController;
 use App\Http\Controllers\TasksController;
 use App\Http\Controllers\MeetingsController;
+use App\Http\Controllers\SourceController;
 use App\Http\Controllers\GetclientAJAXController;
 
 Route::get('/', function () {
@@ -38,18 +39,6 @@ Route::post('/clients/{id}/edit', [ClientsController::class, 'updateClientSubmit
 Route::get('/clients/{id}/delete', [ClientsController::class, 'ClientDelete'])->name('Client-Delete')->middleware('auth');
 
 
-/*
-Route::get('/leads', [LeadsController::class, 'showleads'])->name('leads')->middleware('auth');
-
-Route::post('/leads/add', [LeadsController::class, 'addlead'])->name('addlead')->middleware('auth');
-
-Route::get('/leads/{id}', [LeadsController::class, 'showLeadById'])->name('showLeadById')->middleware('auth');
-
-Route::post('/leads/{id}/edit', [LeadsController::class, 'LeadUpdateSubmit'])->name('LeadUpdateSubmit')->middleware('auth');
-
-Route::get('/leads/{id}/delete', [LeadsController::class, 'LeadDelete'])->name('LeadDelete')->middleware('auth');
-*/
-
 Route::get('/tasks', [TasksController::class, 'index'])->name('tasks')->middleware('auth');
 
 Route::post('/tasks/add', [TasksController::class, 'create'])->name('addtask')->middleware('auth');
@@ -65,6 +54,10 @@ Route::get('/contacts', function () {return view('contacts');})->middleware('aut
 
 
   Route::middleware(['auth'])->group(function () {
+
+    Route::controller(SourceController::class)->group(function () {
+      Route::post('/source/add', 'addSource')->name('addSource');
+    });
 
     Route::controller(LeadsController::class)->group(function () {
       Route::get('/leads', 'showleads')->name('leads');

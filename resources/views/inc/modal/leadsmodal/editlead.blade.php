@@ -28,11 +28,13 @@
 
               <div class="form-group mb-3">
                 <label for="source">Укажите источник</label>
-                <select class="form-select" name="source" id="source" aria-label="Default select example">
-                  <option value="Не знаю источник" @if($data->source == "Не знаю источник") selected @endif>Не знаю источник</option>
-                  <option value="сайт" @if($data->source == "сайт") selected @endif>Сайт</option>
-                  <option value="Рекомендация" @if($data->source == "Рекомендация") selected @endif>Рекомендация</option>
-                  <option value="С улицы" @if($data->source == "С улицы") selected @endif>С улицы</option>
+
+                <select class="form-select" name="source" id="source" class="form-control">
+                      @foreach($datasource as $el)
+                        <option value="{{$el -> name}}"
+                           @if($data->source == $el -> name) selected @endif
+                           >{{$el -> name}}</option>
+                      @endforeach
                 </select>
               </div>
 

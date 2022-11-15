@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Leads;
 use App\Models\User;
 use App\Models\Services;
+use App\Models\Source;
 use Illuminate\Http\Request;
 use App\Http\Requests\LeadsRequest;
 use App\Models\ClientsModel;
@@ -49,12 +50,16 @@ class LeadsController extends Controller{
           ->where('status', '!=', $deleting)
           ->where($source, $req->checkedsources)
           ->where($responsible, $req->checkedresponsible)
-          ->get()], ['datalawyers' =>  User::all(), 'dataservices' =>  Services::all()]);
+          ->get()], ['datalawyers' =>  User::all(),
+          'dataservices' =>  Services::all(), 'datasources' =>  Source::all('name'),
+          'datasource' => Source::all()]);
         }
 
 
       public function showLeadById($id){
-        return view ('leads/showLeadById', ['data' => Leads::with('userFunc', 'responsibleFunc' , 'servicesFunc')->find($id)], ['datalawyers' =>  User::all(), 'dataservices' =>  Services::all()]);
+        return view ('leads/showLeadById', ['data' => Leads::with('userFunc',
+        'responsibleFunc' , 'servicesFunc')->find($id)], ['datalawyers' =>  User::all(),
+        'dataservices' =>  Services::all(), 'datasource' => Source::all()]);
       }
 
       public function LeadUpdateSubmit($id, LeadsRequest $req){
