@@ -21,7 +21,6 @@ class LeadsController extends Controller{
           $lead -> responsible = $req -> input('responsible');
           $lead -> service = $req -> input('service');
           $lead -> status = $req -> input('status');
-          $lead -> action = $req -> input('action');
 
           $lead -> save();
 
