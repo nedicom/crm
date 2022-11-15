@@ -7,6 +7,7 @@ use App\Http\Requests\ClientsRequest;
 use App\Http\Requests\FilterRequest;
 use App\Models\ClientsModel;
 use App\Models\User;
+use App\Models\Tasks;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -96,11 +97,13 @@ class ClientsController extends Controller{
       }
 
         else{
-          return view ('clients', ['data' => ClientsModel::with('userFunc')-> paginate(10)], ['datalawyers' =>  User::all()]);
+          return view ('clients', ['data' => ClientsModel::with('userFunc')-> paginate(10)], ['datalawyers' =>  User::all(), 'datatasks' => Tasks::all()]);
         }
           return $client->get();
 
     }
+
+
 
     public function showClientById($id){
       $client = new ClientsModel();

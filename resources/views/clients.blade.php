@@ -41,7 +41,7 @@
             <p class="mb-0 text-muted">закреплен за: </br>{{$el -> userFunc -> name}}</p>
 
             <hr class="bg-dark-lighten my-3">
-            <p class="mt-3 fw-semibold text-muted">Задач: <strong>18</strong> </p>
+            <p class="mt-3 fw-semibold text-muted">Задач: <strong>{{$el -> tasksFunc -> name}}</strong> </p>
             <p class="mt-3 fw-semibold text-muted">Стоимость: <strong>18000</strong> </p>
             <div class="mt-3 row d-flex justify-content-center">
                 <div class="col-4 mb-3">
