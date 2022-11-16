@@ -97,6 +97,7 @@ class ClientsController extends Controller{
 
     }
 
+test2
     public function showClientById($id){
       $client = new ClientsModel();
       return view ('clientbyid', ['data' => ClientsModel::with('userFunc')->find($id)],
