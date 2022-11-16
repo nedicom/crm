@@ -19,7 +19,7 @@ class ClientsController extends Controller{
         $client = new ClientsModel();
         $client -> name = $req -> input('name');
         $client -> phone = $req -> input('phone');
-        $client -> email = $req -> input('email');
+        if(!is_null($req -> input('email'))) {$client -> email = $req -> input('email');}
         $client -> source = $req -> input('source');
         $client -> status = $req -> input('status');
         $client -> lawyer = $req -> input('lawyer');
@@ -32,13 +32,6 @@ class ClientsController extends Controller{
 
     public function AllClients(Request $request){
 
-  /*query to DB ClientsModel has user
-            $request = $req -> status;
-            $clients =  ClientsModel::whereHas('userFunc', function ($query) use ($request) {
-                  $query->where('id', $request);
-              })->get();
-            return $clients;
-  */
     $client = new ClientsModel();
 
       $findclient = $request->input('findclient');
@@ -121,7 +114,7 @@ class ClientsController extends Controller{
         $client = ClientsModel::find($id);
         $client -> name = $req -> input('name');
         $client -> phone = $req -> input('phone');
-        $client -> email = $req -> input('email');
+        if(!is_null($req -> input('email'))) {$client -> email = $req -> input('email');}
         $client -> source = $req -> input('source');
         $client -> status = $req -> input('status');
         $client -> lawyer = $req -> input('lawyer');

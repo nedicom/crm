@@ -40,7 +40,7 @@
                 <i class="bi-pen"></i></a>
               </div>
               <div class="col-4 mb-3">
-                <a class="btn btn-light w-100 disabled" href="{{ route ('Client-Delete', $data->id) }}">
+                <a class="btn btn-light w-100" href="{{ route ('Client-Delete', $data->id) }}">
                 <i class="bi-trash"></i></a>
               </div>
           </div>
