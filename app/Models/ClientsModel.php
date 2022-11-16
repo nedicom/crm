@@ -19,7 +19,7 @@ use App\Models\Tasks;
 
     public function tasksFunc()
       {
-          return $this->belongsTo(Tasks::class, 'lawyer');
+          return $this->hasMany(Tasks::class, 'client' , 'name');
       }
 
   }

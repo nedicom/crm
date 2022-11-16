@@ -109,6 +109,7 @@ use Illuminate\Support\Facades\Auth;
             $task -> date = $req -> date;
             $task -> lawyer = $req -> lawyer;
             $task -> duration = $req -> duration;
+            $task -> clientid = $req -> clientidinput;
             $task -> status = 'status';
 
             $task -> save();
@@ -130,6 +131,7 @@ use Illuminate\Support\Facades\Auth;
           $task -> lawyer = $req -> lawyer;
           $task -> duration = $req -> duration;
           $task -> status = 'status';
+          $task -> clientid = $req -> clientidinput;  
 
           $task -> save();
 

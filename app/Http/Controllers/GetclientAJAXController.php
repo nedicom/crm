@@ -22,6 +22,7 @@ class GetclientAJAXController extends Controller{
         {
          $output .= '
          <li class="list-group-item clientList" id="clientAJAX"><a href="#" class="text-decoration-none">'.$row->name.'</a></li>
+         <span class="invisible" id="AJAXid" >'.$row->id.'</span>
          ';
         }
       $output .= '</ul>';

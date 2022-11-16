@@ -20,7 +20,8 @@
       });
 
       $(document).on('click', '#clientAJAX', function(){
-          $('#client').val($(this).text());
+          $('#client').val($('#clientAJAX').text());
+          $('#clientidinput').val($('#AJAXid').text());
           $('#clientList').fadeOut();
       });
 
@@ -60,6 +61,7 @@
               <div class="form-group mb-3">
                 <label for="client">Укажите клиента</label>
                 <input type = "text" name="client" id="client" class="form-control">
+                <input type="hidden" name="clientidinput" id="clientidinput" class="form-control">
                 <div id="clientList">
                   </div>
               </div>

@@ -12,11 +12,8 @@
 
 @section('main')
     <h2 class="px-3">Клиенты</h2>
-  {{-- start filter clients--}}
-    @include('inc/filter.clientfilter')
-    {{-- end filter clients--}}
 
-    {{-- start views for all clients--}}
+    @include('inc/filter.clientfilter')
 
     <div class = "row p-4">
 
@@ -41,9 +38,8 @@
             <p class="mb-0 text-muted">закреплен за: </br>{{$el -> userFunc -> name}}</p>
 
             <hr class="bg-dark-lighten my-3">
-            <p class="mt-3 fw-semibold text-muted">Задач: <strong>
-              @if ($el->tasksFunc)
-              {{$el -> tasksFunc -> name}}@else 0 @endif</strong> </p>                          
+            <p class="mt-3 fw-semibold text-muted">Задач:
+              <strong>{{$el -> tasksFunc -> count()}}</strong> </p>
             <p class="mt-3 fw-semibold text-muted">Стоимость: <strong>18000</strong> </p>
             <div class="mt-3 row d-flex justify-content-center">
                 <div class="col-4 mb-3">
@@ -63,7 +59,6 @@
       </div>
 
     </div>
-    {{-- end views for all clients--}}
 
     </div>
 
