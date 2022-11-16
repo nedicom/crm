@@ -19,10 +19,10 @@
           }
       });
 
-      $(document).on('click', '#clientAJAX', function(){
-        $('#client').val($('#clientAJAX').text());
-        $('#clientidinput').val($('#AJAXid').text());
-        $('#clientList').fadeOut();
+      $(document).on('click', '.clientAJAX', function(){
+          $('#clientidinput').val($(this).val());
+          $('#client').val($(this).text());
+          $('#clientList').fadeOut();
       });
 
   });
@@ -61,7 +61,6 @@
               <div class="form-group mb-3">
                 <label for="client">Укажите клиента</label>
                 <input type = "text" name="client" id="client" value="{{$data->client}}" class="form-control">
-                <input type="hidden" name="clientidinput" id="clientidinput" class="form-control">
                 <div id="clientList">
                   </div>
               </div>
@@ -74,6 +73,8 @@
                   @endforeach
                 </select>
               </div>
+
+              <input type="hidden" name="clientidinput" id="clientidinput" class="form-control">
 
               <button type="submit" id='submit' class="btn btn-primary">обновить</button>
             </form>
