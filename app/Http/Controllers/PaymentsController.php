@@ -65,14 +65,14 @@ class PaymentsController extends Controller{
           $currentuser = Auth::id();
           if((Auth::user()->role) == 'admin'){
             return view ('payments', ['data' => Payments::with('serviceFunc', 'AttractionerFunc', 'sellerFunc', 'developmentFunc')
-            ->get()], ['datalawyers' =>  User::all(), 'dataservices' =>  Services::all(), 'test'=> Auth::user()->role]);
+            ->get()], ['datalawyers' =>  User::all(), 'dataservices' =>  Services::all());
           }
           else{
             return view ('payments', ['data' => Payments::with('serviceFunc', 'AttractionerFunc', 'sellerFunc', 'developmentFunc')
             ->where('nameOfAttractioner', '=', $currentuser)
             ->orWhere('nameOfSeller', '=', $currentuser)
             ->orWhere('directionDevelopment', '=', $currentuser)
-            ->get()], ['datalawyers' =>  User::all(), 'dataservices' =>  Services::all(), 'test'=> Auth::user()->role]);           
+            ->get()], ['datalawyers' =>  User::all(), 'dataservices' =>  Services::all()]);
           }
 
       }
@@ -80,7 +80,6 @@ class PaymentsController extends Controller{
       public function test(){
             return view ('test', ['data' => Payments::with('serviceFunc')->get()]);
         }
-
 
 
     public function showPaymentById($id){
