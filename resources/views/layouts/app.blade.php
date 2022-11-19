@@ -11,7 +11,7 @@
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
       <link href="style.css" rel="stylesheet">
       @yield('head')
-
+test
   </head>
 
   <body class="fw-light text-muted">
