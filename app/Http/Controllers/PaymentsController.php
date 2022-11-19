@@ -7,6 +7,7 @@ use App\Models\Payments;
 use Illuminate\Http\Request;
 use App\Http\Requests\PaymentsRequest;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class PaymentsController extends Controller{
 
@@ -61,8 +62,19 @@ class PaymentsController extends Controller{
 
 
     public function showpayments(){
-          return view ('payments', ['data' => Payments::with('serviceFunc', 'AttractionerFunc', 'sellerFunc', 'developmentFunc')
-          ->get()], ['datalawyers' =>  User::all(), 'dataservices' =>  Services::all()]);
+          $currentuser = Auth::id();
+          if((Auth::user()->role) == 'admin'){
+            return view ('payments', ['data' => Payments::with('serviceFunc', 'AttractionerFunc', 'sellerFunc', 'developmentFunc')
+            ->get()], ['datalawyers' =>  User::all(), 'dataservices' =>  Services::all(), 'test'=> Auth::user()->role]);
+          }
+          else{
+            return view ('payments', ['data' => Payments::with('serviceFunc', 'AttractionerFunc', 'sellerFunc', 'developmentFunc')
+            ->where('nameOfAttractioner', '=', $currentuser)
+            ->orWhere('nameOfSeller', '=', $currentuser)
+            ->orWhere('directionDevelopment', '=', $currentuser)
+            ->get()], ['datalawyers' =>  User::all(), 'dataservices' =>  Services::all(), 'test'=> Auth::user()->role]);           
+          }
+
       }
 
       public function test(){

@@ -17,7 +17,7 @@
 
     {{-- end filter payments--}}
 
-
+{{$test}}
 
     {{-- start views for all payments--}}
 
