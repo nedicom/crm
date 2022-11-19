@@ -113,4 +113,6 @@
       </div>
   {{-- end views for all meetings--}}
 
+  @include('inc/modal/addtask')
+
 @endsection

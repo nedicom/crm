@@ -29,13 +29,8 @@
                background: linear-gradient(to top right, #f9f4ff, #FFF);">
                 @include('inc.navauth')
                 @include('inc.maincontent')
-                @include('inc.modals')
 
-              @if (request()->is('clients'))
-                 @include('inc./modal/addclient')
-               @endif
-
-              @if (request()->is('clients/*'))
+                @if (request()->is('clients/*'))
                 @include('inc./modal/editclient')
               @endif
 
@@ -57,10 +52,6 @@
 
                @if (request()->is('meetings/*'))
                  @include('inc./modal/editmeeting')
-               @endif
-
-               @if (request()->is('tasks'))
-                 @include('inc./modal/addtask')
                @endif
 
                @if (request()->is('tasks/*'))

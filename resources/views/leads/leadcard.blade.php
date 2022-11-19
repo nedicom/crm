@@ -35,7 +35,7 @@
                 </div>
                 <div class="">
                 @if($el -> action)<a class ="btn" data-toggle="tooltip" title="{{$el -> action}}">
-                   <i class="bi bi-fire" style="color: red"></i></a>
+                   <i class="bi bi-chat-right-text" style="color: red "></i></a>
                 @endif
                 </div>
               </div>
