@@ -4,7 +4,7 @@
     })
   </script>
 
-<div class="my-3 d-inline-block" style="width: 20rem;">
+<div class="my-3 d-inline-block shadow m-1" style="width: 20rem;">
           <div class="card border-light">
               <div class="card-body">
                 <div class ="d-flex justify-content-between">

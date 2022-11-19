@@ -22,7 +22,8 @@
   @include('inc/filter.leadfilter')
 
     <div class="row">
-      <div class="col-4">
+      <div class="col-4 text-center">
+        <h4 class="page-title">поступил</h4>
         @foreach($data as $el)
           @if($el -> status == "поступил")
             @include('leads/leadcard')
@@ -30,7 +31,8 @@
         @endforeach
       </div>
 
-      <div class="col-8">
+      <div class="col-8 text-center">
+        <h4 class="page-title">в работе</h4>
         @foreach($data as $el)
           @if($el -> status !== "поступил")
             @include('leads/leadcard')
