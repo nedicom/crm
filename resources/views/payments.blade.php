@@ -17,8 +17,6 @@
 
     {{-- end filter payments--}}
 
-{{$test}}
-
     {{-- start views for all payments--}}
 
     <div class="row">

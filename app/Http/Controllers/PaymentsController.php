@@ -65,7 +65,7 @@ class PaymentsController extends Controller{
           $currentuser = Auth::id();
           if((Auth::user()->role) == 'admin'){
             return view ('payments', ['data' => Payments::with('serviceFunc', 'AttractionerFunc', 'sellerFunc', 'developmentFunc')
-            ->get()], ['datalawyers' =>  User::all(), 'dataservices' =>  Services::all());
+            ->get()], ['datalawyers' =>  User::all(), 'dataservices' =>  Services::all()]);
           }
           else{
             return view ('payments', ['data' => Payments::with('serviceFunc', 'AttractionerFunc', 'sellerFunc', 'developmentFunc')
