@@ -29,8 +29,8 @@ class AuthServiceProvider extends ServiceProvider
 
         VerifyEmail::toMailUsing(function ($notifiable, $url) {
         return (new MailMessage)
-            ->subject('Подтверждение адреса')
-            ->line('Чтобы подтвердить адрес почты нажмите на кнопку ниже')
+            ->subject('Подтверждение адреса на crm.nedicom.ru')
+            ->line('Вы почти у цели. Чтобы подтвердить адрес почты нажмите на кнопку ниже.')
             ->action('Подтвердить адрес', $url);
     });
     }

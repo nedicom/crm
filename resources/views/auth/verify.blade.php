@@ -14,11 +14,12 @@
                         </div>
                     @endif
 
-                    {{ __('Проверьте ссылку на верификацию.') }}
+                    {{ __('Проверьте ссылку на верификацию (особенно папку спам).') }}
                     {{ __('Если Вы ее не получили') }},
                     <form class="d-inline" method="POST" action="{{ route('verification.send') }}">
                         @csrf
-                        <button type="submit" class="btn btn-link p-0 m-0 align-baseline">{{ __('нажмите здесь чтобы направить повторно') }}</button>.
+                        <button type="submit" class="btn btn-primary p-0 m-0 align-baseline">{{ __('нажмите здесь ') }}</button>.
+                    {{ __('Не кликайте по 10 раз. Достаточно одного.') }},
                     </form>
                 </div>
             </div>

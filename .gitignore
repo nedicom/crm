@@ -5,6 +5,7 @@
 /storage/*.key
 /vendor
 /config/mail.php
+/resources/views/layouts/app.blade.php
 .htaccess
 .env
 .env.backup
