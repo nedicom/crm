@@ -23,33 +23,6 @@ Route::get('/logout', function () {
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
 
 
-Route::get('/clients', [ClientsController::class, 's'])->name('home')->middleware('auth');
-
-
-Route::get('/clients', [ClientsController::class, 'AllClients'])->name('clients')->middleware('auth');
-
-Route::post('/clients/add', [ClientsController::class, 'submit'])->name('add-client')->middleware('auth');
-
-Route::get('/clients/{id}', [ClientsController::class, 'showClientById'])->name('showClientById')->middleware('auth');
-
-Route::get('/clients/{id}/edit', [ClientsController::class, 'updateClient'])->name('Client-Update')->middleware('auth');
-
-Route::post('/clients/{id}/edit', [ClientsController::class, 'updateClientSubmit'])->name('Client-Update-Submit')->middleware('auth');
-
-Route::get('/clients/{id}/delete', [ClientsController::class, 'ClientDelete'])->name('Client-Delete')->middleware('auth');
-
-
-Route::get('/tasks', [TasksController::class, 'index'])->name('tasks')->middleware('auth');
-
-Route::post('/tasks/add', [TasksController::class, 'create'])->name('addtask')->middleware('auth');
-
-Route::get('/tasks/{id}', [TasksController::class, 'showTaskById'])->name('showTaskById')->middleware('auth');
-
-Route::post('/tasks/{id}/edit', [TasksController::class, 'editTaskById'])->name('editTaskById')->middleware('auth');
-
-Route::get('/tasks/{id}/delete', [TasksController::class, 'TaskDelete'])->name('TaskDelete')->middleware('auth');
-
-
 Route::get('/contacts', function () {return view('contacts');})->middleware('auth');
 
 
@@ -68,6 +41,54 @@ Route::get('/contacts', function () {return view('contacts');})->middleware('aut
       Route::post('/leads/{id}/towork', 'leadToWork')->name('leadToWork');
       Route::post('/leads/{id}/toclient', 'leadToClient')->name('leadToClient');
     });
+
+
+    Route::controller(ClientsController::class)->group(function () {
+      Route::get('/clients', 'AllClients')->name('clients');
+      Route::post('/clients/add', 'submit')->name('add-client');
+      Route::get('/clients/{id}', 'showClientById')->name('showClientById');
+      Route::post('/clients/{id}/edit', 'updateClientSubmit')->name('Client-Update-Submit');
+      Route::post('/clients/{id}/delete', 'ClientDelete')->name('Client-Delete');
+    });
+
+    Route::controller(TasksController::class)->group(function () {
+      Route::get('/tasks', 'index')->name('tasks');
+      Route::post('/tasks/add', 'create')->name('addtask');
+      Route::get('/tasks/{id}', 'showTaskById')->name('showTaskById');
+      Route::post('/tasks/{id}/edit', 'editTaskById')->name('editTaskById');
+      Route::post('/tasks/{id}/delete', 'TaskDelete')->name('TaskDelete');
+    });
+
+
+
+
+  /*    Route::get('/tasks', [TasksController::class, 'index'])->name('tasks')->middleware('auth');
+
+    Route::post('/tasks/add', [TasksController::class, 'create'])->name('addtask')->middleware('auth');
+
+    Route::get('/tasks/{id}', [TasksController::class, 'showTaskById'])->name('showTaskById')->middleware('auth');
+
+    Route::post('/tasks/{id}/edit', [TasksController::class, 'editTaskById'])->name('editTaskById')->middleware('auth');
+
+    Route::get('/tasks/{id}/delete', [TasksController::class, 'TaskDelete'])->name('TaskDelete')->middleware('auth');
+
+
+
+  Route::get('/clients', [ClientsController::class, 'AllClients'])->name('clients')->middleware('auth');
+
+    Route::post('/clients/add', [ClientsController::class, 'submit'])->name('add-client')->middleware('auth');
+
+    Route::get('/clients/{id}', [ClientsController::class, 'showClientById'])->name('showClientById')->middleware('auth');
+
+    Route::get('/clients/{id}/edit', [ClientsController::class, 'updateClient'])->name('Client-Update')->middleware('auth');
+
+    Route::post('/clients/{id}/edit', [ClientsController::class, 'updateClientSubmit'])->name('Client-Update-Submit')->middleware('auth');
+
+    Route::get('/clients/{id}/delete', [ClientsController::class, 'ClientDelete'])->name('Client-Delete')->middleware('auth');
+*/
+
+
+
 
     Route::controller(MeetingsController::class)->group(function () {
       Route::get('/meetings', 'index')->name('meetings');
