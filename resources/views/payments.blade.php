@@ -13,64 +13,166 @@
 
 @section('main')
     <h2 class="px-3">Платежи</h2>
-    {{-- start filter payments--}}
-
-    {{-- end filter payments--}}
 
     {{-- start views for all payments--}}
 
     <div class="row">
         <div class="col-12">
-            <table class="table table-striped table-hover align-middle">
-                <thead>
+            <table class="table table-hover table-borderless align-middle caption-top" style="font-size: 14px;">
+            <div class="d-flex flex-row-reverse"><a class="btn btn-secondary" href="payments" role="button">сбросить фильтры</a></div>
+                <thead class="fw-bold text-center">
                 <tr>
+                    <th scope="col">№</th>
                     <th scope="col">дата</th>
                     <th scope="col">Клиент</th>
                     <th scope="col">Услуга</th>
                     <th scope="col">Цена услуги</th>
                     <th scope="col">Оплачено</th>
                     <th scope="col">Куда поступили</th>
-                    <th scope="col">Привлек</th>
+                    <th scope="col">
+                      <div class="dropdown">
+                        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          привлек
+                        </button>
+                        <ul class="dropdown-menu">
+                          @foreach($datalawyers as $el)
+                            <li>
+                            <a class="dropdown-item" href="payments/?nameOfAttractioner={{$el -> id}}">{{$el -> name}}</a>                            
+                            </li>
+                          @endforeach
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                              <a class="dropdown-item" href="payments">сбросить</a>                            
+                            </li>
+                        </ul>
+                      </div>
+                    </th>
                     <th scope="col">Оплата + повышение</th>
-                    <th scope="col">Продал</th>
+                    <th scope="col">
+                     <div class="dropdown">
+                        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          продал
+                        </button>
+                        <ul class="dropdown-menu">
+                          @foreach($datalawyers as $el)
+                            <li>
+                            <a class="dropdown-item" href="payments/?nameOfSeller={{$el -> id}}">{{$el -> name}}</a>                            
+                            </li>
+                          @endforeach
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                              <a class="dropdown-item" href="payments">сбросить</a>                            
+                            </li>
+                        </ul>
+                      </div>
+                    </th>
                     <th scope="col">Оплата + повышение</th>
-                    <th scope="col">Развитие направления</th>
+                    <th scope="col">
+                      <div class="dropdown">
+                        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          развил
+                        </button>
+                        <ul class="dropdown-menu">
+                          @foreach($datalawyers as $el)
+                            <li>
+                            <a class="dropdown-item" href="payments/?directionDevelopment={{$el -> id}}">{{$el -> name}}</a>                            
+                            </li>
+                          @endforeach
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                              <a class="dropdown-item" href="payments">сбросить</a>                            
+                            </li>
+                        </ul>
+                      </div>
+                    </th>
                     <th scope="col">Оплата</th>
                 </tr>
                 </thead>
 
-                <tbody>
+                <tbody class="fw-light text-center">
+                  @php 
+                    $total = 0; $totalattr = 0; $totalattrup = 0; $totalsell = 0; $totalsellup = 0; $totaldirect = 0;
+                    $number = 1;                    
+                  @endphp
+
                   @foreach($data as $el)
-                      <tr >
+                      <tr>
+                          <td>{{$number}}</td>
                           <td>{{$el -> created_at}}</td>
                           <td scope="row">{{$el -> client}}</td>
                           <td>{{$el -> serviceFunc -> name}}</td>
-                          <td><span class="badge bg-primary py-3 px-4">{{$el -> serviceFunc -> price}}</span></td>
-                          <td><span class="badge bg-primary py-3 px-4">{{$el -> summ}}</span></td>
+                          <td class="fw-bold text-center">{{$el -> serviceFunc -> price}}</td>                          
+                          <td class="fw-bold text-center">{{$el -> summ}}</td>
                           <td>
-                          <span class="badge py-3 px-4
-                          @if ($el -> calculation == 'ГЕНБАНК') bg-primary
-                          @elseif ($el -> calculation == 'РНКБ') bg-info
-                          @elseif ($el -> calculation == 'НАЛИЧНЫЕ') bg-secondary
-                          @elseif ($el -> calculation == 'СБЕР') bg-success
-                          @else bg-light
-                          @endif
+                          <span class="badge py-1 px-1
+                            @if ($el -> calculation == 'ГЕНБАНК') bg-primary
+                            @elseif ($el -> calculation == 'РНКБ') bg-info
+                            @elseif ($el -> calculation == 'НАЛИЧНЫЕ') bg-secondary
+                            @elseif ($el -> calculation == 'СБЕР') bg-success
+                            @else bg-light
+                            @endif
                           ">{{$el -> calculation}}</span></td>
                           <td>{{$el -> AttractionerFunc -> name}}</td>
-                          <td><span class="badge bg-success py-3 px-4">{{$el -> AttaractionerSalary}} + {{$el -> modifyAttraction}}</span></td>
+                          <td class="fw-bold text-center">{{$el -> AttaractionerSalary}} + {{$el -> modifyAttraction}}</td>
+                          
                           <td>{{$el -> sellerFunc -> name}}</td>
-                          <td><span class="badge bg-success py-3 px-4">{{$el -> SallerSalary}} + {{$el -> modifySeller}}</span></td>
+                          <td class="fw-bold text-center">{{$el -> SallerSalary}} + {{$el -> modifySeller}}</td>
                           <td>{{$el -> developmentFunc -> name}}</td>
-                          <td><span class="badge bg-success py-3 px-4">{{$el -> DeveloperSalary}}</span></td>
+                          <td class="fw-bold text-center">{{$el -> DeveloperSalary}}</td>
                           <td>
                             <a class="btn btn-light w-100" href="{{ route ('showPaymentById', $el->id) }}">
                               <i class="bi-three-dots"></i></a>
                           </td>
                       </tr>
 
-                  @endforeach
+                      @php
+                        $number++;
+                        $total = $total + ($el -> summ); 
+                        $totalattr= $totalattr + ($el -> AttaractionerSalary); $totalattrup = $totalattrup + ($el -> modifyAttraction); 
+                        $totalsell = $totalsell + ($el -> SallerSalary); $totalsellup = $totalsellup + ($el -> modifySeller);
+                        $totaldirect = $totaldirect + ($el -> DeveloperSalary);  
+                      @endphp
 
-                </tbody>
+
+                  @endforeach
+                  <tfoot>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td class="fw-bold text-center"><span class="badge bg-primary py-2 px-2 fs-6">{{$totalattr}} + {{$totalattrup}}</span></td>
+                      <td></td>
+                      <td class="fw-bold text-center"> <span class="badge bg-primary py-2 px-2 fs-6">{{$totalsell}} + {{$totalsellup}}</span></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td>итого:</td>
+                      <td></td>
+                      <td class="fw-bold text-center"><span class="badge bg-primary py-2 px-2 fs-6">{{$total}}</span></td>
+                      <td></td>
+                      <td></td>
+                      @php
+                      $totalattrall = $totalattr + $totalattrup; $totalsellrall = $totalsell + $totalsellup;
+                      @endphp
+                      <td class="fw-bold text-center"><span class="badge bg-primary py-2 px-2 fs-6">{{$totalattrall}}</span></td>
+                      <td></td>
+                      <td class="fw-bold text-center"> <span class="badge bg-primary py-2 px-2 fs-6">{{$totalsellrall}}</span></td>
+                      <td></td>
+                      <td class="fw-bold text-center"><span class="badge bg-primary py-2 px-2 fs-6">{{$totaldirect}}</span></td>
+                      <td></td>
+                    </tr>
+                  </tfoot>
+                  </tbody>
             </table>
 
                                         <!-- end table-responsive -->

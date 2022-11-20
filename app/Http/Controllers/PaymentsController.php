@@ -61,17 +61,39 @@ class PaymentsController extends Controller{
     }
 
 
-    public function showpayments(){
+    public function showpayments(Request $req){
           $currentuser = Auth::id();
+          $nameOfAttractioner = null; 
+          $nameOfSeller = null;
+          $directionDevelopment = null;
+
           if((Auth::user()->role) == 'admin'){
+            if (!empty($req->nameOfAttractioner)){$nameOfAttractioner='nameOfAttractioner';}
+            if (!empty($req->nameOfSeller)){$nameOfSeller='nameOfSeller';}
+            if (!empty($req->directionDevelopment)){$directionDevelopment='directionDevelopment';}
+
             return view ('payments', ['data' => Payments::with('serviceFunc', 'AttractionerFunc', 'sellerFunc', 'developmentFunc')
+            ->where($nameOfAttractioner, $req->nameOfAttractioner)
+            ->where($nameOfSeller, $req->nameOfSeller)
+            ->where($directionDevelopment, $req->directionDevelopment)
             ->get()], ['datalawyers' =>  User::all(), 'dataservices' =>  Services::all()]);
           }
-          else{
+          else{ 
+            if (!empty($req->nameOfAttractioner)){$nameOfAttractioner='nameOfAttractioner';}
+            if (!empty($req->nameOfSeller)){$nameOfSeller='nameOfSeller';}
+            if (!empty($req->directionDevelopment)){$directionDevelopment='directionDevelopment';}
+
             return view ('payments', ['data' => Payments::with('serviceFunc', 'AttractionerFunc', 'sellerFunc', 'developmentFunc')
-            ->where('nameOfAttractioner', '=', $currentuser)
-            ->orWhere('nameOfSeller', '=', $currentuser)
-            ->orWhere('directionDevelopment', '=', $currentuser)
+            ->where(function ($query) {
+              $currentuser = Auth::id();
+              $query
+              ->orWhere('nameOfAttractioner', $currentuser)
+              ->orWhere('nameOfSeller', $currentuser)
+              ->orWhere('directionDevelopment', $currentuser);
+             })
+            ->where($nameOfAttractioner, $req->nameOfAttractioner)
+            ->where($nameOfSeller, $req->nameOfSeller)
+            ->where($directionDevelopment, $req->directionDevelopment)
             ->get()], ['datalawyers' =>  User::all(), 'dataservices' =>  Services::all()]);
           }
 
