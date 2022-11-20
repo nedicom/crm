@@ -11,6 +11,7 @@
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
       <link href="public/style.css" rel="stylesheet">
       <link rel="icon" href="favicon.svg" type="image/svg+xml"/>
+      
       @yield('head')
 
   </head>
