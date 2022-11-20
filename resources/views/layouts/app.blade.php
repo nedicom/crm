@@ -22,7 +22,6 @@
 
             @auth
 
-
                 @include('inc.leftmenu')
 
               <div style="margin-left: 13%; width: 86%;
