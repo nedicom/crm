@@ -156,7 +156,7 @@
                       <td></td>
                       <td></td>
                       <td></td>
-                      <td>итого:</td>
+                      <td class="fw-bold text-center fs-6">итого:</td>
                       <td></td>
                       <td class="fw-bold text-center"><span class="badge bg-primary py-2 px-2 fs-6">{{$total}}</span></td>
                       <td></td>
