@@ -25,7 +25,7 @@
                     $mail = Auth::user()->email;
                     $explode = explode("@",$mail);                    
                     @endphp
-                    Потом перейдите в почту <a href="http://{{ $explode[1] }}" type="submit" class="btn btn-primary">{{ Auth::user()->email }}</a>
+                    <div id="mail" class="mt-4"> Потом перейдите в почту <a href="http://{{ $explode[1] }}" type="submit" class="btn btn-primary">{{ Auth::user()->email }}</a></div> 
                     <script>
                         $( "#clicked" ).click(function() {
                          $( "#mail" ).show( "fast" );
