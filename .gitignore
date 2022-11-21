@@ -4,7 +4,6 @@
 /public/storage
 /storage/*.key
 /vendor
-/resources/views/layouts/app.blade.php
 .htaccess
 .env
 .env.backup

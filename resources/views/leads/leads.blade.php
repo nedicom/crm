@@ -41,11 +41,7 @@
       </div>
     </div>
 
-{{-- end views for all services--}}
-
-  @endsection
-
-  @section('modals')
     @include('inc./modal/leadsmodal/addlead')
     @include('inc./modal/leadsmodal/sources')
+
   @endsection

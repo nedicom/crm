@@ -121,11 +121,8 @@
           </div>
       </div>
 
+      @include('../inc/modal/leadsmodal/editlead')
+      @include('inc/modal/leadsmodal/leadtowork')
+      @include('inc/modal/leadsmodal/leadtoclient')
+      @include('inc/modal/leadsmodal/leaddelete')
 @endsection
-
-  @section('modals')
-    @include('inc./modal/leadsmodal/editlead')
-    @include('inc./modal/leadsmodal/leadtowork')
-    @include('inc./modal/leadsmodal/leadtoclient')
-    @include('inc./modal/leadsmodal/leaddelete')
-  @endsection
