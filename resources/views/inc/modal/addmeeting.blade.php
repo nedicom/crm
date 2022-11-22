@@ -13,16 +13,24 @@
             data:{query:query, _token:_token},
             success:function(data){
              $('#clientList').fadeIn();
-                      $('#clientList').html(data);
+             $('#clientList').html(data);
             }
            });
           }
       });
 
-      $(document).on('click', '#clientAJAX', function(){
+      $(document).on('click', '.clientAJAX', function(){
+          $('#clientidinput').val($(this).val());
           $('#client').val($(this).text());
           $('#clientList').fadeOut();
       });
+
+      $(".nameToForm").click(function() {
+        var namevalue = $(this).attr('dataclient');
+        var clientIdValue = $(this).attr('datavalueid');
+        document.getElementById("client").value = namevalue;
+        document.getElementById("clientidinput").value = clientIdValue;
+    });
 
   });
 </script>
@@ -30,7 +38,8 @@
   <div class="modal fade" id="meetingModal">
     <div class="modal-dialog">
       <div class="modal-content">
-          <div class ="modal-header">
+          
+      <div class ="modal-header">
             <h2>Добавить встречу</h2>
           </div>
 
