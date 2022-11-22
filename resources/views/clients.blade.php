@@ -48,7 +48,7 @@
                 </div>
                 <div class="col-4 mb-3">
                   <a class="btn btn-light w-100 nameToForm" href="#"
-                  dataclient="{{$el -> name}}" data-bs-toggle="modal" data-bs-target="#taskModal">
+                  dataclient="{{$el -> name}}" datavalueid="{{$el -> id}}" data-bs-toggle="modal" data-bs-target="#taskModal">
                   <i class="bi-clipboard-plus"></i></a>
                 </div>
             </div>
@@ -68,16 +68,5 @@
     </div>
     @include('inc./modal/addclient')
     @include('inc/modal/addtask')
-
-    <script>
-
-    $(".nameToForm").click(function() {
-        var namevalue = $(this).attr('dataclient');
-        document.getElementById("client").value = namevalue;
-    });
-
-
-
-    </script>
 
     @endsection

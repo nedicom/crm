@@ -43,10 +43,17 @@
                 <a class="btn btn-light w-100" href="{{ route ('Client-Delete', $data->id) }}">
                 <i class="bi-trash"></i></a>
               </div>
+              <div class="col-4 mb-3">
+                  <a class="btn btn-light w-100 nameToForm" href="#"
+                  dataclient="{{$data -> name}}" datavalueid="{{$data -> id}}" data-bs-toggle="modal" data-bs-target="#taskModal">
+                  <i class="bi-clipboard-plus"></i></a>
+               </div>
           </div>
         </div>
 
       </div>
     </div>
 
+    @include('inc/modal/addtask')
+    
 @endsection

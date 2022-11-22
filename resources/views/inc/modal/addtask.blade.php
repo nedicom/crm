@@ -13,7 +13,7 @@
             data:{query:query, _token:_token},
             success:function(data){
              $('#clientList').fadeIn();
-                      $('#clientList').html(data);
+             $('#clientList').html(data);
             }
            });
           }
@@ -24,6 +24,13 @@
           $('#client').val($(this).text());
           $('#clientList').fadeOut();
       });
+
+      $(".nameToForm").click(function() {
+        var namevalue = $(this).attr('dataclient');
+        var clientIdValue = $(this).attr('datavalueid');
+        document.getElementById("client").value = namevalue;
+        document.getElementById("clientidinput").value = clientIdValue;
+    });
 
   });
 </script>
