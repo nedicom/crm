@@ -10,7 +10,7 @@
            $.ajax({
             url:"{{ route('getclient') }}",
             method:"POST",
-            data:{query:query, _token:_token},
+            data:{query:query, _token:'{{csrf_token()}}'},
             success:function(data){
              $('#clientList').fadeIn();
              $('#clientList').html(data);
@@ -67,7 +67,7 @@
 
               <div class="form-group mb-3">
                 <label for="client">Укажите клиента</label>
-                <input type = "text" name="client" id="client" class="form-control">
+                <input type = "text" name="client" id="client" class="form-control" required>
                   <div id="clientList">
                   </div>
               </div>

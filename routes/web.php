@@ -12,6 +12,7 @@ use App\Http\Controllers\TasksController;
 use App\Http\Controllers\MeetingsController;
 use App\Http\Controllers\SourceController;
 use App\Http\Controllers\GetclientAJAXController;
+use App\Http\Controllers\TaskAJAXController;
 
   Route::get('/', function () {
       return redirect('/home');
@@ -94,12 +95,11 @@ use App\Http\Controllers\GetclientAJAXController;
 //Route::get('/test', [MeetingsController::class, 'index'])->name('test');
 
 
-    Route::get('ajax',function() {
-       return view('message');
-    });
+   // Route::get('ajax',function() {return view('message');});
 
     Route::POST('/getclient', [GetclientAJAXController::class, 'getclient'])->name('getclient')->middleware('auth');
 
+    Route::post('/setstatus', [TaskAJAXController::class, 'setstatustask'])->name('setstatus');
 
     Route::get('/email/verify', function () {
         return view('auth/verify');

@@ -47,9 +47,18 @@
               </div>
 
               <div class="form-group mb-3">
-                <label for="date">Укажите время:</label>
-                <input type="datetime-local" id="date" value="{{$data->date['value']}}" class="form-control" name="date"
-                      min="{{ date('Y-m-d H:i') }}">
+                <label for="status">Укажите статус</label>
+                  <select class="form-select" name="status" id="status" class="form-control">
+                      <option value="в работе">в работе</option>
+                      <option value="просрочена">просрочена</option>                      
+                      <option value="выполнена">выполнена</option>
+                      <option value="ожидает">ожидает</option>
+                  </select>
+              </div>
+
+              <div class="form-group mb-3">
+                <label for="date">Укажите время начала:</label>
+                <input type="datetime-local" id="date" value="{{$data->date['value']}}" class="form-control" name="date">
               </div>
 
               <div class="input-group form-group mb-3">

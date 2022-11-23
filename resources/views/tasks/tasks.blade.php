@@ -1,6 +1,26 @@
 @extends('layouts.app')
 
 @section('head')
+<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js" integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0=" crossorigin="anonymous"></script>
+
+<style>
+  .task-toggle {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    margin-top: -8px;
+  }
+  .task-content {
+    padding: 0.4em;
+  }
+  .task-placeholder {
+    border: 1px dotted black;
+    margin: 0 1em 1em 0;
+    height: 50px;
+  }
+  
+  </style>
 @endsection
 
 @section('title')
@@ -58,20 +78,64 @@
 
 
 
+
   {{-- start views for all meetings--}}
-      <div class="row">
+      <div class="row" id="taskarea">
 
         @php
           $weekMap = [0 => 'Понедельник', 1 => 'Вторник', 2 => 'Среда', 3 => 'Четерг', 4 => 'Пятница', 5 => 'Суббота', 6 => 'Воскресенье']
         @endphp
 
-        @if (app('request')->input('calendar') == '')
-          @foreach($data as $el)
-            <div class="col-2 my-3">
-              @include('inc.calendar.task')
-            </div>
-          @endforeach
-        @endif
+
+
+
+       @if (app('request')->input('calendar') == '')        
+        <div class="row">
+
+        <div class="col-3 columncard text-center" id="timeleft">
+            <h5 class="page-title">просрочена</h5>
+            @foreach($data as $el)
+              @if($el -> status == "просрочена")
+                @include('tasks.taskcard')
+              @endif
+            @endforeach
+          </div>  
+
+          <div class="col-3 columncard text-center" id="waiting">
+            <h5 class="page-title">ожидает</h5>
+            @foreach($data as $el)
+              @if($el -> status == "ожидает")
+                @include('tasks.taskcard')
+              @endif
+            @endforeach
+          </div>
+
+
+ 
+
+          <div class="col-3 columncard text-center" id="inwork">
+            <h5 class="page-title">в работе</h5>
+            @foreach($data as $el)
+              @if($el -> status == "в работе")
+                @include('tasks.taskcard')
+              @endif
+            @endforeach
+          </div>     
+
+          <div class="col-3 columncard text-center" id="finished">
+              <h5 class="page-title">выполнена</h5>
+              @foreach($data as $el)
+                @if($el -> status == "выполнена")
+                  @include('tasks.taskcard')
+                @endif
+              @endforeach            
+          </div>
+
+        </div>
+      @endif
+
+
+
 
         @if (app('request')->input('calendar') == 'week')
         <h2 class="">Неделя</h2>
@@ -112,6 +176,55 @@
 
       </div>
   {{-- end views for all meetings--}}
+
+          <script>
+          function mouseDown(clicked_id) {
+            document.getElementById(clicked_id).style.border = "solid 1px #FF1493";
+            document.getElementById('status'+clicked_id).innerHTML = "изменен"; 
+          }
+
+          function mouseUp(clicked_id) {
+            document.getElementById(clicked_id).style.border = "";
+          }
+          </script>
+ 
+          <script> 
+            $( function() {
+                $( ".columncard" ).sortable({
+                  connectWith: ".columncard",
+                  handle: ".task-header",
+                  cancel: ".task-toggle",
+                  placeholder: "task-placeholder ui-corner-all",
+                  opacity: 0.5,
+                  receive: function(event, ui) {
+                    var status =  this.id;
+                    var id =  ui.item.attr("id");
+                    $.ajax({
+                      method:"POST",
+                      url: "{{ route('setstatus') }}",
+                      data: { id: id, status: status, _token: '{{csrf_token()}}' },
+                      success: function(data) {
+                      }                  
+                    });
+                  } 
+                });
+            
+                $( ".taskcard" )
+                  .addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" )
+                  .find( ".task-header" )
+                    .addClass( "ui-widget-header ui-corner-all" )
+                    .prepend( "<span class='ui-icon ui-icon-minusthick task-toggle'></span>");
+                 
+                $( ".task-toggle" ).on( "click", function() {
+                  var icon = $( this );                  
+                  icon.toggleClass( "ui-icon-minusthick ui-icon-plusthick" );
+                  icon.closest( ".taskcard" ).find( ".task-content" ).toggle();    
+                });
+              });
+           </script>
+
+
+
 
   @include('inc/modal/addtask')
 

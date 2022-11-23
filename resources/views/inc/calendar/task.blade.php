@@ -1,4 +1,4 @@
-  @if (app('request')->input('calendar') == 'month')
+@if (app('request')->input('calendar') == 'month')
     <div>
       <a class="" href="{{ route ('showTaskById', $el->id) }}">
         <span class="badge bg-primary text-truncate">{{$el -> name}}</span>
