@@ -83,6 +83,12 @@
                 </select>
               </div>
 
+              <div class="form-group mb-3">
+                <label for="name">Ссылка на документы (яндекс диск)</label>
+                <input type = "url" name="hrftodcm" placeholder="https://disk.yandex.ru" id="hrftodcm" 
+                value="{{$data->hrftodcm}}" class="form-control">
+              </div>
+
               <input type="hidden" name="clientidinput" id="clientidinput" class="form-control">
 
               <button type="submit" id='submit' class="btn btn-primary">обновить</button>

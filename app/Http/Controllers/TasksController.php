@@ -110,7 +110,8 @@ use Illuminate\Support\Facades\Auth;
             $task -> lawyer = $req -> lawyer;
             $task -> duration = $req -> duration;
             $task -> clientid = $req -> clientidinput;
-            $task -> status = 'в работе';
+            if($req -> hrftodcm){$task -> hrftodcm = $req -> hrftodcm;};
+            $task -> status = 'ожидает';
 
             $task -> save();
 
@@ -131,6 +132,7 @@ use Illuminate\Support\Facades\Auth;
           $task -> lawyer = $req -> lawyer;
           $task -> duration = $req -> duration;
           $task -> status = $req -> status;
+          if($req -> hrftodcm){$task -> hrftodcm = $req -> hrftodcm;};
           if($req -> clientidinput){$task -> clientid = $req -> clientidinput;};  
 
           $task -> save();
