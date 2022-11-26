@@ -50,6 +50,7 @@ class LeadsController extends Controller{
           ->where('status', '!=', $deleting)
           ->where($source, $req->checkedsources)
           ->where($responsible, $req->checkedresponsible)
+          ->orderBy('created_at', 'desc')
           ->get()], ['datalawyers' =>  User::all(),
           'dataservices' =>  Services::all(), 'datasources' =>  Source::all('name'),
           'datasource' => Source::all()]);
