@@ -24,6 +24,7 @@
         @endphp
 
           <div class="card border-light">
+            {{date('Y-m-d H:i:s');}}
             <div class="card-body">
               <h5 class="card-title text-truncate">{{$data -> name}}</h5>
                 <h5>
