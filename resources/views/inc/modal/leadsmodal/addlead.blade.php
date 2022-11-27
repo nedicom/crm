@@ -13,17 +13,17 @@
 
               <div class="form-group mb-3">
                 <label for="name">Введите ФИО</label>
-                <input type = "text" name="name" id="name" class="form-control" value="{{ old('name') }}">
+                <input type = "text" name="name" id="name" class="form-control" value="{{ old('name') }}" required>
               </div>
 
               <div class="form-group mb-3">
                 <label for="phone">Введите телефон</label>
-                <input type = "phone" name="phone" placeholder="+7" id="phone" value="{{ old('phone') }}" class="form-control">
+                <input type = "phone" name="phone" placeholder="+7" id="phone" value="{{ old('phone') }}" class="form-control" required>
               </div>
 
               <div class="form-group mb-3">
                 <label for="description">Описание проблемы</label>
-                <textarea rows="3" name="description" value="{{ old('description') }}" placeholder="Не увольняют военнослужащего" id="phone" class="form-control"></textarea>
+                <textarea rows="3" name="description" placeholder="Не увольняют военнослужащего" id="description" class="form-control" required>{{ old('description') }}</textarea>
               </div>
 
               <div class="form-group mb-3">

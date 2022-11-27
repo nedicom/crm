@@ -37,11 +37,12 @@ class ClientsController extends Controller{
       if (!empty($req->findclient)){$findclient='findclient';}
       if (!empty($req->checkedlawyer)){$checkedlawyer='lawyer';}
 
-          return view ('clients', ['data' => ClientsModel::with('userFunc', 'tasksFunc')
+          return view ('clients/clients', ['data' => ClientsModel::with('userFunc', 'tasksFunc')
           -> where('name', 'like', '%'.$req->findclient.'%')
           -> where($checkedlawyer, $req->checkedlawyer)
           -> where($statusclient, $req->status)
-          -> paginate(12)], ['datalawyers' =>  User::all(),
+          
+          -> paginate(48)], ['datalawyers' =>  User::all(),
           'dataservices' =>  Services::all(), 'datatasks' => Tasks::all(),
           'datasource' => Source::all()
           ]);
@@ -50,13 +51,13 @@ class ClientsController extends Controller{
 
     public function showClientById($id){
       $client = new ClientsModel();
-      return view ('clientbyid', ['data' => ClientsModel::with('userFunc')->find($id)],
+      return view ('clients/clientbyid', ['data' => ClientsModel::with('userFunc', 'tasksFunc')->find($id)],
       ['datalawyers' =>  User::all(), 'datasource' => Source::all()]);
     }
 
     public function updateClient($id){
       $client = new ClientsModel();
-      return view ('updateClient', ['data' => $client->find($id)], ['datalawyers' =>  User::all()]);
+      return view ('clients/updateClient', ['data' => $client->find($id)], ['datalawyers' =>  User::all()]);
     }
 
     public function updateClientSubmit($id, ClientsRequest $req){
@@ -75,9 +76,10 @@ class ClientsController extends Controller{
     }
 
     public function ClientDelete($id){
-        ClientsModel::find($id)->delete();
-        return redirect() -> route('clients') -> with('success', 'Все в порядке, клиент удален');
-
+        $client = ClientsModel::find($id);
+        $client -> status = null;
+        $client -> save();
+        return redirect() -> route('clients') -> with('success', 'Все в порядке, клиент удален (не в работе)');
     }
 
 }

@@ -23,7 +23,7 @@ class LeadsRequest extends FormRequest
     public function rules()
     {
         return [
-          'phone' => 'required|min:9|max:15',
+          'phone' => 'required|min:9|max:50',
           'name' => 'required',
           'description' => 'required'
         ];
@@ -33,7 +33,7 @@ class LeadsRequest extends FormRequest
       return [
         'phone.required' => 'Телефон обязателен',
         'phone.min' => 'Телефон должен быть больше 9 цифр',
-        'phone.max' => 'Телефон должен быть меньше 15 цифр',
+        'phone.max' => 'Телефон должен быть меньше 50 цифр',
         'name.required' => 'ФИО обязательно',
         'description.required' => 'Описание обязательно'
       ];

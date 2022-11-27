@@ -27,14 +27,12 @@
         </div>
 
         <div class="text-center">
-          <h5 class="mb-2 text-muted text-truncate">{{$data -> name}}</h5>
+          <h5 class="mb-2 px-3 text-muted">{{$data -> name}}</h5>
           <p class="mb-0 text-muted">{{$data -> phone}}</p>
           <p class="mb-0 text-muted">{{$data -> email}}</p>
           <p class="mb-0 text-muted">закреплен за: </br>{{$data -> userFunc -> name}}</p>
           <hr class="bg-dark-lighten my-3">
-          <p class="mt-3 fw-semibold text-muted">Задач: <strong>18</strong> </p>
-          <p class="mt-3 fw-semibold text-muted">Стоимость: <strong>18000</strong> </p>
-          <div class="mt-3 row d-flex justify-content-center">
+          <div class="mt-3 px-3 row d-flex justify-content-center">
               <div class="col-4 mb-3">
                 <a class="btn btn-light w-100" href="#" data-bs-toggle="modal" data-bs-target="#editModal">
                 <i class="bi-pen"></i></a>
@@ -49,6 +47,34 @@
                   <i class="bi-clipboard-plus"></i></a>
                </div>
           </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class= 'col-md-9 col-xxl-9 my-3'>
+      <div class= 'card border-light'>
+        <div class= 'd-inline-flex justify-content-end px-2'>
+
+          @if ($data -> status == 1)
+              <i class="bi bi-circle-fill" style = "color: #0acf97;"></i>
+          @else
+              <i class="bi bi-circle-fill text-secondary"></i>
+          @endif
+
+        </div>
+
+        <div class="text-center">
+          <h6 class="mb-2 px-3 text-muted">задачи <span>({{$data -> tasksFunc -> count()}})</span></h6>
+          <hr class="bg-dark-lighten my-3">
+          @foreach(($data -> tasksFunc) as $task)
+            <div class="mx-3 d-flex justify-content-beetwen">
+              <p class="mt-3 mx-3 text-start">{{$task->created_at->month}} / {{$task->created_at->day}}</p>
+              <a class="mt-3 mx-3 text-start" href="/tasks/{{$task->id}}" target="_blank">{{$task->name}}</a>               
+            </div>          
+          @endforeach
+          <p class="mt-3 fw-semibold text-muted">Стоимость: <strong>18000</strong> </p>
+
         </div>
 
       </div>

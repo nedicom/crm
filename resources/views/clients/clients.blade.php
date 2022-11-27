@@ -32,7 +32,7 @@
           </div>
 
           <div class="text-center">
-            <h5 class="mb-2 text-muted text-truncate">{{$el -> name}}</h5>
+            <h5 class="mb-2 px-3 text-muted text-truncate">{{$el -> name}}</h5>
             <p class="mb-0 text-muted">{{$el -> phone}}</p>
             <p class="mb-0 text-muted">{{$el -> email}}</p>
             <p class="mb-0 text-muted">закреплен за: </br>{{$el -> userFunc -> name}}</p>

@@ -17,6 +17,7 @@ use App\Http\Controllers\TaskAJAXController;
   Route::get('/', function () {
       return redirect('/home');
   });
+  
   Route::get('/logout', function () {
       return redirect('/login');
   });
@@ -50,7 +51,7 @@ use App\Http\Controllers\TaskAJAXController;
       Route::post('/clients/add', 'submit')->name('add-client');
       Route::get('/clients/{id}', 'showClientById')->name('showClientById');
       Route::post('/clients/{id}/edit', 'updateClientSubmit')->name('Client-Update-Submit');
-      Route::post('/clients/{id}/delete', 'ClientDelete')->name('Client-Delete');
+      Route::get('/clients/{id}/delete', 'ClientDelete')->name('Client-Delete');
     });
 
     Route::controller(TasksController::class)->group(function () {
