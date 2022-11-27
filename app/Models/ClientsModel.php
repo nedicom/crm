@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Tasks;
+use App\Models\Payments;
+use App\Models\Services;
 
   class ClientsModel extends Model
   {
@@ -20,6 +22,23 @@ use App\Models\Tasks;
     public function tasksFunc()
       {
           return $this->hasMany(Tasks::class, 'client' , 'name');
+      }
+
+    public function serviceFunc()
+      {
+        return $this->hasManyThrough(
+          Services::class,
+          Payments::class,
+          'clientid',
+          'id',
+          'id',
+          'service'
+      );
+      }
+    
+      public function paymentsFunc()
+      {
+          return $this->hasMany(Payments::class, 'clientid' , 'id');
       }
 
   }

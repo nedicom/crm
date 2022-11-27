@@ -51,7 +51,7 @@ class ClientsController extends Controller{
 
     public function showClientById($id){
       $client = new ClientsModel();
-      return view ('clients/clientbyid', ['data' => ClientsModel::with('userFunc', 'tasksFunc')->find($id)],
+      return view ('clients/clientbyid', ['data' => ClientsModel::with('userFunc', 'tasksFunc', 'serviceFunc', 'paymentsFunc')->find($id)],
       ['datalawyers' =>  User::all(), 'datasource' => Source::all()]);
     }
 
