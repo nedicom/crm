@@ -22,8 +22,9 @@
         });
 
         $(document).on('click', '.clientList', function(){
-            $('#client').val($(this).text());
-            $('#clientList').fadeOut();
+          $('#clientidinput').val($(this).val());
+          $('#client').val($(this).text());
+          $('#clientList').fadeOut();
         });
 
     });
@@ -108,6 +109,8 @@
                   <option value="НАЛИЧНЫЕ">НАЛИЧНЫЕ</option>
                 </select>
               </div>
+
+              <input type="hidden" name="clientidinput" id="clientidinput" class="form-control">
 
               <button type="submit" id='submit' class="btn btn-primary">Сохранить</button>
             </form>

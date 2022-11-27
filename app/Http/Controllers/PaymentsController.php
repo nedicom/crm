@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Services;
+use App\Models\ClientsModel;
 use App\Models\Payments;
 use Illuminate\Http\Request;
 use App\Http\Requests\PaymentsRequest;
@@ -50,6 +51,7 @@ class PaymentsController extends Controller{
 
         $payment -> calculation = $req -> input('calculation');
         $payment -> client = $req -> input('client');
+        if($req -> input('clientidinput')){$payment -> clientid = $req -> input('clientidinput');};
 
         $payment -> nameOfAttractioner = $req -> input('nameOfAttractioner');
         $payment -> nameOfSeller = $req -> input('nameOfSeller');
@@ -76,7 +78,7 @@ class PaymentsController extends Controller{
             ->where($nameOfAttractioner, $req->nameOfAttractioner)
             ->where($nameOfSeller, $req->nameOfSeller)
             ->where($directionDevelopment, $req->directionDevelopment)
-            ->get()], ['datalawyers' =>  User::all(), 'dataservices' =>  Services::all()]);
+            ->get()], ['datalawyers' =>  User::all(), 'dataservices' =>  Services::all(), 'dataclients' =>  ClientsModel::all()]);
           }
           else{ 
             if (!empty($req->nameOfAttractioner)){$nameOfAttractioner='nameOfAttractioner';}
@@ -94,25 +96,15 @@ class PaymentsController extends Controller{
             ->where($nameOfAttractioner, $req->nameOfAttractioner)
             ->where($nameOfSeller, $req->nameOfSeller)
             ->where($directionDevelopment, $req->directionDevelopment)
-            ->get()], ['datalawyers' =>  User::all(), 'dataservices' =>  Services::all()]);
+            ->get()], ['datalawyers' =>  User::all(), 'dataservices' =>  Services::all(), 'dataclients' =>  ClientsModel::all()]);
           }
 
       }
 
-      public function test(){
-            return view ('test', ['data' => Payments::with('serviceFunc')->get()]);
-        }
-
-
     public function showPaymentById($id){
           return view ('showPaymentById', ['data' => Payments::with('serviceFunc', 'AttractionerFunc', 'sellerFunc', 'developmentFunc')
-          ->find($id)], ['datalawyers' =>  User::all(), 'dataservices' =>  Services::all()]);
+          ->find($id)], ['datalawyers' =>  User::all(), 'dataservices' =>  Services::all(), 'dataclients' =>  ClientsModel::all()]);
       }
-
-  //    public function PaymentUpdate($id){
-  //      $payment = new Payments();
-  //      return view ('PaymentUpdate', ['data' => $payment->find($id)]);
-  //    }
 
       public function PaymentUpdateSubmit($id, PaymentsRequest $req){
           $payment = Payments::find($id);
@@ -150,7 +142,8 @@ class PaymentsController extends Controller{
           $payment -> nameOfAttractioner = $req -> input('nameOfAttractioner');
           $payment -> nameOfSeller = $req -> input('nameOfSeller');
           $payment -> directionDevelopment = $req -> input('directionDevelopment');
-
+          if($req -> input('clientidinput')){$payment -> clientid = $req -> input('clientidinput');};
+          
           $payment -> save();
 
           return redirect() -> route('showPaymentById', $id) -> with('success', 'Все в порядке, платеж обновлен');
