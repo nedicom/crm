@@ -1,5 +1,3 @@
-  {{-- start ajax payments--}}
-
   <script>
     $(document).ready(function(){
 
@@ -28,9 +26,7 @@
         });
 
     });
-
-
-        </script>
+  </script>
 
   {{-- end ajax payments--}}
 

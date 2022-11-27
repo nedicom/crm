@@ -11,6 +11,7 @@ use App\Http\Controllers\LeadsController;
 use App\Http\Controllers\TasksController;
 use App\Http\Controllers\MeetingsController;
 use App\Http\Controllers\SourceController;
+use App\Http\Controllers\DogovorController;
 use App\Http\Controllers\GetclientAJAXController;
 use App\Http\Controllers\TaskAJAXController;
 
@@ -30,6 +31,17 @@ use App\Http\Controllers\TaskAJAXController;
 
 
   Route::middleware(['verified'])->group(function () {
+
+    Route::controller(DogovorController::class)->group(function () {
+      Route::post('/dogovor/add', 'addDogovor')->name('addDogovor');
+    });
+
+    Route::controller(DogovorController::class)->group(function () {
+      Route::get('/dogovor', 'dogovor')->name('dogovor');
+      Route::post('/dogovor/add', 'adddogovor')->name('adddogovor');
+      Route::get('/dogovor/{id}', 'showdogovorById')->name('showdogovorById');
+      Route::post('/dogovor/{id}/edit', 'dogovorUpdateSubmit')->name('dogovorUpdateSubmit');
+    });
 
     Route::controller(SourceController::class)->group(function () {
       Route::post('/source/add', 'addSource')->name('addSource');
