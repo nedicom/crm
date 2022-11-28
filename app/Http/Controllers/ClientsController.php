@@ -24,6 +24,8 @@ class ClientsController extends Controller{
         $client -> source = $req -> input('source');
         $client -> status = $req -> input('status');
         $client -> lawyer = $req -> input('lawyer');
+        if(!is_null($req -> input('address'))) {$client -> address = $req -> input('address');}
+        
       
         $client -> save();
 
@@ -68,7 +70,8 @@ class ClientsController extends Controller{
         $client -> source = $req -> input('source');
         $client -> status = $req -> input('status');
         $client -> lawyer = $req -> input('lawyer');
-
+        if(!is_null($req -> input('address'))) {$client -> address = $req -> input('address');}
+        
         $client -> save();
 
         return redirect() -> route('showClientById', $id) -> with('success', 'Все в порядке, клиент обновлен');

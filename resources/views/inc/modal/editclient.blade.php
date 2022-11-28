@@ -9,12 +9,16 @@
       <form action="{{route('Client-Update-Submit', $data -> id)}}" method="post">
         @csrf
         <div class="form-group mb-3">
-          <label for="name">Введите Имя</label>
-          <input type = "text" name="name" placeholder="Иван Васильевич" id="name" value='{{$data->name}}' class="form-control">
+          <label for="name">Введите Имя <span class="text-danger">*</span></label>
+          <input type = "text" name="name" placeholder="Иван Васильевич" id="name" value='{{$data->name}}' class="form-control" required>
         </div>
         <div class="form-group mb-3">
-          <label for="phone">Введите телефон</label>
-          <input type = "phone" name="phone" placeholder="+7" id="phone" value='{{$data->phone}}' class="form-control">
+          <label for="phone">Введите телефон <span class="text-danger">*</span></label>
+          <input type = "phone" name="phone" placeholder="+7" id="phone" value='{{$data->phone}}' class="form-control" required>
+        </div>
+        <div class="form-group mb-3">
+          <label for="address">Введите адрес</label>
+          <input type = "text" name="address" placeholder="295000, Симферополь, ул. Кирова, 15" value='{{$data->address}}' id="address" class="form-control">
         </div>
         <div class="form-group mb-3">
           <label for="phone">Введите email</label>

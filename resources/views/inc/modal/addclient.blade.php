@@ -9,16 +9,20 @@
       <form action="{{route('add-client')}}" method="post">
         @csrf
         <div class="form-group mb-3">
-          <label for="name">Введите Имя</label>
-          <input type = "text" name="name" placeholder="Иван Васильевич" id="name" class="form-control">
+          <label for="name">Введите Имя <span class="text-danger">*</span></label>
+          <input type = "text" name="name" placeholder="Иван Васильевич" id="name" class="form-control" reqired>
         </div>
         <div class="form-group mb-3">
-          <label for="phone">Введите телефон</label>
-          <input type = "phone" name="phone" placeholder="+7" id="phone" class="form-control">
+          <label for="phone">Введите телефон <span class="text-danger">*</span></label>
+          <input type = "phone" name="phone" placeholder="+7" id="phone" class="form-control" reqired>
         </div>
         <div class="form-group mb-3">
           <label for="phone">Введите email</label>
           <input type = "email" name="email" placeholder="ivanov@yandex.ru" id="email" class="form-control">
+        </div>
+        <div class="form-group mb-3">
+          <label for="address">Введите адрес</label>
+          <input type = "text" name="address" placeholder="295000, Симферополь, ул. Кирова, 15" id="address" class="form-control">
         </div>
         <div class="form-group mb-3">
           <label for="source">Укажите источник</label>
