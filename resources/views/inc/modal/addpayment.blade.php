@@ -48,7 +48,7 @@
               <label for="summ" class="form-label">Введите сумму</label>
               <div class="input-group mb-3">
                     <span class="input-group-text">ru</span>
-                      <input type = "text" name="summ" placeholder="" id="summ" class="form-control" value='' required>
+                      <input type = "text" name="summ" placeholder="" value="{{ old('summ') }}" id="summ" class="form-control" value='' required>
                     <span class="input-group-text">.00</span>
                 </div>
 

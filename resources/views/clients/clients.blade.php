@@ -39,8 +39,7 @@
 
             <hr class="bg-dark-lighten my-3">
             <p class="mt-3 fw-semibold text-muted">Задач:
-              <strong>{{$el -> tasksFunc -> count()}}</strong> </p>
-            <p class="mt-3 fw-semibold text-muted">Стоимость: <strong>18000</strong> </p>
+              <strong>{{$el -> tasksFunc -> count()}}</strong> </p>           
             <div class="mt-3 row d-flex justify-content-center">
                 <div class="col-4 mb-3">
                   <a class="btn btn-light w-100" href="{{ route ('showClientById', $el->id) }}">

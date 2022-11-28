@@ -56,21 +56,6 @@
         </div>
       </div>
 
-
-        <div class="card-footer text-center">
-          <div class="mt-3 row d-flex justify-content-center">
-              <div class="mt-3 row d-flex justify-content-center">
-                  <div class="col-2 mb-3">
-                    <a class="btn btn-light w-100" href="#" data-toggle="tooltip" data-placement="top" title="Редактировать">
-                    <i class="bi-pen"></i></a>
-                  </div>
-                  <div class="col-2 mb-3">
-                    <a class="btn btn-light w-100" href="#" data-toggle="tooltip" data-placement="top" title="Удалить">
-                    <i class="bi-trash"></i></a>
-                  </div>
-                </div>
-          </div>
-        </div>
     </div>
 
 @endsection

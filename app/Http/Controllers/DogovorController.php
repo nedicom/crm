@@ -14,7 +14,7 @@ use ZipArchive;
 class DogovorController extends Controller{
 
     public function dogovor(){
-        return view ('dogovor', ['data' => Dogovor::all()]);
+        return view ('dogovor/dogovor', ['data' => Dogovor::all()]);
     }
 
     public function showdogovorById($id){
@@ -25,7 +25,7 @@ class DogovorController extends Controller{
     public function adddogovor(Request $req){
         $Dogovor = new Dogovor();
             $name = $req -> input('name');
-            $client = $req -> input('client'); 
+            $clientname = $req -> input('client'); 
             $predoplata = $req -> input('predoplata');
             $today= Carbon::now(); 
             $ispolnitel = 'Адвокатский кабинет Мина Марк Анатольевич';
@@ -36,18 +36,22 @@ class DogovorController extends Controller{
             $uslugi = $req -> input('subject');
             $allstoimost = $req -> input('allstoimost');
             $preduslugi = $req -> input('preduslugi');
-            $predoplata = $req -> input('predoplata');
-        $Dogovor -> name = $name;
-        //$Dogovor -> adress = $adress;
-        $Dogovor -> subject = $req -> input('subject');
-        $Dogovor -> client_id = $req -> input('clientidinput');
-        $Dogovor -> lawyer_id = Auth::id();
-        $Dogovor -> date =  $today;
-
+                $Dogovor -> name = $name;
+                $Dogovor -> allstoimost = $req -> input('allstoimost');    
+                $Dogovor -> preduslugi = $req -> input('preduslugi');    
+                $Dogovor -> predoplata = $req -> input('predoplata');               
+                $Dogovor -> subject = $req -> input('subject');
+                $Dogovor -> client_id = $req -> input('clientidinput');
+                $Dogovor -> lawyer_id = Auth::id();
+                $Dogovor -> date =  $today;
         $Dogovor -> save();
 
+        $id = $req -> input('clientidinput');
+
         $client = ClientsModel::find($id);
-        if(!is_null($req -> input('address'))) {$client -> address = $req -> input('address');}
+            if(!is_null($req -> input('adress'))) {$client -> address = $adress;}
+            if(!is_null($req -> input('client'))) {$client -> name =  $clientname;}
+            if(!is_null($req -> input('phone'))) {$client -> phone =  $phone;}
         $client -> save();
 
         $Rekvizitydogovora = array(
@@ -55,7 +59,7 @@ class DogovorController extends Controller{
             'field_addres', 'field_phone', 'field_uslugi', 'field_allstoimost', 'field_preduslugi', 'field_predoplata');
 
         $Rekvizitydogovoravar = array(
-            $today, $ispolnitel, $adresispolnitelya, $kontaktyispolnitelya, $client,
+            $today, $ispolnitel, $adresispolnitelya, $kontaktyispolnitelya, $clientname,
             $adress, $phone, $uslugi, $allstoimost, $preduslugi, $predoplata);
 
         $psthxml = "dogovor/document.xml";
@@ -72,13 +76,13 @@ class DogovorController extends Controller{
 				}
 
 		$file = ("dogovor/soglashenie.docx");//path
-		header ("Content-Type: application/octet-stream");
-		header ("Accept-Ranges: bytes");
-		header ("Content-Length: ".filesize($file));
-		header ("Content-Disposition: attachment; filename=test.docx");
-		flush();		
+            header ("Content-Type: application/octet-stream");
+            header ("Accept-Ranges: bytes");
+            header ("Content-Length: ".filesize($file));
+            header ("Content-Disposition: attachment; filename=test.docx");
+            flush();		
 		readfile($file);
 
-        //return redirect() -> route('clients') -> with('success', 'Все в порядке, договор добавлен'); 
+        return redirect() -> route('dogovor') -> with('success', 'Все в порядке, договор добавлен'); 
     }
 }

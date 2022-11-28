@@ -44,48 +44,52 @@
               @csrf
 
               <div class="form-group mb-3">
-                <label for="name">Укажите название</label>
-                <input type = "text" name="name" placeholder="" id="name" class="form-control" required>
+                <label for="name">Укажите название<span class="text-danger">*</span></label>
+                <input type = "text" name="name" placeholder="Мой самый успешный договор" id="name" value="{{ old('name') }}" class="form-control" required>
+                <div id="name" class="form-text">Название поможет Вам найти договор в общем списке</div>
               </div>
 
               <div class="form-group mb-3">
-                <label for="subject">Укажите предмет (услуги)</label>
-                <textarea rows="3" name="subject"
+                <label for="subject">Укажите предмет (услуги)<span class="text-danger">*</span></label>
+                <textarea rows="3" name="subject" value="{{ old('subject') }}"
                 placeholder="Исковое заявление о признании права собственности, участие в судебном заседании..." id="subject" class="form-control" required></textarea>
               </div>
 
               <div class="form-group mb-3">
-                <label for="allstoimost">Укажите общую стоимость услуг</label>
-                <input type = "text" name="allstoimost" placeholder="" id="allstoimost" class="form-control" required>
+                <label for="allstoimost">Укажите общую стоимость услуг<span class="text-danger">*</span></label>
+                <input type = "text" name="allstoimost" placeholder="" value="{{ old('allstoimost') }}" id="allstoimost" class="form-control" required>
               </div>
 
               <div class="form-group mb-3">
-                <label for="preduslugi">Укажите какие услуги предоплачены</label>
-                <textarea rows="3" name="preduslugi"
+                <label for="preduslugi">Укажите какие услуги предоплачены<span class="text-danger">*</span></label>
+                <textarea rows="3" name="preduslugi" value="{{ old('preduslugi') }}"
                 placeholder="Например, исковое заявление о признании права собственности." id="preduslugi" class="form-control" required></textarea>
               </div>
 
               <div class="form-group mb-3">
-                <label for="predoplata">Укажите размер предоплаты</label>
-                <input type = "text" name="predoplata" placeholder="" id="predoplata" class="form-control" required>
+                <label for="predoplata">Укажите размер предоплаты<span class="text-danger">*</span></label>
+                <input type = "text" name="predoplata" value="{{ old('predoplata') }}" placeholder="" id="predoplata" class="form-control" required>
               </div>
 
 
               <div class="form-group mb-3">
-                <label for="client">Укажите клиента</label>
-                <input type = "text" name="client" id="client" class="form-control">
+                <label for="client">Укажите клиента<span class="text-danger">*</span></label>
+                <input type = "text" name="client" value="{{ old('client') }}" id="client" class="form-control" required>                
                 <div id="clientList">
                 </div>
+                <div id="client" class="form-text">Вы не можете создавать нового клиента, но можете изменить имя клиента, если в нем ошибка</div>
               </div>
 
               <div class="form-group mb-3">
-                <label for="adress">Укажите адрес клиента</label>
-                <input type = "text" name="adress" placeholder="" id="adress" class="form-control" required>
+                <label for="adress">Укажите адрес клиента<span class="text-danger">*</span></label>
+                <input type = "text" name="adress" value="{{ old('adress') }}" placeholder="" id="adress" class="form-control" required>
+                <div id="adress" class="form-text">Так же Вы можете поменять адрес клиента</div>
               </div>
 
               <div class="form-group mb-3">
-                <label for="phone">Укажите телефон клиента</label>
-                <input type = "text" name="phone" placeholder="" id="phone" class="form-control" required>
+                <label for="phone">Укажите телефон клиента<span class="text-danger">*</span></label>
+                <input type = "text" name="phone" value="{{ old('phone') }}" placeholder="" id="phone" class="form-control" required>
+                <div id="adress" class="form-text">Телефон Вы тоже можете изменить</div>
               </div>
 
 

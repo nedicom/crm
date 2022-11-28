@@ -18,26 +18,16 @@
 
       <div class="col-12">
       </div>
-
-
-
         @foreach($data as $el)
       <div class="col-3 my-3">
         <div class="card border-light">
             <div class="card-body">
               <h5 class="card-title">{{$el -> name}}</h5>
-              <h6 class="card-subtitle mb-2 text-muted">{{$el -> price}}</h6>
+              <h6 class="card-subtitle mb-2 text-muted">{{$el -> subject}}</h6>
                 <h4 class="header-title mb-3"></h4>
 
                 <p>{{$el -> created_at}}</p>
 
-
-                <div class="mt-3 row d-flex justify-content-center">
-                        <div class="col-4 mb-3">
-                          <a class="btn btn-light w-100" href="{{ route ('showdogovorById', $el->id) }}">
-                          <i class="bi-three-dots"></i></a>
-                        </div>
-                </div>
               </div>
             </div>
         </div>
