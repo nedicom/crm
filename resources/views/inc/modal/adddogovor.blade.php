@@ -20,6 +20,7 @@
             });
 
             $(document).on('click', '.clientList', function(){
+              $('#adress').val($(this).attr( "address" ));
               $('#phone').val($(this).attr( "phone" ));
               $('#clientidinput').val($(this).val());
               $('#client').val($(this).text());

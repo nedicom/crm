@@ -1,12 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Dogovor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Models\User;
-use Illuminate\Support\Facades\Storage;
+use App\Models\ClientsModel;
+//use Illuminate\Support\Facades\Storage;
 use ZipArchive;
 
 class DogovorController extends Controller{
@@ -43,6 +45,10 @@ class DogovorController extends Controller{
         $Dogovor -> date =  $today;
 
         $Dogovor -> save();
+
+        $client = ClientsModel::find($id);
+        if(!is_null($req -> input('address'))) {$client -> address = $req -> input('address');}
+        $client -> save();
 
         $Rekvizitydogovora = array(
             'field_calendar', 'field_ispolnitel', 'field_adresispolnitelya', 'field_kontaktyispolnitelya', 'field_fio',
