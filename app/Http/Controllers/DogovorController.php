@@ -23,19 +23,22 @@ class DogovorController extends Controller{
     public function adddogovor(Request $req){
         $Dogovor = new Dogovor();
         $name = $req -> input('name');
+        $today= Carbon::now();
         $Dogovor -> name = $name;
         $Dogovor -> subject = $req -> input('subject');
         $Dogovor -> client_id = $req -> input('clientidinput');
         $Dogovor -> lawyer_id = Auth::id();
-        $Dogovor -> date = Carbon::now();
+        $Dogovor -> date =  $today;
 
         $Dogovor -> save();
 
         $Rekvizitydogovora = array(
-            '$test'
-        );
+            'field_calendar', 'field_ispolnitel', 'field_adresispolnitelya', 'field_kontaktyispolnitelya', 'field_fio',
+            'field_addres', 'field_phone', 'field_uslugi', 'field_allstoimost', 'field_preduslugi', 'field_predoplata');
 
-        $Rekvizitydogovoravar = array($name);
+        $Rekvizitydogovoravar = array(
+            '$today', 'field_ispolnitel', 'field_adresispolnitelya', 'field_kontaktyispolnitelya', 'field_fio',
+            'field_addres', 'field_phone', 'field_uslugi', 'field_allstoimost', 'field_preduslugi', 'field_predoplata');
 
         $psthxml = "dogovor/document.xml";
 
@@ -48,16 +51,12 @@ class DogovorController extends Controller{
 					$content = str_replace($Rekvizitydogovora, $Rekvizitydogovoravar, $content);
 					$zip->deleteName('word/document.xml');
 					$zip->addFromString('word/document.xml',$content);
-					$zip->close();
-
-                    return redirect() -> route('clients') -> with('success', 'Все в порядке, договор добавлен');
-
-                    
+					$zip->close();                  
 				}
 
 
 
-		/*$file = ("http://localhost/storage/app/dogovor/soglashenie.docx");//path
+		$file = ("dogovor/soglashenie.docx");//path
 		header ("Content-Type: application/octet-stream");
 		header ("Accept-Ranges: bytes");
 		header ("Content-Length: ".filesize($file));
@@ -65,7 +64,7 @@ class DogovorController extends Controller{
 		flush();		
 		readfile($file);
 
-        $roots = $_SERVER['DOCUMENT_ROOT'];*/
+        //return redirect() -> route('clients') -> with('success', 'Все в порядке, договор добавлен');  
 
 
     }
