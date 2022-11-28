@@ -20,9 +20,10 @@
             });
 
             $(document).on('click', '.clientList', function(){
-            $('#clientidinput').val($(this).val());
-            $('#client').val($(this).text());
-            $('#clientList').fadeOut();
+              $('#phone').val($(this).attr( "phone" ));
+              $('#clientidinput').val($(this).val());
+              $('#client').val($(this).text());
+              $('#clientList').fadeOut();
             });
 
         });
@@ -47,10 +48,27 @@
               </div>
 
               <div class="form-group mb-3">
-                <label for="subject">Укажите предмет</label>
+                <label for="subject">Укажите предмет (услуги)</label>
                 <textarea rows="3" name="subject"
-                placeholder="Исковое заявление о признании права собственности, участие в судебном заседании" id="subject" class="form-control" required></textarea>
+                placeholder="Исковое заявление о признании права собственности, участие в судебном заседании..." id="subject" class="form-control" required></textarea>
               </div>
+
+              <div class="form-group mb-3">
+                <label for="allstoimost">Укажите общую стоимость услуг</label>
+                <input type = "text" name="allstoimost" placeholder="" id="allstoimost" class="form-control" required>
+              </div>
+
+              <div class="form-group mb-3">
+                <label for="preduslugi">Укажите какие услуги предоплачены</label>
+                <textarea rows="3" name="preduslugi"
+                placeholder="Например, исковое заявление о признании права собственности." id="preduslugi" class="form-control" required></textarea>
+              </div>
+
+              <div class="form-group mb-3">
+                <label for="predoplata">Укажите размер предоплаты</label>
+                <input type = "text" name="predoplata" placeholder="" id="predoplata" class="form-control" required>
+              </div>
+
 
               <div class="form-group mb-3">
                 <label for="client">Укажите клиента</label>
@@ -58,6 +76,17 @@
                 <div id="clientList">
                 </div>
               </div>
+
+              <div class="form-group mb-3">
+                <label for="adress">Укажите адрес клиента</label>
+                <input type = "text" name="adress" placeholder="" id="adress" class="form-control" required>
+              </div>
+
+              <div class="form-group mb-3">
+                <label for="phone">Укажите телефон клиента</label>
+                <input type = "text" name="phone" placeholder="" id="phone" class="form-control" required>
+              </div>
+
 
               <input type="hidden" name="clientidinput" id="clientidinput" class="form-control">
 
