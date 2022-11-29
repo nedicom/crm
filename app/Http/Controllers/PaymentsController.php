@@ -12,42 +12,57 @@ use Illuminate\Support\Facades\Auth;
 
 class PaymentsController extends Controller{
 
+
+        //создание платежа
+
     public function addpayment(PaymentsRequest $req){
         $payment = new Payments();
 
-        if(strstr($req -> input('summ'), ',', true)){
-          $summ = strstr($req -> input('summ'), ',', true);
-          $payment -> summ = $summ;
+        $summ = $req -> input('summ');
+        
+        $payment -> summ = $summ;
 
-        }
-        else{
-          $summ = $req -> input('summ');
-          $payment -> summ = $summ;
-        }
 
-        $serviceid = $req -> input('service');//get id of service
+        $serviceid = $req -> input('service');
         $payment -> service = $serviceid;
-        $service = DB::table('services')->find($serviceid);//get service of payment's
+        $service = DB::table('services')->find($serviceid);
+        $price = $service -> price;                                  // цена услуги стандартная
 
-        if(($service -> price)>($summ)){
-          $payment -> SallerSalary = ($service -> price)/100*5;
-          $payment -> AttaractionerSalary = ($service -> price)/100*10;
-          $payment -> DeveloperSalary = ($service -> price)/100*10;
-
-        }
-        elseif(($service -> price)<($summ)){
-          $payment -> SallerSalary = ($service -> price)/100*13;
-          $payment -> AttaractionerSalary = ($service -> price)/100*20;
-          $payment -> DeveloperSalary = ($service -> price)/100*17;
-          $payment -> modifyAttraction = ($summ - ($service -> price))/100*33;
-          $payment -> modifySeller = ($summ - ($service -> price))/100*17;
+        if(!empty($req -> input('sellsumm'))){ // если взял предоплату
+          $sellsumm = $req -> input('sellsumm');                       // поступившая предоплата
+          $payment -> predoplatasumm = $sellsumm; // запись в БД
+          $sootnoshnie = $sellsumm/$summ; // расчитываем соотношение цены за которую продали к предоплате
         }
         else{
-          $payment -> SallerSalary = ($service -> price)/100*13;
-          $payment -> AttaractionerSalary = ($service -> price)/100*20;
-          $payment -> DeveloperSalary = ($service -> price)/100*17;
+          $sellsumm = $summ; // если предоплата не указана выполняется условия когда цена продажи равна сумме поступивших денег
+          $sootnoshnie = 1; // соотношение не расчитывается
+          $payment -> predoplatasumm = $summ; // запись в БД
+        }              
+
+        if($price < $sellsumm){
+            $totalprice = $price / $sootnoshnie;
+            $payment -> SallerSalary = $totalprice/100*13; // доход продавца от цены услуги (производной)
+            $payment -> modifySeller = ($summ - $totalprice)/100*17; // увеличение дохода продавца от разницы в платеже минус цены услуги
+            $payment -> AttaractionerSalary = $totalprice/100*20; // доход привлеченца            
+            $payment -> modifyAttraction = ($summ - $totalprice)/100*33; // увеличение дохода привлеченца
+            $payment -> DeveloperSalary = $summ/100*17; // доход развивателя
         }
 
+        if($price > $sellsumm){
+          $payment -> SallerSalary = $summ/100*5;
+          $payment -> AttaractionerSalary = $summ/100*10;
+          $payment -> DeveloperSalary = $summ/100*10;
+          $payment -> modifyAttraction = 0;
+          $payment -> modifySeller = 0;
+        }
+
+        if($price == $sellsumm){
+          $payment -> SallerSalary = $summ/100*13;
+          $payment -> AttaractionerSalary = $summ/100*20;
+          $payment -> DeveloperSalary = $summ/100*17;
+          $payment -> modifyAttraction = 0;
+          $payment -> modifySeller = 0;
+        }
 
         $payment -> calculation = $req -> input('calculation');
         $payment -> client = $req -> input('client');
@@ -61,6 +76,8 @@ class PaymentsController extends Controller{
 
         return redirect() -> route('payments') -> with('success', 'Все в порядке, платеж добавлен');
     }
+
+        //конец создания платежа
 
 
     public function showpayments(Request $req){
@@ -101,41 +118,59 @@ class PaymentsController extends Controller{
 
       }
 
-    public function showPaymentById($id){
+      public function showPaymentById($id){
           return view ('showPaymentById', ['data' => Payments::with('serviceFunc', 'AttractionerFunc', 'sellerFunc', 'developmentFunc')
           ->find($id)], ['datalawyers' =>  User::all(), 'dataservices' =>  Services::all(), 'dataclients' =>  ClientsModel::all()]);
       }
 
+      //обновление платежа
+
       public function PaymentUpdateSubmit($id, PaymentsRequest $req){
-          $payment = Payments::find($id);
-          $summ = $req -> input('summ');
+          
+        $payment = Payments::find($id);
+          $summ = $req -> input('summ');                                 // поступивший платеж
           $payment -> summ = $summ;
 
-          $serviceid = $req -> input('service');//get id of service
+          $serviceid = $req -> input('service');
           $payment -> service = $serviceid;
-          $service = DB::table('services')->find($serviceid);//get service of payment's
+          $service = DB::table('services')->find($serviceid);
+          $price = $service -> price;                                  // цена услуги стандартная
 
-          if(($service -> price)>($summ)){
-            $payment -> SallerSalary = ($service -> price)/100*5;
-            $payment -> AttaractionerSalary = ($service -> price)/100*10;
-            $payment -> DeveloperSalary = ($service -> price)/100*10;
-            $payment -> modifyAttraction = 0;
-            $payment -> modifySeller = 0;
-
-          }
-          elseif(($service -> price)<($summ)){
-            $payment -> SallerSalary = ($service -> price)/100*13;
-            $payment -> AttaractionerSalary = ($service -> price)/100*20;
-            $payment -> DeveloperSalary = ($service -> price)/100*17;
-            $payment -> modifyAttraction = ($summ - ($service -> price))/100*33;
-            $payment -> modifySeller = ($summ - ($service -> price))/100*17;
+          if(!empty($req -> input('sellsumm'))){ // если взял предоплату
+            $sellsumm = $req -> input('sellsumm');                       // поступившая предоплата
+            $payment -> predoplatasumm = $sellsumm; // запись в БД
+            $sootnoshnie = $sellsumm/$summ; // расчитываем соотношение цены за которую продали к предоплате
           }
           else{
-            $payment -> SallerSalary = ($service -> price)/100*13;
-            $payment -> AttaractionerSalary = ($service -> price)/100*20;
-            $payment -> DeveloperSalary = ($service -> price)/100*17;
+            $sellsumm = $summ; // если предоплата не указана выполняется условия когда цена продажи равна сумме поступивших денег
+            $sootnoshnie = 1; // соотношение не расчитывается
+            $payment -> predoplatasumm = $summ; // запись в БД
+          }              
+
+          if($price < $sellsumm){
+              $totalprice = $price / $sootnoshnie;
+              $payment -> SallerSalary = $totalprice/100*13; // доход продавца от цены услуги (производной)
+              $payment -> modifySeller = ($summ - $totalprice)/100*17; // увеличение дохода продавца от разницы в платеже минус цены услуги
+              $payment -> AttaractionerSalary = $totalprice/100*20; // доход привлеченца            
+              $payment -> modifyAttraction = ($summ - $totalprice)/100*33; // увеличение дохода привлеченца
+              $payment -> DeveloperSalary = $summ/100*17; // доход развивателя
           }
 
+          if($price > $sellsumm){
+            $payment -> SallerSalary = $summ/100*5;
+            $payment -> AttaractionerSalary = $summ/100*10;
+            $payment -> DeveloperSalary = $summ/100*10;
+            $payment -> modifyAttraction = 0;
+            $payment -> modifySeller = 0;
+          }
+
+          if($price == $sellsumm){
+            $payment -> SallerSalary = $summ/100*13;
+            $payment -> AttaractionerSalary = $summ/100*20;
+            $payment -> DeveloperSalary = $summ/100*17;
+            $payment -> modifyAttraction = 0;
+            $payment -> modifySeller = 0;
+          }
 
           $payment -> calculation = $req -> input('calculation');
           $payment -> client = $req -> input('client');
@@ -149,6 +184,8 @@ class PaymentsController extends Controller{
           return redirect() -> route('showPaymentById', $id) -> with('success', 'Все в порядке, платеж обновлен');
 
       }
+      //конец обновления платежа
+
 
     public function PaymentDelete($id){
         Payments::find($id)->delete();

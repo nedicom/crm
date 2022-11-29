@@ -20,7 +20,8 @@
       });
 
       $(document).on('click', '#clientAJAX', function(){
-          $('#client').val($(this).text());
+          $('#clientidinput').val($(this).val());
+          $('#client').val($(this).attr( "name" ));
           $('#clientList').fadeOut();
       });
 
@@ -38,12 +39,43 @@
         <div class ="modal-body">
       <form action="{{route('PaymentUpdateSubmit', $data -> id)}}" method="post" autocomplete="off">
         @csrf
+        
+
         <label for="summ" class="form-label">Введите сумму</label>
-        <div class="input-group mb-3">
-              <span class="input-group-text">ru</span>
-                <input type = "number" step=500 name="summ" placeholder="" id="summ" class="form-control" value='{{$data->summ}}' required>
-              <span class="input-group-text">.00</span>
-          </div>
+              <div class = "row d-flex align-items-center mb-3">              
+                <div class = "col-6">
+                  <div class="input-group d-flex align-items-center">
+                      <span class="input-group-text">ru</span>
+                        <input type = "number" name="summ" placeholder="" value="{{$data->summ}}" id="summ" class="form-control" required
+                        style="input::-webkit-inner-spin-button: -webkit-appearance: none; margin: 0; -moz-appearance: textfield;"
+                        >
+                      <span class="input-group-text">.00</span>
+                  </div>
+                </div>
+                <div class="form-check col-6">
+                  <input class="form-check-input" type="checkbox" value="predoplata" id="predoplata"
+                  data-bs-toggle="collapse" href="#predoplatadiv" aria-expanded="false" aria-controls="predoplatadiv">
+                  <label class="form-check-label" for="predoplata">
+                    Частичный платеж
+                  </label>
+                </div>
+              </div>
+
+              <div class = "row mb-3 collapse" id="predoplatadiv">              
+                <div class = "col-6">
+                  <div class="input-group">
+                      <span class="input-group-text">ru</span>
+                        <input type = "number" name="sellsumm" placeholder="" value="{{$data->predoplatasumm}}" 
+                        style="input::-webkit-inner-spin-button: -webkit-appearance: none; margin: 0; -moz-appearance: textfield;"
+                        id="sellsumm" class="form-control">
+                      <span class="input-group-text">.00</span>
+                  </div>
+                </div>
+                <div class = "col-6 d-flex align-items-center">
+                  <span class="">За сколько продана услуга?</span>
+                </div>
+              </div>
+
 
         <div class="form-group mb-3">
           <label for="client">Укажите клиента</label>
@@ -56,7 +88,7 @@
           <label for="service">Укажите услугу</label>
           <select class="form-select" name="service" id="service" class="form-control">
                 @foreach($dataservices as $el)
-                  <option value="{{$el -> id}}" @if ($data->service == $el -> id) selected @endif>{{$el -> name}}</option>
+                  <option value="{{$el -> id}}" @if ($data->service == $el -> id) selected @endif>{{$el -> name}} ({{$el -> price}})</option>
                 @endforeach
           </select>
         </div>
@@ -97,6 +129,8 @@
             <option value="НАЛИЧНЫЕ" @if ($data->calculation == "НАЛИЧНЫЕ") selected @endif>НАЛИЧНЫЕ</option>
           </select>
         </div>
+
+        <input type="hidden" name="clientidinput" id="clientidinput" class="form-control">
 
         <button type="submit" id='submit' class="btn btn-primary">Обновить</button>
       </form>

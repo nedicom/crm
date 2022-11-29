@@ -37,10 +37,19 @@
                   @endif">{{$data -> calculation}}</span>
                   </td>
                   <td><span class="badge  bg-primary py-3 px-4">{{$data->summ}}</span></td>
-                  <td><span class="badge  bg-primary py-3 px-4">{{($data->summ) - ($data -> serviceFunc -> price)}}</span></td>
+                  <td><span class="badge  bg-primary py-3 px-4"></span></td>
                 </tr>
 
-                                <tr>
+
+                <tr>
+                  <td>за сколько продана услуга</td>
+                  <td><span></span></td>
+                  <td><span class="badge bg-primary py-3 px-4">{{$data -> predoplatasumm}}</span></td>
+                  <td></td>
+                </tr>
+
+
+                <tr>
                   <td> услуга</td>
                   <td><span>{{$data -> serviceFunc -> name}}</span></td>
                   <td><span class="badge bg-primary py-3 px-4">{{$data -> serviceFunc -> price}}</span></td>
