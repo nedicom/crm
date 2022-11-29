@@ -8,17 +8,18 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\ClientsModel;
+use App\Models\Services;
 //use Illuminate\Support\Facades\Storage;
 use ZipArchive;
 
 class DogovorController extends Controller{
 
     public function dogovor(){
-        return view ('dogovor/dogovor', ['data' => Dogovor::all()]);
+        return view ('dogovor/dogovor', ['data' => Dogovor::all()], ['dataservice' =>  Services::all()]);
     }
 
     public function showdogovorById($id){
-        return view ('dogovor/showdogovorById', ['data' => Dogovor::with('userFunc', 'clientFunc')->find($id)], ['datalawyers' =>  User::all(),
+        return view ('dogovor/showdogovorById', ['data' => Dogovor::with('userFunc', 'clientFunc')->find($id)], ['datalawyers' =>  User::all()   
         ]);
       }
 
@@ -79,7 +80,7 @@ class DogovorController extends Controller{
             header ("Content-Type: application/octet-stream");
             header ("Accept-Ranges: bytes");
             header ("Content-Length: ".filesize($file));
-            header ("Content-Disposition: attachment; filename=test.docx");
+            header ("Content-Disposition: attachment; filename=".$name.".docx");
             flush();		
 		readfile($file);
 
