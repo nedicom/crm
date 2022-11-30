@@ -12,9 +12,109 @@
     @endsection
 
 @section('main')
-    <h2 class="px-3">Платежи</h2>
 
-    {{-- start views for all payments--}}
+    <div class="row mb-4">
+    <div class="col-2">
+      <div class="">
+        <h2 class="">Платежи <i class="bi bi-credit-card text-info"></i></h2>
+        <h5></h5>
+      </div>
+    </div>
+
+    <div class="col-10 row"> 
+
+       <div class="col-4">
+       <div class="card h-100">
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <h4><i class="bi bi-clipboard2-check" style="color: blue"></i></h4>
+              <p class="mb-1"> Цена продажи равна цене услуги </p>
+            </div>
+
+            <table class="mt-2 text-center w-100">
+              <thead class="">              
+                <th>Привлечение</th>
+                <th>Продажа</th>
+                <th>Развитие</th>
+              </thead>
+              <tbody class="fs-5">
+                <tr>
+                  <td>20 %</td>
+                  <td>13 %</td>
+                  <td>17 %</td>
+                </tr>
+                <tr style="font-size: .8rem !important;">
+                <td colspan="3">от общей стоимости</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>          
+        </div> 
+      </div>
+
+      <div class="col-4">
+       <div class="card h-100">
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <h4><i class="bi bi-clipboard2-plus" style="color: green"></i></h4>
+              <p class="mb-1">Цена продажи больше цены услуги</p>
+            </div>
+
+            <table class="mt-2 text-center w-100">
+              <thead class="">              
+                <th>Привлечение</th>
+                <th>Продажа</th>
+                <th>Развитие</th>
+              </thead>
+              <tbody class="fs-5">
+                <tr>
+                  <td>20 % + 33 %</td>
+                  <td>13 % + 17 %</td>
+                  <td>17%</td>
+                </tr>
+                <tr style="font-size: .8rem !important;">
+                  <td colspan="2">от общей стоимости + от размера превышение</td>
+                  <td>от общей стоимости</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>          
+        </div> 
+      </div>
+
+
+      <div class="col-4">
+       <div class="card h-100">
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <h4><i class="bi bi-clipboard-x" style="color: red"></i></h4>
+              <p class="mb-1">Цена продажи меньше цены услуги</p>
+            </div>
+
+            <table class="mt-2 text-center w-100">
+              <thead class="">              
+                <th>Привлечение</th>
+                <th>Продажа</th>
+                <th>Развитие</th>
+              </thead>
+              <tbody class="fs-5">
+                <tr>
+                  <td>10 %</td>
+                  <td>5 %</td>
+                  <td>10 %</td>
+                </tr>
+                <tr style="font-size: .8rem !important;">
+                <td colspan="3">от общей стоимости</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>          
+        </div> 
+      </div>
+
+
+      </div>
+    </div>
 
     <div class="row">
         <div class="col-12">
@@ -86,12 +186,16 @@
                       </div>
                     </th>
                     <th scope="col">Оплата</th>
+                    @if (auth()->user()->role == 'admin')
+                      <th scope="col">Доход компании</th>
+                    @endif                    
+                    <th scope="col"></th>
                 </tr>
                 </thead>
 
                 <tbody class="fw-light text-center">
                   @php 
-                    $total = 0; $totalattr = 0; $totalattrup = 0; $totalsell = 0; $totalsellup = 0; $totaldirect = 0;
+                    $total = 0; $totalattr = 0; $totalattrup = 0; $totalsell = 0; $totalsellup = 0; $totaldirect = 0; $totalfirmearning=0;
                     $number = 1;                    
                   @endphp
 
@@ -101,7 +205,7 @@
                           <td>{{$el -> created_at}}</td>
                           <td scope="row">{{$el -> client}}</td>
                           <td>{{$el -> serviceFunc -> name}}</td>
-                          <td class="fw-bold text-center">{{$el -> serviceFunc -> price}}</td>                          
+                          <td class="text-center">{{$el -> serviceFunc -> price}}</td>                          
                           <td class="fw-bold text-center">{{$el -> summ}}</td>
                           <td>
                           <span class="badge py-1 px-1
@@ -118,7 +222,10 @@
                           <td>{{$el -> sellerFunc -> name}}</td>
                           <td class="fw-bold text-center">{{$el -> SallerSalary}} + {{$el -> modifySeller}}</td>
                           <td>{{$el -> developmentFunc -> name}}</td>
-                          <td class="fw-bold text-center">{{$el -> DeveloperSalary}}</td>
+                          <td class="fw-bold text-center">{{$el -> DeveloperSalary}}</td>                          
+                          @if (auth()->user()->role == 'admin')
+                            <th scope="col">{{$el -> firmearning}}</th>
+                          @endif   
                           <td>
                             <a class="btn btn-light w-100" href="{{ route ('showPaymentById', $el->id) }}">
                               <i class="bi-three-dots"></i></a>
@@ -130,12 +237,12 @@
                         $total = $total + ($el -> summ); 
                         $totalattr= $totalattr + ($el -> AttaractionerSalary); $totalattrup = $totalattrup + ($el -> modifyAttraction); 
                         $totalsell = $totalsell + ($el -> SallerSalary); $totalsellup = $totalsellup + ($el -> modifySeller);
-                        $totaldirect = $totaldirect + ($el -> DeveloperSalary);  
+                        $totaldirect = $totaldirect + ($el -> DeveloperSalary); $totalfirmearning = $totalfirmearning + ($el -> firmearning);   
                       @endphp
 
 
                   @endforeach
-                  <tfoot>
+                  <tfoot class="border-top">
                     <tr>
                       <td></td>
                       <td></td>
@@ -145,9 +252,9 @@
                       <td></td>
                       <td></td>
                       <td></td>
-                      <td class="fw-bold text-center"><span class="badge bg-primary py-2 px-2 fs-6">{{$totalattr}} + {{$totalattrup}}</span></td>
+                      <td class="fw-bold text-center">{{$totalattr}} + {{$totalattrup}}</td>
                       <td></td>
-                      <td class="fw-bold text-center"> <span class="badge bg-primary py-2 px-2 fs-6">{{$totalsell}} + {{$totalsellup}}</span></td>
+                      <td class="fw-bold text-center">{{$totalsell}} + {{$totalsellup}}</td>
                       <td></td>
                       <td></td>
                       <td></td>
@@ -158,17 +265,20 @@
                       <td></td>
                       <td class="fw-bold text-center fs-6">итого:</td>
                       <td></td>
-                      <td class="fw-bold text-center"><span class="badge bg-primary py-2 px-2 fs-6">{{$total}}</span></td>
+                      <td class="fw-bold text-center">{{$total}}</td>
                       <td></td>
                       <td></td>
                       @php
                       $totalattrall = $totalattr + $totalattrup; $totalsellrall = $totalsell + $totalsellup;
                       @endphp
-                      <td class="fw-bold text-center"><span class="badge bg-primary py-2 px-2 fs-6">{{$totalattrall}}</span></td>
+                      <td class="fw-bold text-center">{{$totalattrall}}</td>
                       <td></td>
-                      <td class="fw-bold text-center"> <span class="badge bg-primary py-2 px-2 fs-6">{{$totalsellrall}}</span></td>
+                      <td class="fw-bold text-center">{{$totalsellrall}}</td>
                       <td></td>
-                      <td class="fw-bold text-center"><span class="badge bg-primary py-2 px-2 fs-6">{{$totaldirect}}</span></td>
+                      <td class="fw-bold text-center">{{$totaldirect}}</td>
+                                      @if (auth()->user()->role == 'admin')
+                                      <td class="fw-bold text-center">{{$totalfirmearning}}</td>
+                                      @endif    
                       <td></td>
                     </tr>
                   </tfoot>
