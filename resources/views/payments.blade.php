@@ -16,13 +16,12 @@
     <div class="row mb-4">
     <div class="col-2">
       <div class="">
-        <h2 class="">Платежи <i class="bi bi-credit-card text-info"></i></h2>
+        <h3 class="text-uppercase">Платежи <i class="bi bi-credit-card text-info mx-2"></i></h3>
         <h5></h5>
       </div>
     </div>
 
-    <div class="col-10 row"> 
-
+    <div class="col-10 row">
        <div class="col-4">
        <div class="card h-100">
           <div class="card-body">
