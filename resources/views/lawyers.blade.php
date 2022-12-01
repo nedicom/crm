@@ -12,21 +12,17 @@
 
   <div class= 'col-md-6 col-xxl-3 my-3'>
     <div class= 'card border-light'>
-      <div class= 'd-inline-flex justify-content-end px-2'>
-
-        @if ($el -> status == 1)
-            <i class="bi bi-circle-fill" style = "color: #eee;"></i>
-        @else
-            <i class="bi bi-circle-fill text-secondary"></i>
-        @endif
-
-      </div>
-
       <div class="text-center">
-        <h5 class="mb-2 text-muted text-truncate">{{$el -> name}}</h5>
-        <p class="mb-0 text-muted">{{$el -> phone}}</p>
-        <p class="mb-0 text-muted">{{$el -> email}}</p>
 
+        <div class="d-flex justify-content-between align-items-center m-3">
+          <h5 class="mx-2 text-muted text-truncate">{{$el -> name}}</h5>
+          
+          <div>
+            <img src="{{ $el -> avatar }}" style="width: 40px;" class="rounded-circle" alt="...">
+          </div>
+         </div>
+
+        <p class="mb-0 text-muted">{{$el -> phone}}</p>
 
         <hr class="bg-dark-lighten my-3">
         <p class="mt-3 fw-semibold text-muted">Задач: <strong>18</strong> </p>

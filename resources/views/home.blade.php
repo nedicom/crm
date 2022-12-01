@@ -11,7 +11,24 @@
       @endsection
 
   @section('main')
-      <h2 class="px-3">Мои показатели</h2>
+  <div class="row"> 
+  <h2 class="px-3 col-8">Мои показатели</h2>
+   
+    <div class="col-4">
+        <form enctype="multipart/form-data" action="{{route('add-avatar')}}" method="post">
+          @csrf
+          <div class="row">
+            <div class="col-8">
+              <input class="form-control" type="file" id="avatar" name="avatar" accept=".png, .jpg, .jpeg" required>            
+            </div>
+            <div class="col-4">
+              <input type="submit" value="сменить аватар" class="btn btn-secondary">
+            </div>
+          </div>
+        </form>
+      </div>
+    </div> 
+   
    <div class = "row p-5">
 
    <div class = "row">

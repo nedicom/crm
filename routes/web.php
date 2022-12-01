@@ -32,6 +32,10 @@ use App\Http\Controllers\TaskAJAXController;
 
   Route::middleware(['verified'])->group(function () {
 
+    Route::controller(LawyersController::class)->group(function () {
+      Route::post('/avatar/add', 'addavatar')->name('add-avatar');
+    });
+
     Route::controller(DogovorController::class)->group(function () {
       Route::post('/dogovor/add', 'addDogovor')->name('addDogovor');
     });
