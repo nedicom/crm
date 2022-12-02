@@ -29,7 +29,7 @@
 </script>
 
   <div class="modal fade" id="edittaskModal">
-    <div class="modal-dialog">
+    <div class="modal-dialog  modal-lg">
       <div class="modal-content">
           <div class ="modal-header">
             <h2>Изменить задачу</h2>
@@ -42,52 +42,95 @@
               @csrf
 
               <div class="form-group mb-3">
-                <label for="name">Укажите название</label>
+                <label for="name">Укажите название<span class="text-danger">*</span></label>
                 <input type = "text" name="name" placeholder="" id="name" value="{{$data->name}}" class="form-control" required>
               </div>
 
               <div class="form-group mb-3">
-                <label for="status">Укажите статус</label>
-                  <select class="form-select" name="status" id="status" class="form-control">
-                      <option value="в работе">в работе</option>
-                      <option value="просрочена">просрочена</option>                      
-                      <option value="выполнена">выполнена</option>
-                      <option value="ожидает">ожидает</option>
-                  </select>
+                <label for="description">Описание</label>
+                <textarea rows="3" name="description" placeholder="Немного подробнее о задаче (необязательно)" id="description" class="form-control">{{$data->description}}</textarea>
               </div>
 
-              <div class="form-group mb-3">
-                <label for="date">Укажите время начала:</label>
-                <input type="datetime-local" id="date" value="{{$data->date['value']}}" class="form-control" name="date">
-              </div>
+              <div class="row">
+                <div class="col-4 form-group mb-3">
+                  <label for="date">Время начала:<span class="text-danger">*</span></label>
+                  <input type="datetime-local" id="date" value="{{$data->date['value']}}" class="form-control" name="date">
+                </div>
 
-              <div class="input-group form-group mb-3">
-                <label class="input-group-text" for="duration"><i class="bi bi-stopwatch"></i></label>
-                <input type = "number" name="duration" value="{{$data->duration}}" min="0.5" max="25" step="0.5" id="duration" class="form-control">
-                <span class="input-group-text">час</span>
-              </div>
-
-              <div class="form-group mb-3">
-                <label for="client">Укажите клиента</label>
-                <input type = "text" name="client" id="client" value="{{$data->client}}" class="form-control">
-                <div id="clientList">
+                <div class="col-4 form-group mb-3">
+                <span>Продолжительность<span class="text-danger">*</span></span>
+                  <div class="input-group form-group mb-3">                    
+                    <label class="input-group-text" for="duration"><i class="bi bi-stopwatch"></i></label>
+                    <input type = "number" name="duration" value="{{$data->duration}}" min="0.5" max="25" step="0.5" id="duration" class="form-control">
+                    <span class="input-group-text">час</span>
                   </div>
+                </div>
+
+                <div class="col-4 form-group mb-3">
+                  <label for="name">Яндекс-диск</label>
+                  <input type = "url" name="hrftodcm" placeholder="https://disk.yandex.ru" id="hrftodcm" 
+                  value="{{$data->hrftodcm}}" class="form-control">
+              </div>
               </div>
 
-              <div class="form-group mb-3">
-                <label for="lawyer">Укажите юриста</label>
-                <select class="form-select" name="lawyer" id="lawyer" class="form-control">
-                  @foreach($datalawyers as $el)
-                    <option value="{{$el -> id}}"  @if ($data->lawyer == $el -> id) selected @endif>{{$el -> name}}</option>
-                  @endforeach
-                </select>
+              <div class="row">
+                <div class="col-6 form-group mb-3">
+                  <label for="client">Клиент<span class="text-danger">*</span></label>
+                  <input type = "text" name="client" id="client" value="{{$data->client}}" class="form-control">
+                  <div id="clientList">
+                    </div>
+                </div>
+
+                <div class="col-3 form-group mb-3">
+                  <label for="tag">Отметка</label>
+                  <select class="form-select" name="tag" id="tag">
+                      <option value="неважно"  @if ($data->tag == "в работе") selected @endif>неважно</option>
+                      <option value="перенос"  @if ($data->tag == "перенос") selected @endif>перенос</option>
+                      <option value="срочно"  @if ($data->tag == "срочно") selected @endif>срочно</option>
+                      <option value="приоритет"  @if ($data->tag == "приоритет") selected @endif>приоритет</option>
+                  </select>
+                </div>
+
+                <div class="col-3 form-group mb-3">
+                  <label for="status">Cтатус</label>
+                    <select class="form-select" name="status" id="status" class="form-control">
+                        <option value="в работе"  @if ($data->status == "в работе") selected @endif>в работе</option>
+                        <option value="просрочена" @if ($data->status == "просрочена") selected @endif>просрочена</option>                      
+                        <option value="выполнена"  @if ($data->status == "выполнена") selected @endif>выполнена</option>
+                        <option value="ожидает"  @if ($data->status == "ожидает") selected @endif>ожидает</option>
+                    </select>
+                </div>
               </div>
 
-              <div class="form-group mb-3">
-                <label for="name">Ссылка на документы (яндекс диск)</label>
-                <input type = "url" name="hrftodcm" placeholder="https://disk.yandex.ru" id="hrftodcm" 
-                value="{{$data->hrftodcm}}" class="form-control">
-              </div>
+
+              <div class="row">
+                <div class="col-4 form-group mb-3">
+                  <label for="lawyer">Исполнитель<span class="text-danger">*</span></label>
+                  <select class="form-select" name="lawyer" id="lawyer" class="form-control">
+                    @foreach($datalawyers as $el)
+                      <option value="{{$el -> id}}"  @if ($data->lawyer == $el -> id) selected @endif>{{$el -> name}}</option>
+                    @endforeach
+                  </select>
+                </div>
+
+                <div class="col-4 form-group mb-3">
+                  <label for="soispolintel">соИсполнитель</label>
+                  <select class="form-select" name="soispolintel" id="soispolintel" class="form-control">
+                        @foreach($datalawyers as $el)
+                          <option value="{{$el -> id}}" @if ($data->soispolintel == $el -> id) selected @endif>{{$el -> name}}</option>
+                        @endforeach
+                  </select>
+                </div>
+
+                <div class="col-4 form-group mb-3">
+                  <label for="postanovshik">Укажите постановщика</label>
+                  <select class="form-select" name="postanovshik" id="postanovshik" class="form-control">
+                        @foreach($datalawyers as $el)
+                          <option value="{{$el -> id}}" @if ($data->postanovshik == $el -> id) selected @endif>{{$el -> name}}</option>
+                        @endforeach
+                  </select>
+                </div>
+               </div>
 
               <input type="hidden" name="clientidinput" id="clientidinput" class="form-control">
 

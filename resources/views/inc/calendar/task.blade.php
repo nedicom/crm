@@ -6,7 +6,7 @@
     </div>
   @endif
 
-  @if (app('request')->input('calendar') !== 'month')
+  @if (app('request')->input('calendar') == 'week')
     <div class="card border-light">
       <div class="card-body">
         <h5 class="card-title text-truncate">{{$el -> name}}</h5>

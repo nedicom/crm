@@ -223,6 +223,32 @@
               });
            </script>
 
+         <script>
+          const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+          const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+        </script>
+
+        <script>
+            $( document ).ready(function() {   
+                $( ".changetags" ).click(function() {
+                        var $input = $( this );  
+                        var id =  $input.attr( "tagName" )
+                        var color =  $input.attr( "color" )
+                        var value =  this.value;  
+
+                        $('#tagspan'+id).css("color", color);      
+
+                            $.ajax({
+                            url:"{{ route('tag') }}",
+                            method:"POST",
+                            data: { id: id, value: value, _token: '{{csrf_token()}}' },
+                              success:function(data){                              
+                              }                            
+                            });   
+                  });
+                });
+        </script>
+
 
 
 

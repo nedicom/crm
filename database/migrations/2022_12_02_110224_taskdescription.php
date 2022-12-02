@@ -13,11 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        /*Schema::table('users', function (Blueprint $table) {
-            $input = ["rabbit.png", "bear.png", "cat.png"];
-            $rand_key =rand(0, 2);
-            $table->string('avatar')->default('/public/avatars/'.$input[$rand_key]);
-        });*/
+        Schema::table('tasks', function (Blueprint $table) {
+            $table->string('description')->default('Описания нет');
+        });
     }
 
     /**

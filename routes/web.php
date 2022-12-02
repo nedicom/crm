@@ -70,14 +70,6 @@ use App\Http\Controllers\TaskAJAXController;
       Route::get('/clients/{id}/delete', 'ClientDelete')->name('Client-Delete');
     });
 
-    Route::controller(TasksController::class)->group(function () {
-      Route::get('/tasks', 'index')->name('tasks');
-      Route::post('/tasks/add', 'create')->name('addtask');
-      Route::get('/tasks/{id}', 'showTaskById')->name('showTaskById');
-      Route::post('/tasks/{id}/edit', 'editTaskById')->name('editTaskById');
-      Route::post('/tasks/{id}/delete', 'TaskDelete')->name('TaskDelete');
-    });
-
     Route::controller(MeetingsController::class)->group(function () {
       Route::get('/meetings', 'index')->name('meetings');
       Route::post('/meetings/add', 'create')->name('addmeetings');
@@ -89,6 +81,7 @@ use App\Http\Controllers\TaskAJAXController;
     Route::controller(TasksController::class)->group(function () {
       Route::get('/tasks', 'index')->name('tasks');
       Route::post('/tasks/add', 'create')->name('addtask');
+      Route::post('/tasks/add/tag', 'tag')->name('tag');      
       Route::get('/tasks/{id}', 'showTaskById')->name('showTaskById');
       Route::post('/tasks/{id}/edit', 'editTaskById')->name('editTaskById');
       Route::get('/tasks/{id}/delete', 'TaskDelete')->name('TaskDelete');

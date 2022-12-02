@@ -84,6 +84,8 @@ use Illuminate\Support\Facades\Auth;
           else{
             return view ('tasks/tasks', ['data' => Tasks::select("*")
             ->where('lawyer', (Auth::user()->id))
+            ->orWhere('soispolintel', (Auth::user()->id))
+            ->orWhere('postanovshik', (Auth::user()->id))
             ->orderBy('date', 'asc')
             ->get()],
             ['datalawyers' =>  User::all()]);
@@ -111,12 +113,28 @@ use Illuminate\Support\Facades\Auth;
             $task -> duration = $req -> duration;
             $task -> clientid = $req -> clientidinput;
             if($req -> hrftodcm){$task -> hrftodcm = $req -> hrftodcm;};
+
+            $task -> postanovshik = Auth::user()->id;
+            if($req -> tag){$task -> tag = $req -> tag;};
+            if($req -> soispolintel){$task -> soispolintel = $req -> soispolintel;};
+            if($req -> description){$task -> description = $req -> description;};
+
             $task -> status = 'ожидает';
 
             $task -> save();
 
             return redirect() -> route('tasks') -> with('success', 'Все в порядке, задача добавлена');
         }
+
+        public function tag(Request $request){
+          if($request->get('id')){
+            $id = $request->get('id');
+            $task = Tasks::find($id);
+            $task -> tag = $request->get('value');
+            $task -> save();
+          }
+        }
+
 
         public function showTaskById($request){
           return view ('tasks/taskById', ['data' => Tasks::find($request)], ['datalawyers' =>  User::all()]);
@@ -132,6 +150,12 @@ use Illuminate\Support\Facades\Auth;
           $task -> lawyer = $req -> lawyer;
           $task -> duration = $req -> duration;
           $task -> status = $req -> status;
+
+          if($req -> tag){$task -> tag = $req -> tag;};
+          if($req -> postanovshik){$task -> postanovshik = $req -> postanovshik;};
+          if($req -> soispolintel){$task -> soispolintel = $req -> soispolintel;};
+          if($req -> description){$task -> description = $req -> description;};
+
           if($req -> hrftodcm){$task -> hrftodcm = $req -> hrftodcm;};
           if($req -> clientidinput){$task -> clientid = $req -> clientidinput;};  
 

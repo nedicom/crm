@@ -83,7 +83,6 @@ class PaymentsController extends Controller{
 
 
     public function showpayments(Request $req){
-          $currentuser = Auth::id();
           $nameOfAttractioner = null; 
           $nameOfSeller = null;
           $directionDevelopment = null;
@@ -97,6 +96,7 @@ class PaymentsController extends Controller{
             ->where($nameOfAttractioner, $req->nameOfAttractioner)
             ->where($nameOfSeller, $req->nameOfSeller)
             ->where($directionDevelopment, $req->directionDevelopment)
+            ->whereMonth('created_at', 12)
             ->get()], ['datalawyers' =>  User::all(), 'dataservices' =>  Services::all(), 'dataclients' =>  ClientsModel::all()]);
           }
           else{ 

@@ -36,7 +36,7 @@
 </script>
 
   <div class="modal fade" id="taskModal">
-    <div class="modal-dialog">
+    <div class="modal-dialog  modal-lg">
       <div class="modal-content">
           <div class ="modal-header">
             <h2>Добавить задачу</h2>
@@ -49,42 +49,90 @@
               @csrf
 
               <div class="form-group mb-3">
-                <label for="name">Укажите название задачи</label>
-                <input type = "text" name="name" placeholder="" id="name" class="form-control" required>
+                <label for="name">Укажите название задачи <span class="text-danger">*</span></label>
+                <input type = "text" name="name" placeholder="Получить решение по делу" value="{{ old('name') }}" placeholder="" id="name" class="form-control" required>
               </div>
 
               <div class="form-group mb-3">
-                <label for="date">Укажите время:</label>
-                <input type="datetime-local" id="date" class="form-control" name="date"
-                      min="{{ date('Y-m-d H:i') }}">
+                <label for="description">Описание</label>
+                <textarea rows="3" name="description" placeholder="Немного подробнее о задаче (необязательно)" id="description" class="form-control">{{ old('description') }}</textarea>
               </div>
 
-              <div class="input-group form-group mb-3">
-                <label class="input-group-text" for="duration"><i class="bi bi-stopwatch"></i></label>
-                <input type = "number" name="duration" min="0.5" max="25" step="0.5" id="duration" class="form-control">
-                <span class="input-group-text">час</span>
-              </div>
 
-              <div class="form-group mb-3">
-                <label for="client">Укажите клиента</label>
-                <input type = "text" name="client" id="client" class="form-control" required>
-                  <div id="clientList">
+
+              <div class="row">
+                <div class="col-4 form-group mb-3">
+                  <label for="date">Время начала: <span class="text-danger">*</span></label>
+                  <input type="datetime-local" id="date" class="form-control" name="date"
+                        min="{{ date('Y-m-d H:i') }}">
+                </div>
+
+                <div class="col-4 form-group mb-3">
+                <span>Продолжительность<span class="text-danger">*</span>
+                  <div class="input-group form-group mb-3">
+                    
+                    <label class="input-group-text" for="duration"><i class="bi bi-stopwatch"></i></label>
+                    <input type = "number" name="duration" min="0.5" max="25" step="0.5" id="duration" class="form-control">
+                    <span class="input-group-text">час</span>
                   </div>
+                </div>
+
+                <div class="col-4 form-group mb-3">
+                  <label for="name">Яндекс-диск</label>
+                  <input type = "url" name="hrftodcm" placeholder="https://disk.yandex.ru" id="hrftodcm" class="form-control">
+                </div>
               </div>
 
-              <div class="form-group mb-3">
-                <label for="lawyer">Укажите юриста</label>
-                <select class="form-select" name="lawyer" id="lawyer" class="form-control">
-                      @foreach($datalawyers as $el)
-                        <option value="{{$el -> id}}">{{$el -> name}}</option>
-                      @endforeach
-                </select>
+              <div class="row">
+                <div class="col-6 form-group mb-3">
+                  <label for="client">Клиент<span class="text-danger">*</span></label>
+                  <input type = "text" name="client" id="client" class="form-control" required>
+                    <div id="clientList">
+                    </div>
+                </div>
+
+                <div class="col-3 form-group mb-3">
+                  <label for="tag">Сделайте отметку</label>
+                  <select class="form-select" name="tag" id="tag">
+                      <option value="неважно">неважно</option>
+                      <option value="перенос">перенос</option>
+                      <option value="срочно">срочно</option>
+                      <option value="приоритет">приоритет</option>
+                  </select>
+                 </div>
+
+                <div class="col-3 form-group mb-3">
+                  <label for="status">Cтатус</label>
+                    <select class="form-select" name="status" id="status" class="form-control">
+                        <option value="в работе">в работе</option>
+                        <option value="просрочена">просрочена</option>                      
+                        <option value="выполнена" >выполнена</option>
+                        <option value="ожидает">ожидает</option>
+                    </select>
+                </div>
               </div>
 
-              <div class="form-group mb-3">
-                <label for="name">Ссылка на документы (яндекс диск)</label>
-                <input type = "url" name="hrftodcm" placeholder="https://disk.yandex.ru" id="hrftodcm" class="form-control">
+              <div class="row">
+                <div class="col-4 form-group mb-3">
+                  <label for="lawyer">Укажите исполнителя <span class="text-danger">*</span></label>
+                  <select class="form-select" name="lawyer" id="lawyer" class="form-control">
+                        @foreach($datalawyers as $el)
+                          <option value="{{$el -> id}}">{{$el -> name}}</option>
+                        @endforeach
+                  </select>
+                </div>
+
+                <div class="col-4 form-group mb-3">
+                  <label for="soispolintel">Укажите соИсполнителя</label>
+                  <select class="form-select" name="soispolintel" id="soispolintel" class="form-control">
+                        @foreach($datalawyers as $el)
+                          <option value="{{$el -> id}}">{{$el -> name}}</option>
+                        @endforeach
+                  </select>
+                </div>
               </div>
+
+
 
               <input type="hidden" name="clientidinput" id="clientidinput" class="form-control">
 
