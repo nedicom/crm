@@ -9,7 +9,8 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\ClientsModel;
 use App\Models\Services;
-//use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\File;
 use ZipArchive;
 
 class DogovorController extends Controller{
@@ -28,7 +29,7 @@ class DogovorController extends Controller{
             $name = $req -> input('name');
             $clientname = $req -> input('client'); 
             $predoplata = $req -> input('predoplata');
-            $today= Carbon::now(); 
+            $today= Carbon::now()->toDateString(); // дата без времени
             $ispolnitel = 'Адвокатский кабинет Мина Марк Анатольевич';
             $adresispolnitelya = '295000, РФ, Респ. Крым, ул. Долгоруковская 13а'; 
             $kontaktyispolnitelya ='+7978 8838 978';
@@ -76,13 +77,21 @@ class DogovorController extends Controller{
 					$zip->close();                  
 				}
 
-		$file = ("dogovor/soglashenie.docx");//path
+		$file = ("dogovor/soglashenie.docx");//мы заменили содержиое файла на сервере
             header ("Content-Type: application/octet-stream");
             header ("Accept-Ranges: bytes");
             header ("Content-Length: ".filesize($file));
             header ("Content-Disposition: attachment; filename=".$name.".docx");
-            flush();		
-		readfile($file);
+            flush();  //очищение буфера вывода
+
+        $filename = 'dog/'.$name.'docx';
+            copy($file, public_path($filename));
+        //Storage::disk('local')->put('example.txt', 'Contents');
+        //$dogovorname = $file->hashName();
+        //$file->move(public_path('/alldogovor'),  $dogovorname);
+		//readfile($file);
+
+        //header( 'Location: http://yandex.ru/yandsearch?text=redirect', true, 301 );
 
         return redirect() -> route('dogovor') -> with('success', 'Все в порядке, договор добавлен'); 
     }
