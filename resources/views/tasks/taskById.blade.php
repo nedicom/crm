@@ -35,8 +35,8 @@
                     @if ($ellawyer -> id == $data -> lawyer)  {{$ellawyer -> name}} @endif
                   @endforeach
                 </h6>
-                <p class="text-truncate">создано: {{$data -> created_at}}</p>
-                <p class="text-truncate">изменено: {{$data -> updated_at}}</p>
+                <p class="text-truncate">начало: {{$data['date']['value'] }}</p>
+
                 <p class="text-truncate">{{$data -> client}}</p>
                 <div class="mt-3 row d-flex justify-content-center">
                 @if($data -> hrftodcm)

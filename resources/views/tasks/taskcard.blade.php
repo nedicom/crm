@@ -19,19 +19,19 @@ max-width:250px;
             </span>       
         </div>
         <div class="card-body task-content">
-        <div class="progress" style="height: 2px; ">
-            <div class="progress-bar" role="progressbar" aria-label="Example 1px high" 
-            @if($el -> status == 'ожидает')
-            style="width: 50%;">
-            @elseif($el -> status == 'в работе') 
-            style="width: 75%;">
-            @elseif($el -> status == 'просрочена') 
-            style="width: 25%;">
-            @elseif($el -> status == 'выполнена') 
-            style="width: 100%;">
-            @endif
+            <div class="progress" style="height: 2px; ">
+                <div class="progress-bar" role="progressbar" aria-label="Example 1px high" 
+                @if($el -> status == 'ожидает')
+                style="width: 50%;">
+                @elseif($el -> status == 'в работе') 
+                style="width: 75%;">
+                @elseif($el -> status == 'просрочена') 
+                style="width: 25%;">
+                @elseif($el -> status == 'выполнена') 
+                style="width: 100%;">
+                @endif
+                </div>
             </div>
-        </div>
 
             <div class="d-flex p-2 justify-content-between align-items-center">
                     <span>
@@ -120,11 +120,7 @@ max-width:250px;
                 @else Black
                 @endif                
                 ;"></i>
-            <span class="visually-hidden"></span>
             </span>
-
-
-
         </div>
     </div>
 </div>

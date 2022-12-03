@@ -46,6 +46,28 @@ class TaskAjaxController extends Controller{
         
       }
 
+      if( !($request->get('dayofmonth') == 0) ){
+
+        $id = $request->get('id');
+        $date = $request->get('date');
+
+        $date2 = date_create($date);
+
+        $dayofmonth = $request->get('dayofmonth');
+        $dayofmonthtask = date('d', strtotime($date));      
+
+        $day = $dayofmonth - $dayofmonthtask;
+
+        $newdate = date_add($date2, date_interval_create_from_date_string($day." days"));
+        $newdate2 = date_format($newdate, DATE_RFC2822);
+        
+        $task = Tasks::find($id);
+        $task -> date = $newdate;
+        $task -> save();
+        return ($newdate2);
+        
+      }
+
     else{};
     }
 }

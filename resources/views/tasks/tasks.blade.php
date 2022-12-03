@@ -34,12 +34,12 @@
 @endsection
 
 @section('main')
-    <h2 class="px-3">Задачи</h2>
+
 {{-- start filter meetings--}}
-  <div class = "row p-4">
+  <div class = "row">
 
       <form class = "row" action="" method="GET">
-
+      <h2 class="col-2 px-3">Задачи</h2>
         <div class="col-8 d-flex justify-content-evenly">
           <div class="">
             <input type="radio" class="btn-check" value="day" name="calendar" id="day"
@@ -134,18 +134,12 @@
         </div>
       @endif
 
-
-
-
-
-
-
         @if (app('request')->input('calendar') == 'week')
         <h2 class="">Неделя</h2>
         @for ($i = 1; $i < 6; $i++)  
         <div style="width: 20%;"> 
           <h1 class="badge bg-secondary">{{$weekMap[$i]}}</h1>
-          </div>
+        </div>
         @endfor
           @for ($i = 1; $i < 6; $i++)           
             <div class="my-3 columncard" style="font-size:12px; width: 20%;" dayofweek="{{$i}}"> 
@@ -159,13 +153,6 @@
           @endfor
         @endif
 
-
-
-
-
-
-
-
         @if (app('request')->input('calendar') == 'day')
         <h2 class="">Сегодня</h2>
             @foreach($data as $el)
@@ -175,19 +162,42 @@
             @endforeach
         @endif
 
+
+
+
+
         @if (app('request')->input('calendar') == 'month')
           <h2 class="">Месяц</h2>
+          @for ($i = 1; $i < 8; $i++)  
+          <div style="width: 14%;"> 
+            <h1 class="badge bg-secondary">{{$weekMap[$i]}}</h1>
+          </div>
+          @endfor
+          @php 
+            $time = mktime(0, 0, 0, date('n'), 1, date('Y'));
+            $firstday = (date('w', $time) + 6) % 7; //воскресенье сделаем 7-м днем, а не первым
+            $daycount = date('t', $time);
+          @endphp
+          @for ($i = 0; $i < $firstday; $i++)
+            <div class="my-3 col" style="min-width: 14%; max-width: 15%; min-height: 100px"></div>
+          @endfor
+
           @for ($i = 1; $i <= (cal_days_in_month(CAL_GREGORIAN, date('m'), date('Y'))); $i++)
-            <div class="my-3 col" style="min-width: 14%; max-width: 15%; min-height: 100px">
+            <div class="my-3 col columncard" style="min-width: 14%; max-width: 15%; min-height: 100px" dayofmonth="{{$i}}">
+            
               {{$i}}
-                @foreach($data as $el)
+                @foreach($data as $el)                
                   @if($el['date']['currentDay'] == $i)
-                    @include('inc.calendar.task')
+                   @include('inc.calendar.task') 
                   @endif
               @endforeach
             </div>
           @endfor
         @endif
+
+
+
+
 
       </div>
   {{-- end views for all meetings--}}
@@ -203,6 +213,12 @@
           }
           </script>
  
+
+
+
+
+
+
           <script> 
           $( document ).ready(function() { 
             $( function() {
@@ -224,12 +240,14 @@
                     if(ui.item.attr("date")){var date =  ui.item.attr("date");}
                     else{var date = 0;};                                 
                     
+                    if($input.attr( "dayofmonth" )){var dayofmonth =  $input.attr( "dayofmonth" );}
+                    else{var dayofmonth = 0;};
+                    
                     $.ajax({
                       method:"POST",
                       url: "{{ route('setstatus') }}",
-                      data: { id: id, status: status, date: date, dayofweek: dayofweek, _token: '{{csrf_token()}}' },
+                      data: { id: id, status: status, date: date, dayofweek: dayofweek, dayofmonth: dayofmonth, _token: '{{csrf_token()}}' },
                       success: function(data) {
-                        
                       }                  
                     });
                   } 
@@ -249,6 +267,11 @@
               });
            });
            </script>
+
+
+
+
+
 
          <script>
           var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
