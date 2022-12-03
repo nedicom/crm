@@ -1,4 +1,9 @@
-<div class="my-3 d-inline-block shadow m-1 taskcard" onmousedown="mouseDown(this.id)" onmouseup="mouseUp(this.id)" id="{{$el -> id}}" style="width: 20rem;">
+<div class="my-3 d-inline-block shadow m-1 taskcard" onmousedown="mouseDown(this.id)" onmouseup="mouseUp(this.id)" 
+date="{{$el['date']['value']}}" id="{{$el -> id}}" style="width: 100%; 
+@if (app('request')->input('calendar') == 'week')
+max-width:250px;
+@else max-width:300px;
+@endif">
     <div class="card" id="card{{$el -> id}}">
         <div class="task-header px-3 pt-3 d-flex justify-content-between">
             <span>                
@@ -6,9 +11,6 @@
                 <span> {{$el['date']['currentDay']}}</span>
                 <span> {{$el['date']['currentMonth']}}</span>                
                 <span> {{$el['date']['currentTime']}}</span>
-                <span>                    
-                <i class="bi bi-stopwatch mx-1"></i><span class="">{{$el -> duration}} </span>
-                </span>
             </span>
             <span>  
                 <span id="status{{$el -> id}}"> 
@@ -31,13 +33,16 @@
             </div>
         </div>
 
-            <div class="d-flex p-2 justify-content-between">
+            <div class="d-flex p-2 justify-content-between align-items-center">
                     <span>
                         @foreach($datalawyers as $ellawyer)
                         @if ($ellawyer -> id == $el -> postanovshik)  
                         <img src="{{$ellawyer -> avatar}}" style="width: 40px;" class="rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="постановщик">
                         @endif
                         @endforeach
+                    </span>
+                    <span class="">                    
+                        <span class="">{{$el -> duration}} </span><i class="bi bi-stopwatch mx-1"></i>
                     </span>
 
                 <span>
@@ -59,8 +64,9 @@
             </div>
 
             
-            <p class="px-2 text-truncate">{{$el -> client}}</p>
-            <p class="px-2 text-truncate" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{$el -> name}}">{{$el -> name}}</p>
+            <div class="px-2 text-truncate text-center">{{$el -> client}}</div>
+
+            <div class="px-2 text-truncate text-center" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" title="{{$el -> name}}" data-bs-content="{{$el -> description}}"><strong>{{$el -> name}}</strong></div>
 
             <div class="mt-3 px-3 d-flex justify-content-center">
                 @if($el -> hrftodcm)
@@ -90,11 +96,7 @@
 
 
 
-            <div class="collapse row" id="collapse{{$el -> id}}">
-                <div class="col-8">
-                {{$el -> description}}
-                </div>
-                <div class="col-4">
+            <div class="collapse text-center" id="collapse{{$el -> id}}">
                 <button class="btn changetags" tagName="{{$el -> id}}" color='LightGray' value="неважно"  data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="неважно">
                     <i class="bi bi-tag-fill" style="color: LightGray;"></i>
                 </button>
@@ -107,7 +109,6 @@
                 <button class="btn changetags" tagName="{{$el -> id}}" color='BlueViolet' value="приоритет"  data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="приоритет">
                     <i class="bi bi-tag-fill" style="color: BlueViolet;"></i>
                 </button>
-                </div>
             </div>
 
             <span class="position-absolute top-0 start-100 translate-middle">

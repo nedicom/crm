@@ -5,22 +5,47 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Tasks;
+use Carbon\Carbon;
 
 class TaskAjaxController extends Controller{
     
     public function setstatustask(Request $request){
-      if($request->get('id')){
+
+      if ( !($request->get('status') == 0) ){
         $id = $request->get('id');
         $status = $request->get('status');
-        if($status == 'waiting'){$statuscard = 'ожидает';}
-        elseif($status=='timeleft'){$statuscard='просрочена';}
-        elseif($status=='inwork'){$statuscard='в работе';}
-        elseif($status=='finished'){$statuscard='выполнена';}
-        else{$statuscard='код не сработал';}
+          if($status == 'waiting'){$statuscard = 'ожидает';}
+          elseif($status=='timeleft'){$statuscard='просрочена';}
+          elseif($status=='inwork'){$statuscard='в работе';}
+          elseif($status=='finished'){$statuscard='выполнена';}
+          else{$statuscard='код не сработал';}
         $task = Tasks::find($id);
         $task -> status = $statuscard;
         $task -> save();
         return ($statuscard);
       }
+
+      if( !($request->get('dayofweek') == 0) ){
+
+        $id = $request->get('id');
+        $date = $request->get('date');
+
+        $date2 = date_create($date);
+
+        $dayofweekcalendar = $request->get('dayofweek');
+        $dayofweektask = date('w', strtotime($date));      
+
+        $day = $dayofweekcalendar - $dayofweektask;
+
+        $newdate = date_add($date2, date_interval_create_from_date_string($day." days"));
+        $newdate2 = date_format($newdate, DATE_RFC2822);
+        
+        $task = Tasks::find($id);
+        $task -> date = $newdate;
+        $task -> save();
+        
+      }
+
+    else{};
     }
 }

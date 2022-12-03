@@ -12,7 +12,7 @@ class Tasks extends Model
     use HasFactory;
 
     protected function date(): Attribute
-      {$weekMap = [0 => 'Воскресенье', 1 => 'Понедельник', 2 => 'Вторник', 3 => 'Среда', 4 => 'Четерг', 5 => 'Пятница', 6 => 'Суббота'];
+      {$weekMap = [1 => 'Понедельник', 2 => 'Вторник', 3 => 'Среда', 4 => 'Четерг', 5 => 'Пятница', 6 => 'Суббота', 7 => 'Воскресенье'];
             return Attribute::make(
                 get: fn ($value) => [
                 'value' => Carbon::parse($value)->format('Y-m-d H:i'),

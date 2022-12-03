@@ -83,7 +83,7 @@
       <div class="row" id="taskarea">
 
         @php
-          $weekMap = [0 => 'Понедельник', 1 => 'Вторник', 2 => 'Среда', 3 => 'Четерг', 4 => 'Пятница', 5 => 'Суббота', 6 => 'Воскресенье']
+          $weekMap = [1 => 'Понедельник', 2 => 'Вторник', 3 => 'Среда', 4 => 'Четерг', 5 => 'Пятница', 6 => 'Суббота', 7 => 'Воскресенье'];
         @endphp
 
 
@@ -137,19 +137,34 @@
 
 
 
+
+
+
         @if (app('request')->input('calendar') == 'week')
         <h2 class="">Неделя</h2>
-          @for ($i = 0; $i < 7; $i++)
-            <div class="col my-3" style="max-width: 14%;">
-            <h1 class="badge bg-secondary">{{$weekMap[$i];}}</h1>
-              @foreach($data as $el)
+        @for ($i = 1; $i < 6; $i++)  
+        <div style="width: 20%;"> 
+          <h1 class="badge bg-secondary">{{$weekMap[$i]}}</h1>
+          </div>
+        @endfor
+          @for ($i = 1; $i < 6; $i++)           
+            <div class="my-3 columncard" style="font-size:12px; width: 20%;" dayofweek="{{$i}}"> 
+              @foreach($data as $el)              
                 @if($el['date']['day'] == $weekMap[$i])
-                  @include('inc.calendar.task')
+                  @include('tasks.taskcard')                  
                 @endif
               @endforeach
             </div>
+         
           @endfor
         @endif
+
+
+
+
+
+
+
 
         @if (app('request')->input('calendar') == 'day')
         <h2 class="">Сегодня</h2>
@@ -189,6 +204,7 @@
           </script>
  
           <script> 
+          $( document ).ready(function() { 
             $( function() {
                 $( ".columncard" ).sortable({
                   connectWith: ".columncard",
@@ -196,14 +212,24 @@
                   cancel: ".task-toggle",
                   placeholder: "task-placeholder ui-corner-all",
                   opacity: 0.5,
-                  receive: function(event, ui) {
-                    var status =  this.id;
+                  receive: function(event, ui) { 
                     var id =  ui.item.attr("id");
+
+                    if(this.id){var status =  this.id;}
+                    else{var status = 0;};
+
+                    $input = $( this );
+                    if($input.attr( "dayofweek" )){var dayofweek =  $input.attr( "dayofweek" );}
+                    else{var dayofweek = 0;};
+                    if(ui.item.attr("date")){var date =  ui.item.attr("date");}
+                    else{var date = 0;};                                 
+                    
                     $.ajax({
                       method:"POST",
                       url: "{{ route('setstatus') }}",
-                      data: { id: id, status: status, _token: '{{csrf_token()}}' },
+                      data: { id: id, status: status, date: date, dayofweek: dayofweek, _token: '{{csrf_token()}}' },
                       success: function(data) {
+                        
                       }                  
                     });
                   } 
@@ -221,9 +247,15 @@
                   icon.closest( ".taskcard" ).find( ".task-content" ).toggle();    
                 });
               });
+           });
            </script>
 
          <script>
+          var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+          var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+            return new bootstrap.Popover(popoverTriggerEl)
+          })
+
           const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
           const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
         </script>
@@ -235,9 +267,7 @@
                         var id =  $input.attr( "tagName" )
                         var color =  $input.attr( "color" )
                         var value =  this.value;  
-
-                        $('#tagspan'+id).css("color", color);      
-
+                        $('#tagspan'+id).css("color", color); 
                             $.ajax({
                             url:"{{ route('tag') }}",
                             method:"POST",
