@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\PaymentsRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class PaymentsController extends Controller{
 
@@ -86,38 +87,49 @@ class PaymentsController extends Controller{
           $nameOfAttractioner = null; 
           $nameOfSeller = null;
           $directionDevelopment = null;
+          $month=Carbon::now()->format('m');
+          $year=Carbon::now()->format('Y');
+          $months = [1 => 'январь',2  => 'февраль',3  => 'март',4  => 'апрель',5  => 'май',6  => 'июнь',7  => 'июль',
+          8  => 'август',9  => 'сентябрь',10 => 'октябрь',11 => 'ноябрь',12 => 'декабрь'];
 
-          if((Auth::user()->role) == 'admin'){
-            if (!empty($req->nameOfAttractioner)){$nameOfAttractioner='nameOfAttractioner';}
-            if (!empty($req->nameOfSeller)){$nameOfSeller='nameOfSeller';}
-            if (!empty($req->directionDevelopment)){$directionDevelopment='directionDevelopment';}
+            if((Auth::user()->role) == 'admin'){//для авторизированных
+              if (!empty($req->nameOfAttractioner)){$nameOfAttractioner='nameOfAttractioner';}
+              if (!empty($req->nameOfSeller)){$nameOfSeller='nameOfSeller';}
+              if (!empty($req->directionDevelopment)){$directionDevelopment='directionDevelopment';}
+              if (!empty($req->month)){$month=$req->month;}
+              if (!empty($req->year)){$year=$req->year;}
 
-            return view ('payments', ['data' => Payments::with('serviceFunc', 'AttractionerFunc', 'sellerFunc', 'developmentFunc')
-            ->where($nameOfAttractioner, $req->nameOfAttractioner)
-            ->where($nameOfSeller, $req->nameOfSeller)
-            ->where($directionDevelopment, $req->directionDevelopment)
-            ->whereMonth('created_at', 12)
-            ->get()], ['datalawyers' =>  User::all(), 'dataservices' =>  Services::all(), 'dataclients' =>  ClientsModel::all()]);
-          }
-          else{ 
-            if (!empty($req->nameOfAttractioner)){$nameOfAttractioner='nameOfAttractioner';}
-            if (!empty($req->nameOfSeller)){$nameOfSeller='nameOfSeller';}
-            if (!empty($req->directionDevelopment)){$directionDevelopment='directionDevelopment';}
+              return view ('payments', ['data' => Payments::with('serviceFunc', 'AttractionerFunc', 'sellerFunc', 'developmentFunc')
+              ->where($nameOfAttractioner, $req->nameOfAttractioner)
+              ->where($nameOfSeller, $req->nameOfSeller)
+              ->where($directionDevelopment, $req->directionDevelopment)
+              ->whereMonth('created_at', $month)
+              ->whereYear('created_at', $year)
+              ->get()], ['months' => $months, 'month' => $month, 'datalawyers' =>  User::all(), 'dataservices' =>  Services::all(), 'dataclients' =>  ClientsModel::all()]);
+            }
 
-            return view ('payments', ['data' => Payments::with('serviceFunc', 'AttractionerFunc', 'sellerFunc', 'developmentFunc')
-            ->where(function ($query) {
-              $currentuser = Auth::id();
-              $query
-              ->orWhere('nameOfAttractioner', $currentuser)
-              ->orWhere('nameOfSeller', $currentuser)
-              ->orWhere('directionDevelopment', $currentuser);
-             })
-            ->where($nameOfAttractioner, $req->nameOfAttractioner)
-            ->where($nameOfSeller, $req->nameOfSeller)
-            ->where($directionDevelopment, $req->directionDevelopment)
-            ->get()], ['datalawyers' =>  User::all(), 'dataservices' =>  Services::all(), 'dataclients' =>  ClientsModel::all()]);
-          }
+            else{ //для не авторизированных
+              if (!empty($req->nameOfAttractioner)){$nameOfAttractioner='nameOfAttractioner';}
+              if (!empty($req->nameOfSeller)){$nameOfSeller='nameOfSeller';}
+              if (!empty($req->directionDevelopment)){$directionDevelopment='directionDevelopment';}
+              if (!empty($req->month)){$month=$req->month;}
+              if (!empty($req->year)){$year=$req->year;}
 
+              return view ('payments', ['data' => Payments::with('serviceFunc', 'AttractionerFunc', 'sellerFunc', 'developmentFunc')
+              ->where(function ($query) {
+                $currentuser = Auth::id();
+                $query
+                ->orWhere('nameOfAttractioner', $currentuser)
+                ->orWhere('nameOfSeller', $currentuser)
+                ->orWhere('directionDevelopment', $currentuser);
+              })
+              ->where($nameOfAttractioner, $req->nameOfAttractioner)
+              ->where($nameOfSeller, $req->nameOfSeller)
+              ->where($directionDevelopment, $req->directionDevelopment)
+              ->whereMonth('created_at', $month)
+              ->whereYear('created_at', $year)
+              ->get()], ['months' => $months, 'month' => $month, 'datalawyers' =>  User::all(), 'dataservices' =>  Services::all(), 'dataclients' =>  ClientsModel::all()]);          
+            }
       }
 
       public function showPaymentById($id){

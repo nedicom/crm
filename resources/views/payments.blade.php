@@ -118,8 +118,64 @@
     <div class="row">
         <div class="col-12">
             <table class="table table-hover table-borderless align-middle caption-top" style="font-size: 14px;">
-            <div class="d-flex flex-row-reverse"><a class="btn btn-secondary" href="payments" role="button">сбросить фильтры</a></div>
                 <thead class="fw-bold text-center">
+                  <form action="{{route('payments')}}" method="get">
+                  @csrf
+                
+                  <th scope="col"></th>
+                    <th scope="col">
+                        <select class="form-select form-select-sm" name="year">                       
+                          <option value="2022" @if (2022 == (request()->get('year'))) selected @endif>2022</option>
+                          <option value="2023" @if (2023 == (request()->get('year'))) selected @endif>2023</option>                        
+                    </th>
+
+                    <th scope="col">
+                        <select class="form-select form-select-sm" name="month">
+                        
+                          @foreach($months as $number => $name)                          
+                            <option value="{{$number}}" @if ($number == (request()->get('month'))) selected @endif
+                            @if ( request()->get('month') == '' && $number == $month ) selected @endif
+                             >{{$name}}
+                            </option>
+                          @endforeach                        
+                    </th>
+                    
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+
+                    <th scope="col" colspan="2">
+                        <select class="form-select form-select-sm" name="nameOfAttractioner">
+                        <option value="">привлек</option>
+                          @foreach($datalawyers as $el)
+                          <option value="{{$el -> id}}" @if ($el -> id == (request()->get('nameOfAttractioner'))) selected @endif>{{$el -> name}}</option>
+                          @endforeach
+                    </th>
+
+                    <th scope="col" colspan="2">
+                        <select class="form-select form-select-sm" name="nameOfSeller">
+                        <option value="">продал</option>
+                          @foreach($datalawyers as $el)
+                          <option value="{{$el -> id}}" @if ($el -> id == (request()->get('nameOfSeller'))) selected @endif>{{$el -> name}}</option>
+                          @endforeach
+                    </th>
+
+                    <th scope="col" colspan="2">
+                        <select class="form-select form-select-sm" name="directionDevelopment" id="directionDevelopment">
+                          <option value="">направление</option>
+                          @foreach($datalawyers as $el)
+                          <option value="{{$el -> id}}" @if ($el -> id == (request()->get('directionDevelopment'))) selected @endif>{{$el -> name}}</option>
+                          @endforeach
+                    </th>
+                    @if (auth()->user()->role == 'admin')
+                            <th scope="col"></th>
+                          @endif
+                    <th scope="col"><button type="submit" class="btn btn-primary  btn-sm">Применить</button></form></th>
+                    <th scope="col"><a class="btn btn-secondary btn-sm" href="payments" role="button">сбросить</a></th>
+                  </tr>
+
+
+                
                 <tr>
                     <th scope="col">№</th>
                     <th scope="col">дата</th>
@@ -129,60 +185,13 @@
                     <th scope="col">Оплачено</th>
                     <th scope="col">Куда поступили</th>
                     <th scope="col">
-                      <div class="dropdown">
-                        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          привлек
-                        </button>
-                        <ul class="dropdown-menu">
-                          @foreach($datalawyers as $el)
-                            <li>
-                            <a class="dropdown-item" href="payments/?nameOfAttractioner={{$el -> id}}">{{$el -> name}}</a>                            
-                            </li>
-                          @endforeach
-                            <li><hr class="dropdown-divider"></li>
-                            <li>
-                              <a class="dropdown-item" href="payments">сбросить</a>                            
-                            </li>
-                        </ul>
-                      </div>
+                      
                     </th>
                     <th scope="col">Оплата + повышение</th>
                     <th scope="col">
-                     <div class="dropdown">
-                        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          продал
-                        </button>
-                        <ul class="dropdown-menu">
-                          @foreach($datalawyers as $el)
-                            <li>
-                            <a class="dropdown-item" href="payments/?nameOfSeller={{$el -> id}}">{{$el -> name}}</a>                            
-                            </li>
-                          @endforeach
-                            <li><hr class="dropdown-divider"></li>
-                            <li>
-                              <a class="dropdown-item" href="payments">сбросить</a>                            
-                            </li>
-                        </ul>
-                      </div>
                     </th>
                     <th scope="col">Оплата + повышение</th>
                     <th scope="col">
-                      <div class="dropdown">
-                        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          развил
-                        </button>
-                        <ul class="dropdown-menu">
-                          @foreach($datalawyers as $el)
-                            <li>
-                            <a class="dropdown-item" href="payments/?directionDevelopment={{$el -> id}}">{{$el -> name}}</a>                            
-                            </li>
-                          @endforeach
-                            <li><hr class="dropdown-divider"></li>
-                            <li>
-                              <a class="dropdown-item" href="payments">сбросить</a>                            
-                            </li>
-                        </ul>
-                      </div>
                     </th>
                     <th scope="col">Оплата</th>
                     @if (auth()->user()->role == 'admin')
@@ -238,8 +247,6 @@
                         $totalsell = $totalsell + ($el -> SallerSalary); $totalsellup = $totalsellup + ($el -> modifySeller);
                         $totaldirect = $totaldirect + ($el -> DeveloperSalary); $totalfirmearning = $totalfirmearning + ($el -> firmearning);   
                       @endphp
-
-
                   @endforeach
                   <tfoot class="border-top">
                     <tr>
