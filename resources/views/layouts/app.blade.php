@@ -16,7 +16,7 @@
 
   </head>
 
-  <body class="fw-light text-muted">
+  <body class="fw-light">
             @guest
               @include('inc.navguest')
             @endguest

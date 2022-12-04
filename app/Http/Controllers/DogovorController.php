@@ -9,14 +9,14 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\ClientsModel;
 use App\Models\Services;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Http\File;
 use ZipArchive;
 
 class DogovorController extends Controller{
 
     public function dogovor(){
-        return view ('dogovor/dogovor', ['data' => Dogovor::all()], ['dataservice' =>  Services::all()]);
+        $avg = Dogovor::avg('allstoimost');
+
+        return view ('dogovor/dogovor', ['data' => Dogovor::orderByDesc('created_at')->get()], ['avg' => $avg, 'dataservice' =>  Services::all(), 'datalawyers' =>  User::all(), 'dataclients' =>  ClientsModel::all()]);
     }
 
     public function showdogovorById($id){
@@ -30,6 +30,7 @@ class DogovorController extends Controller{
             $clientname = $req -> input('client'); 
             $predoplata = $req -> input('predoplata');
             $today= Carbon::now()->toDateString(); // дата без времени
+            $todaywithmin = Carbon::now();
             $ispolnitel = 'Адвокатский кабинет Мина Марк Анатольевич';
             $adresispolnitelya = '295000, РФ, Респ. Крым, ул. Долгоруковская 13а'; 
             $kontaktyispolnitelya ='+7978 8838 978';
@@ -38,6 +39,10 @@ class DogovorController extends Controller{
             $uslugi = $req -> input('subject');
             $allstoimost = $req -> input('allstoimost');
             $preduslugi = $req -> input('preduslugi');
+
+            $dogovorurl = 'dogovors/'.$name.' - '.$todaywithmin.'.docx';
+            $dogovorurldb = 'public/'.$dogovorurl;
+
                 $Dogovor -> name = $name;
                 $Dogovor -> allstoimost = $req -> input('allstoimost');    
                 $Dogovor -> preduslugi = $req -> input('preduslugi');    
@@ -46,6 +51,7 @@ class DogovorController extends Controller{
                 $Dogovor -> client_id = $req -> input('clientidinput');
                 $Dogovor -> lawyer_id = Auth::id();
                 $Dogovor -> date =  $today;
+                $Dogovor -> url =  $dogovorurl;
         $Dogovor -> save();
 
         $id = $req -> input('clientidinput');
@@ -64,9 +70,9 @@ class DogovorController extends Controller{
             $today, $ispolnitel, $adresispolnitelya, $kontaktyispolnitelya, $clientname,
             $adress, $phone, $uslugi, $allstoimost, $preduslugi, $predoplata);
 
-        $psthxml = "dogovor/document.xml";
+       $psthxml = "dogovor/document.xml";
 
-        $zip = new ZipArchive;
+        $zip = new ZipArchive;//пакуем в архив наши переменные
 				if($zip->open('dogovor/soglashenie.docx') === TRUE) {
 					$handle = fopen($psthxml, "r");
 					$content = fread($handle, filesize($psthxml));
@@ -77,22 +83,15 @@ class DogovorController extends Controller{
 					$zip->close();                  
 				}
 
-		$file = ("dogovor/soglashenie.docx");//мы заменили содержиое файла на сервере
+	        $file = ("dogovor/soglashenie.docx");	//мы уже заменили содержиое файла на сервере
             header ("Content-Type: application/octet-stream");
             header ("Accept-Ranges: bytes");
             header ("Content-Length: ".filesize($file));
             header ("Content-Disposition: attachment; filename=".$name.".docx");
-            flush();  //очищение буфера вывода
+            //flush();  //очищение буфера вывода
 
-        $filename = 'dog/'.$name.'docx';
-            copy($file, public_path($filename));
-        //Storage::disk('local')->put('example.txt', 'Contents');
-        //$dogovorname = $file->hashName();
-        //$file->move(public_path('/alldogovor'),  $dogovorname);
-		//readfile($file);
-
-        //header( 'Location: http://yandex.ru/yandsearch?text=redirect', true, 301 );
-
-        return redirect() -> route('dogovor') -> with('success', 'Все в порядке, договор добавлен'); 
+        copy($file, $dogovorurl);  //копируем обработанный договор в общую папку
+        session()->flash('url', $dogovorurldb);
+        return redirect() -> route('dogovor') -> with('success', 'Все в порядке, договор добавлен '); 
     }
 }
