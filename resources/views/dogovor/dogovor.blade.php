@@ -25,7 +25,7 @@
            <span>
             @foreach($datalawyers as $ellawyer)
             @if ($ellawyer -> id == $el -> lawyer_id)  
-            <img src="{{$ellawyer -> avatar}}" style="width: 40px;" class="rounded-circle">
+            <img src="{{$ellawyer -> avatar}}" style="width: 40px; height:40px" class="rounded-circle">
             @endif
             @endforeach
           </span>
