@@ -37,7 +37,7 @@
                         @foreach($datalawyers as $ellawyer)
                           @if ($ellawyer -> id == $el -> responsible)  
                             <img src="{{$ellawyer -> avatar}}" style="width: 40px;  height:40px" class="rounded-circle" 
-                            data-toggle="tooltip" title="{{$el -> name}}">
+                            data-toggle="tooltip" title="{{$ellawyer -> name}}">
                           @endif
                         @endforeach
                 </div>
