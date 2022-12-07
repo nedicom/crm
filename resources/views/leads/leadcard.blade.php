@@ -33,7 +33,14 @@
                   <a class="btn btn-light w-100" href="{{ route ('showLeadById', $el->id) }}">
                   <i class="bi-three-dots"></i></a>
                 </div>
-                <div class="">
+                <div class="col-4">
+                        @foreach($datalawyers as $ellawyer)
+                          @if ($ellawyer -> id == $el -> responsible)  
+                            <img src="{{$ellawyer -> avatar}}" style="width: 40px;  height:40px" class="rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{$ellawyer -> name}}">
+                          @endif
+                        @endforeach
+                </div>
+                <div class="col-4">
                 @if($el -> action)<a class ="btn" data-toggle="tooltip" title="{{$el -> action}}">
                    <i class="bi bi-chat-right-text" style="color: red "></i></a>
                 @endif

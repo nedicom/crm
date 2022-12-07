@@ -37,7 +37,7 @@ max-width:250px;
                     <span>
                         @foreach($datalawyers as $ellawyer)
                         @if ($ellawyer -> id == $el -> postanovshik)  
-                        <img src="{{$ellawyer -> avatar}}" style="width: 40px;" class="rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="постановщик">
+                        <img src="{{$ellawyer -> avatar}}" style="width: 40px; height:40px" class="rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="постановщик">
                         @endif
                         @endforeach
                     </span>
@@ -49,14 +49,14 @@ max-width:250px;
                     <span>
                         @foreach($datalawyers as $ellawyer)
                         @if ($ellawyer -> id == $el -> lawyer)  
-                        <img src="{{$ellawyer -> avatar}}" style="width: 40px;" class="rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="исполнитель">
+                        <img src="{{$ellawyer -> avatar}}" style="width: 40px;  height:40px" class="rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="исполнитель">
                         @endif
                         @endforeach
                     </span>
                     <span>
                         @foreach($datalawyers as $ellawyer)
                         @if ($ellawyer -> id == $el -> soispolintel)  
-                        <img src="{{$ellawyer -> avatar}}" style="width: 40px;" class="rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="соисполнитель">
+                        <img src="{{$ellawyer -> avatar}}" style="width: 40px;  height:40px" class="rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="соисполнитель">
                         @endif
                         @endforeach
                     </span>

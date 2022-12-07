@@ -18,7 +18,7 @@
           <h5 class="mx-2 text-muted text-truncate">{{$el -> name}}</h5>
           
           <div>
-            <img src="{{ $el -> avatar }}" style="width: 40px;" class="rounded-circle" alt="...">
+            <img src="{{ $el -> avatar }}" style="width: 40px; height:40px" class="rounded-circle" alt="...">
           </div>
          </div>
 

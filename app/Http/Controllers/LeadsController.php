@@ -53,7 +53,8 @@ class LeadsController extends Controller{
           ->orderBy('created_at', 'desc')
           ->get()], ['datalawyers' =>  User::all(),
           'dataservices' =>  Services::all(), 'datasources' =>  Source::all('name'),
-          'datasource' => Source::all()]);
+          'datasource' => Source::all(),
+          'datalawyers' => User::all()]);
         }
 
 
