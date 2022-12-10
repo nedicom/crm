@@ -16,7 +16,7 @@
     <div class="row mb-4">
     <div class="col-2">
       <div class="">
-        <h3 class="text-uppercase">Платежи <i class="bi bi-credit-card text-info mx-2"></i></h3>
+        <h4 class="text-uppercase">Платежи<i class="bi bi-credit-card text-info mx-2"></i></h4>
         <h5></h5>
       </div>
     </div>
@@ -117,70 +117,83 @@
 
     <div class="row">
         <div class="col-12">
-            <table class="table table-hover table-borderless align-middle caption-top" style="font-size: 14px;">
+            <table class="table table-hover table-borderless align-middle caption-top" style="font-size: 12px; table-layout: fixed;">
                 <thead class="fw-bold text-center">
                   <form action="{{route('payments')}}" method="get">
                   @csrf
                 
-                  <th scope="col"></th>
-                    <th scope="col">
+                  
+                  <div class="d-flex">
+
+                  <div class="d-flex">
+                    <div class="px-3">
                         <select class="form-select form-select-sm" name="year">                       
                           <option value="2022" @if (2022 == (request()->get('year'))) selected @endif>2022</option>
                           <option value="2023" @if (2023 == (request()->get('year'))) selected @endif>2023</option>                        
-                    </th>
+                        </select>
+                    </div>
 
-                    <th scope="col">
-                        <select class="form-select form-select-sm" name="month">
-                        
+                    <div class="px-3">                   
+                        <select class="form-select form-select-sm" name="month">                        
                           @foreach($months as $number => $name)                          
                             <option value="{{$number}}" @if ($number == (request()->get('month'))) selected @endif
                             @if ( request()->get('month') == '' && $number == $month ) selected @endif
                              >{{$name}}
                             </option>
                           @endforeach                        
-                    </th>
-                    
-                    <th scope="col"></th>
-                    <th scope="col"></th>
-                    <th scope="col"></th>
+                        </select>                    
+                    </div>
 
-                    <th scope="col" colspan="2">
+                    <div class="px-3">   
+                        <select class="form-select form-select-sm" name="calculation">
+                        <option value="">куда поступили</option>
+                          <option value="РНКБ" @if ("РНКБ" == (request()->get('calculation'))) selected @endif>РНКБ</option>
+                          <option value="СБЕР" @if ("СБЕР" == (request()->get('calculation'))) selected @endif>СБЕР</option>
+                          <option value="ГЕНБАНК" @if ("ГЕНБАНК" == (request()->get('calculation'))) selected @endif>ГЕНБАНК</option>
+                          <option value="НАЛИЧНЫЕ" @if ("НАЛИЧНЫЕ" == (request()->get('calculation'))) selected @endif>НАЛИЧНЫЕ</option>
+                        </select>
+                    </div>
+
+                    <div class="px-3">   
                         <select class="form-select form-select-sm" name="nameOfAttractioner">
                         <option value="">привлек</option>
                           @foreach($datalawyers as $el)
                           <option value="{{$el -> id}}" @if ($el -> id == (request()->get('nameOfAttractioner'))) selected @endif>{{$el -> name}}</option>
                           @endforeach
-                    </th>
+                        </select>
+                    </div>
 
-                    <th scope="col" colspan="2">
+                    <div class="px-3">                          
                         <select class="form-select form-select-sm" name="nameOfSeller">
                         <option value="">продал</option>
                           @foreach($datalawyers as $el)
                           <option value="{{$el -> id}}" @if ($el -> id == (request()->get('nameOfSeller'))) selected @endif>{{$el -> name}}</option>
                           @endforeach
-                    </th>
-
-                    <th scope="col" colspan="2">
+                        </select>
+                    </div>   
+                    
+                    <div class="px-3">                      
                         <select class="form-select form-select-sm" name="directionDevelopment" id="directionDevelopment">
                           <option value="">направление</option>
                           @foreach($datalawyers as $el)
                           <option value="{{$el -> id}}" @if ($el -> id == (request()->get('directionDevelopment'))) selected @endif>{{$el -> name}}</option>
                           @endforeach
-                    </th>
-                    @if (auth()->user()->role == 'admin')
-                            <th scope="col"></th>
-                          @endif
-                    <th scope="col"><button type="submit" class="btn btn-primary  btn-sm">Применить</button></form></th>
-                    <th scope="col"><a class="btn btn-secondary btn-sm" href="payments" role="button">сбросить</a></th>
-                  </tr>
+                        </select>   
+                    </div>
 
+                  <div class="d-flex px-3">                   
+                        <button type="submit" class="mx-1 btn btn-primary  btn-sm">Применить</button></form>
+                        <a class="mx-1 btn btn-secondary btn-sm" href="payments" role="button">сбросить</a>
+                  </div>
+
+                  </div>
 
                 
                 <tr>
-                    <th scope="col">№</th>
+                    <th style="width: 2%">№</th>
                     <th scope="col">дата</th>
-                    <th scope="col">Клиент</th>
-                    <th scope="col">Услуга</th>
+                    <th style="width: 10%">Клиент</th>
+                    <th style="width: 8%">Услуга</th>
                     <th scope="col">Цена услуги</th>
                     <th scope="col">Оплачено</th>
                     <th scope="col">Куда поступили</th>
@@ -197,7 +210,7 @@
                     @if (auth()->user()->role == 'admin')
                       <th scope="col">Доход компании</th>
                     @endif                    
-                    <th scope="col"></th>
+                    <th style="width: 4%"></th>
                 </tr>
                 </thead>
 
@@ -210,9 +223,13 @@
                   @foreach($data as $el)
                       <tr>
                           <td>{{$number}}</td>
-                          <td>{{$el -> created_at}}</td>
-                          <td scope="row">{{$el -> client}}</td>
-                          <td>{{$el -> serviceFunc -> name}}</td>
+                          <td>{{$el -> created_at->format('j / m')}}</td>
+                          <td class = "text-truncate" data-bs-toggle="tooltip" data-bs-title="{{$el -> client}}">
+                          {{$el -> client}}
+                          </td>
+                          <td class = "text-truncate" data-bs-toggle="tooltip" data-bs-title="{{$el -> serviceFunc -> name}}">
+                           {{$el -> serviceFunc -> name}}
+                          </td>
                           <td class="text-center">{{$el -> serviceFunc -> price}}</td>                          
                           <td class="fw-bold text-center">{{$el -> summ}}</td>
                           <td>
@@ -258,11 +275,12 @@
                       <td></td>
                       <td></td>
                       <td></td>
-                      <td class="fw-bold text-center">{{$totalattr}} + {{$totalattrup}}</td>
+                      <td class="fw-bold text-center">
+                      {{$totalattr}} + {{$totalattrup}}</td>
                       <td></td>
                       <td class="fw-bold text-center">{{$totalsell}} + {{$totalsellup}}</td>
                       <td></td>
-                      <td></td>
+                      <td class="fw-bold text-center"></td>
                       <td></td>
                     </tr>
                     <tr>
@@ -277,11 +295,11 @@
                       @php
                       $totalattrall = $totalattr + $totalattrup; $totalsellrall = $totalsell + $totalsellup;
                       @endphp
-                      <td class="fw-bold text-center">{{$totalattrall}}</td>
+                      <td class="fw-bold text-center">привлечение:</br></br>{{$totalattrall}}</td>
                       <td></td>
-                      <td class="fw-bold text-center">{{$totalsellrall}}</td>
+                      <td class="fw-bold text-center">продажа:</br></br>{{$totalsellrall}}</td>
                       <td></td>
-                      <td class="fw-bold text-center">{{$totaldirect}}</td>
+                      <td class="fw-bold text-center">развитие:</br></br>{{$totaldirect}}</td>
                                       @if (auth()->user()->role == 'admin')
                                       <td class="fw-bold text-center">{{$totalfirmearning}}</td>
                                       @endif    
@@ -298,7 +316,10 @@
         </div> <!-- end col -->
     </div>
 
-
+    <script>
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    </script>
 
     {{-- end views for all payments--}}
 

@@ -87,6 +87,7 @@ class PaymentsController extends Controller{
           $nameOfAttractioner = null; 
           $nameOfSeller = null;
           $directionDevelopment = null;
+          $calculation = null;
           $month=Carbon::now()->format('m');
           $year=Carbon::now()->format('Y');
           $months = [1 => 'январь',2  => 'февраль',3  => 'март',4  => 'апрель',5  => 'май',6  => 'июнь',7  => 'июль',
@@ -96,6 +97,7 @@ class PaymentsController extends Controller{
               if (!empty($req->nameOfAttractioner)){$nameOfAttractioner='nameOfAttractioner';}
               if (!empty($req->nameOfSeller)){$nameOfSeller='nameOfSeller';}
               if (!empty($req->directionDevelopment)){$directionDevelopment='directionDevelopment';}
+              if (!empty($req->calculation)){$calculation='calculation';}
               if (!empty($req->month)){$month=$req->month;}
               if (!empty($req->year)){$year=$req->year;}
 
@@ -103,6 +105,7 @@ class PaymentsController extends Controller{
               ->where($nameOfAttractioner, $req->nameOfAttractioner)
               ->where($nameOfSeller, $req->nameOfSeller)
               ->where($directionDevelopment, $req->directionDevelopment)
+              ->where($calculation, $req->calculation)
               ->whereMonth('created_at', $month)
               ->whereYear('created_at', $year)
               ->get()], ['months' => $months, 'month' => $month, 'datalawyers' =>  User::all(), 'dataservices' =>  Services::all(), 'dataclients' =>  ClientsModel::all()]);
@@ -126,6 +129,7 @@ class PaymentsController extends Controller{
               ->where($nameOfAttractioner, $req->nameOfAttractioner)
               ->where($nameOfSeller, $req->nameOfSeller)
               ->where($directionDevelopment, $req->directionDevelopment)
+              ->where($calculation, $req->calculation)
               ->whereMonth('created_at', $month)
               ->whereYear('created_at', $year)
               ->get()], ['months' => $months, 'month' => $month, 'datalawyers' =>  User::all(), 'dataservices' =>  Services::all(), 'dataclients' =>  ClientsModel::all()]);          
