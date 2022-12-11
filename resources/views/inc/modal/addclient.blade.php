@@ -10,23 +10,23 @@
         @csrf
         <div class="form-group mb-3">
           <label for="name">Введите Имя <span class="text-danger">*</span></label>
-          <input type = "text" name="name" placeholder="Иван Васильевич" id="name" class="form-control" reqired>
+          <input type = "text" name="name" value="{{ old('name') }}" placeholder="Иван Васильевич" id="name" class="form-control" reqired>
         </div>
         <div class="form-group mb-3">
           <label for="phone">Введите телефон <span class="text-danger">*</span></label>
-          <input type = "phone" name="phone" placeholder="+7" id="phone" class="form-control" reqired>
+          <input type = "phone" name="phone" value="{{ old('phone') }}" placeholder="+7" id="phone" class="form-control" reqired>
         </div>
         <div class="form-group mb-3">
-          <label for="phone">Введите email</label>
-          <input type = "email" name="email" placeholder="ivanov@yandex.ru" id="email" class="form-control">
+          <label for="email">Введите email</label>
+          <input type = "email" name="email" value="{{ old('email') }}" placeholder="ivanov@yandex.ru" id="email" class="form-control">
         </div>
         <div class="form-group mb-3">
           <label for="address">Введите адрес</label>
-          <input type = "text" name="address" placeholder="295000, Симферополь, ул. Кирова, 15" id="address" class="form-control">
+          <input type = "text" name="address" value="{{ old('address') }}" placeholder="295000, Симферополь, ул. Кирова, 15" id="address" class="form-control">
         </div>
         <div class="form-group mb-3">
           <label for="source">Укажите источник</label>
-          <select class="form-select" name="source" id="source" class="form-control">
+          <select class="form-select" name="source" value="{{ old('source') }}" id="source" class="form-control">
                 @foreach($datasource as $el)
                   <option value="{{$el -> name}}">{{$el -> name}}</option>
                 @endforeach
