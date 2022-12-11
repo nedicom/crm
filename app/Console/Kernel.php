@@ -23,7 +23,7 @@ class Kernel extends ConsoleKernel
         })->everyMinute();
         //->dailyAt('22:00');
 
-        $schedule->call(function () {
+       /* $schedule->call(function () {
             $users = DB::table('users')
             ->where('email', '=', 'm6132@yandex.ru')
             ->get();
@@ -38,7 +38,7 @@ class Kernel extends ConsoleKernel
                         // send email
                         mail($to, $topic,$msg,$headers);
                 }
-        })->everyMinute();
+        })->everyMinute();*/
 
     }
 
