@@ -31,6 +31,6 @@ class DailyTask extends Command
                     mail($to, $topic,$msg,$headers);
             }
          
-        $this->info('Successfully sent daily quote to everyone.');
+        $this->info('Successfully sent tasks to everyone.');
     }
 }

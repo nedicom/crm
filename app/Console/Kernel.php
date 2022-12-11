@@ -6,6 +6,7 @@ use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\Console\Commands\DailyTask;
 
 class Kernel extends ConsoleKernel
 {
@@ -21,7 +22,7 @@ class Kernel extends ConsoleKernel
             ->update(['status' => 'просрочена']);
         })->dailyAt('22:00');
 
-        $schedule->command('Tasktoday:daily')
+        $schedule->command(DailyTask::class)
         ->everyMinute();
     }
 
