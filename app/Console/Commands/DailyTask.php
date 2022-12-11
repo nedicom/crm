@@ -3,8 +3,6 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\SendMail;
 use Illuminate\Support\Facades\DB;
 
 class DailyTask extends Command
@@ -33,13 +31,16 @@ class DailyTask extends Command
         $users = DB::table('users')
         ->where('email', '=', 'm6132@yandex.ru')
         ->get();
-        foreach ($users as $user) {
-            Mail::raw("{$key} -> {$data}", function ($mail) use ($user) {
-                $mail->from('digamber@positronx.com');
-                $mail->to($user->email)
-                    ->subject('Daily New Quote!');
-            });
-        }
+            foreach ($users as $user) {
+                // the message
+                    $msg = "First line of text\nSecond line of text";
+
+                    // use wordwrap() if lines are longer than 70 characters
+                    $msg = wordwrap($msg,70);
+
+                    // send email
+                    mail("m6132@yandex.ru","My subject",$msg);
+            }
          
         $this->info('Successfully sent daily quote to everyone.');
     }
