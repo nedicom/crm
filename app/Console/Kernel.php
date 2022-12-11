@@ -6,14 +6,10 @@ use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
-use App\Console\Commands\DailyTask;
+//use App\Console\Commands\DailyTask;
 
 class Kernel extends ConsoleKernel
 {
-
-    protected $commands = [
-        Commands\DailyTask::class,
-    ];
 
     protected function schedule(Schedule $schedule)
     {
@@ -23,7 +19,7 @@ class Kernel extends ConsoleKernel
         })->everyMinute();
         //->dailyAt('22:00');
 
-       /* $schedule->call(function () {
+        $schedule->call(function () {
             $users = DB::table('users')
             ->where('email', '=', 'm6132@yandex.ru')
             ->get();
@@ -38,7 +34,7 @@ class Kernel extends ConsoleKernel
                         // send email
                         mail($to, $topic,$msg,$headers);
                 }
-        })->everyMinute();*/
+        })->everyMinute();
 
     }
 
