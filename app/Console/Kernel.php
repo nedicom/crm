@@ -20,7 +20,8 @@ class Kernel extends ConsoleKernel
         $schedule->call(function () {
             DB::table('tasks')->where('date', '<', Carbon::now())
             ->update(['status' => 'просрочена']);
-        })->dailyAt('22:00');
+        })->everyMinute();
+        //->dailyAt('22:00');
 
         $schedule->command(DailyTask::class)
         ->everyMinute();
