@@ -23,8 +23,23 @@ class Kernel extends ConsoleKernel
         })->everyMinute();
         //->dailyAt('22:00');
 
-        $schedule->command(DailyTask::class)
-        ->everyMinute();
+        $schedule->call(function () {
+            $users = DB::table('users')
+            ->where('email', '=', 'm6132@yandex.ru')
+            ->get();
+                foreach ($users as $user) {
+    
+                        $to = "m6132@yandex.ru";
+                        $topic = "Задачи";
+                        $msg = "First line of text\nSecond line of text";
+                        $msg = wordwrap($msg,70);
+                        $headers = "From: crm@nedicom.ru";
+    
+                        // send email
+                        mail($to, $topic,$msg,$headers);
+                }
+        })->everyMinute();
+
     }
 
     protected function commands()
