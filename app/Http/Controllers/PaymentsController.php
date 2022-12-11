@@ -12,10 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
 class PaymentsController extends Controller{
-
-
         //создание платежа
-
     public function addpayment(PaymentsRequest $req){
         $payment = new Payments();
 
@@ -79,11 +76,11 @@ class PaymentsController extends Controller{
 
         return redirect() -> route('payments') -> with('success', 'Все в порядке, платеж добавлен');
     }
-
         //конец создания платежа
 
 
     public function showpayments(Request $req){
+
           $nameOfAttractioner = null; 
           $nameOfSeller = null;
           $directionDevelopment = null;

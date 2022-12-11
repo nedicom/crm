@@ -8,6 +8,7 @@ use App\Models\Tasks;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
   class TasksController extends Controller{
 
