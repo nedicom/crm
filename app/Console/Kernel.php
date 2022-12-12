@@ -6,34 +6,52 @@ use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
-//use App\Console\Commands\DailyTask;
+use App\Models\User;
+use App\Models\Tasks;
 
 class Kernel extends ConsoleKernel
 {
 
     protected function schedule(Schedule $schedule)
     {
-        $schedule->call(function () {
-            DB::table('tasks')->where('date', '<', Carbon::now())
-            ->update(['status' => 'просрочена']);
-        })->everyMinute();
-        //->dailyAt('22:00');
 
         $schedule->call(function () {
-            $users = DB::table('users')
-            ->where('email', '=', 'm6132@yandex.ru')
-            ->get();
-                foreach ($users as $user) {
-    
-                        $to = "m6132@yandex.ru";
-                        $topic = "Задачи";
-                        $msg = "First line of text\nSecond line of text";
-                        $msg = wordwrap($msg,70);
-                        $headers = "From: crm@nedicom.ru";
-    
-                        // send email
-                        mail($to, $topic,$msg,$headers);
-                }
+            
+            DB::table('tasks')->where('date', '<', Carbon::now())
+            ->update(['status' => 'просрочена']);
+            
+            $users = USER::all();
+            $myfile = fopen('test.txt', "w") or die("Unable to open file!");
+            foreach ($users as $user){
+                
+                        //$to = "m6132@yandex.ru";
+                        //$topic = "Ваши задачи";
+                        //$msg = $user -> name;
+                        //$msg = wordwrap($msg,100);
+                        //$headers = "From: crm@nedicom.ru";
+                        //mail($to, $topic,$msg,$headers);
+
+                        $id = $user -> id;
+                        fwrite($myfile, $user -> name);
+                        fwrite($myfile, 'исполнитель');
+                        
+                        $tasks = Tasks::where('lawyer', $id)->get();
+                            foreach ($tasks as $task){                              
+                                fwrite($myfile, $task->name);
+                            }
+                            fwrite($myfile, 'соисполнитель');
+                            $tasks = Tasks::where('soispolintel', $id)->get();
+                                foreach ($tasks as $task){                              
+                                    fwrite($myfile, $task->name);
+                                }
+                                $tasks = Tasks::where('postanovshik', $id)->get();
+                                foreach ($tasks as $task){                              
+                                    fwrite($myfile, $task->name);
+                                }
+                        
+
+            }
+            fclose($myfile);
         })->everyMinute();
 
     }
