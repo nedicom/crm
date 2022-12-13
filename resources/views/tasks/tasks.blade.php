@@ -90,10 +90,10 @@
 
 
        @if (app('request')->input('calendar') == '')        
-        <div class="row">
+        <div class="row pt-4">
 
         <div class="col-3 columncard text-center" id="timeleft">
-            <h5 class="page-title">просрочена</h5>
+            <h5 class="page-title" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Сюда попадают просроченные задачи каждый день в 8.00 утра">просрочка</h5>
             @foreach($data as $el)
               @if($el -> status == "просрочена")
                 @include('tasks.taskcard')
@@ -102,7 +102,7 @@
           </div>  
 
           <div class="col-3 columncard text-center" id="waiting">
-            <h5 class="page-title">ожидает</h5>
+            <h5 class="page-title" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Тут задачи которые Вам поставили, но не принятые в работу">ожидает</h5>
             @foreach($data as $el)
               @if($el -> status == "ожидает")
                 @include('tasks.taskcard')
@@ -114,7 +114,7 @@
  
 
           <div class="col-3 columncard text-center" id="inwork">
-            <h5 class="page-title">в работе</h5>
+            <h5 class="page-title" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Здесь задачи с которыми вы работаете сейчас. Позже будет учитываться время потраченное на выполнение">в работе</h5>
             @foreach($data as $el)
               @if($el -> status == "в работе")
                 @include('tasks.taskcard')
@@ -123,9 +123,9 @@
           </div>     
 
           <div class="col-3 columncard text-center" id="finished">
-              <h5 class="page-title">выполнена</h5>
+              <h5 class="page-title" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Каждый день в 00.00 выполненные задачи будут пропадать из списка">выполнена</h5>
               @foreach($data as $el)
-                @if(($el -> status == "выполнена") && ($el -> status == "выполнена"))
+                @if(($el -> status == "выполнена") && ($el -> donetime > Carbon\Carbon::today()))
                   @include('tasks.taskcard')
                 @endif
               @endforeach            
