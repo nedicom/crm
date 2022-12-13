@@ -11,7 +11,7 @@
 @endsection
 
 @section('main')
-    <h2 class="px-3">Клиенты</h2>
+    <h2 class="px-3">Клиенты ({{$data->count()}})</h2>
 
     @include('inc/filter.clientfilter')
 
@@ -21,25 +21,51 @@
 
       <div class= 'col-md-6 col-xxl-3 my-3'>
         <div class= 'card border-light'>
-          <div class= 'd-inline-flex justify-content-end px-2'>
+          <div class= 'd-inline-flex justify-content-between px-4 pt-2'>
 
-            @if ($el -> status == 1)
-                <i class="bi bi-circle-fill" style = "color: #0acf97;"></i>
-            @else
-                <i class="bi bi-circle-fill text-secondary"></i>
+        <div>
+          @foreach($el -> tasksFunc as $val)
+            @if($val -> lawyer == Auth::user()->id && $val -> status == 'просрочена')
+            <i class="bi bi-alarm" style = "color: red;"></i>          
             @endif
+          @endforeach
+        </div>
+
+        <div>
+          @foreach($el -> tasksFunc as $val)
+            @if($val -> lawyer == Auth::user()->id && $val -> status == 'в работе')
+            <i class="bi bi-person-workspace" style = "color: green;"></i>          
+            @endif
+          @endforeach
+        </div>
+
+        <div>
+          @foreach($el -> tasksFunc as $val)
+            @if($val -> lawyer == Auth::user()->id && $val -> status == 'ожидает')
+            <i class="bi bi-hourglass-split" style = "color: orange;"></i>          
+            @endif
+          @endforeach
+        </div>
+
+        <div>
+            @if ($el -> status == 1)
+                <i class="bi bi-person" style = "color: #0acf97;"></i>
+            @else
+                <i class="bi bi-person text-secondary"></i>
+            @endif
+            </div>
 
           </div>
 
           <div class="text-center">
-            <h5 class="mb-2 px-3 text-muted text-truncate">{{$el -> name}}</h5>
+            <h6 class="mb-2 px-3 text-muted text-truncate">{{$el -> name}}</h6>
             <p class="mb-0 text-muted">{{$el -> phone}}</p>
             <p class="mb-0 text-muted">{{$el -> email}}</p>
-            <p class="mb-0 text-muted">закреплен за: </br>{{$el -> userFunc -> name}}</p>
+            <p class="mb-0 text-muted">закреплен за: </br>@if($el -> userFunc -> name){{$el -> userFunc -> name}}@endif</p>
 
             <hr class="bg-dark-lighten my-3">
             <p class="mt-3 fw-semibold text-muted">Задач:
-              <strong>{{$el -> tasksFunc -> count()}}</strong> </p>           
+              <strong>@if($el -> tasksFunc -> count()){{$el -> tasksFunc -> count()}}@endif</strong> </p>           
             <div class="mt-3 row d-flex justify-content-center">
                 <div class="col-4 mb-3">
                   <a class="btn btn-light w-100" href="{{ route ('showClientById', $el->id) }}">
@@ -57,10 +83,6 @@
       </div>
 
     @endforeach
-
-      <div class="d-flex justify-content-center">
-      {{ $data->links() }}
-      </div>
 
     </div>
 

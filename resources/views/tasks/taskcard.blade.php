@@ -70,7 +70,7 @@ max-width:250px;
 
             <div class="mt-3 px-3 d-flex justify-content-center">
                 @if($el -> hrftodcm)
-                    <div class="col-3 px-1 mb-3">
+                    <div class="col-3 px-1 mb-1">
                     <a href="{{$el -> hrftodcm}}"class="btn btn-light w-100" target="_blank">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="Blue" class="bi bi-hdd" viewBox="0 0 16 16">
                             <path d="M4.5 11a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1zM3 10.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z"></path>

@@ -9,7 +9,7 @@
           class="nav-link dropdown-toggle {{ (request()->is('clients*')) ? 'active' : '' }} {{ (request()->is('dogovor*')) ? 'active' : '' }}">Клиенты</a>
 
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="{{route('clients')}}">Все клиенты</a></li>
+            <li><a class="dropdown-item" href="{{route('clients')}}?checkedlawyer={{ Auth::user()->id}}"">Все клиенты</a></li>
             <li><a class="dropdown-item" href="{{route('dogovor')}}">Договоры</a></li>
           </ul>      
         </li>

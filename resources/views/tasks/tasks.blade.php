@@ -42,7 +42,7 @@
         <h2 class="col-2 px-3">Задачи</h2>
         <div class="col-8 d-flex justify-content-evenly">
           <div class="">  
-            <a href="{{route('tasks')}}?checkedlawyer={{ Auth::user()->id}}" class="btn btn-outline-primary">все задачи</a>
+            <a href="{{route('tasks')}}?checkedlawyer={{ Auth::user()->id}}" class="btn btn-outline-primary">все мои задачи</a>
           </div>  
 
           <div class="">          

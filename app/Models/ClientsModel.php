@@ -21,7 +21,7 @@ use App\Models\Services;
 
     public function tasksFunc()
       {
-          return $this->hasMany(Tasks::class, 'client' , 'name');
+          return $this->hasMany(Tasks::class, 'clientid' , 'id');
       }
 
     public function serviceFunc()

@@ -4,14 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\ClientsRequest;
-use App\Http\Requests\FilterRequest;
+use Illuminate\Support\Facades\Auth;
 use App\Models\ClientsModel;
 use App\Models\User;
 use App\Models\Tasks;
 use App\Models\Source;
 use App\Models\Services;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Eloquent\Builder;
 
 
 class ClientsController extends Controller{
@@ -33,21 +32,39 @@ class ClientsController extends Controller{
     }
 
     public function AllClients(Request $req){
-      $checkedlawyer = $findclient = $statusclient = null;
+      $checkedlawyer = $statusclient = null;
+      $lawyertask = Auth::id();
 
       if (!empty($req->status)){$statusclient='status';}
-      if (!empty($req->findclient)){$findclient='findclient';}
-      if (!empty($req->checkedlawyer)){$checkedlawyer='lawyer';}
-
-          return view ('clients/clients', ['data' => ClientsModel::with('userFunc', 'tasksFunc')
-          -> where('name', 'like', '%'.$req->findclient.'%')
+      if (!empty($req->checkedlawyer)){$checkedlawyer='lawyer'; $lawyertask = $req->checkedlawyer;}   
+      if (!empty($req->statustask)){
+        $statustask = $req->statustask;
+        return view ('clients/clients', ['data' => ClientsModel::whereRelation('tasksFunc', 'status', '=', $statustask)
+        //-> whereRelation('tasksFunc', 'lawyer', '=', $lawyertask)
+        -> where('name', 'like', '%'.$req->findclient.'%')
+        -> where($statusclient, $req->status)          
+        -> get()], ['datalawyers' =>  User::all(),
+        'dataservices' =>  Services::all(), 'datatasks' => Tasks::all(),
+        'datasource' => Source::all(), 'datasource' => Source::all(),
+        'dataprosr' => DB::table('tasks')->where('lawyer', '=', Auth::id())->where('status', '=', 'просрочена')->count(),
+        'datawaiting' => DB::table('tasks')->where('lawyer', '=', Auth::id())->where('status', '=', 'ожидает')->count(),
+        'datainwork' => DB::table('tasks')->where('lawyer', '=', Auth::id())->where('status', '=', 'в работе')->count(),
+        ]);
+      }
+      else{
+          return view ('clients/clients', ['data' => ClientsModel::
+          where('name', 'like', '%'.$req->findclient.'%')
           -> where($checkedlawyer, $req->checkedlawyer)
-          -> where($statusclient, $req->status)
-          
-          -> paginate(48)], ['datalawyers' =>  User::all(),
-          'dataservices' =>  Services::all(), 'datatasks' => Tasks::all(),
-          'datasource' => Source::all()
+          -> where($statusclient, $req->status)          
+          -> get()], ['datalawyers' =>  User::all(),
+          'dataservices' =>  Services::all(), 'dataprosr' => DB::table('tasks')->where('lawyer', '=', Auth::id())->where('status', '=', 'просрочена')->count(),
+          'datasource' => Source::all(),
+          'dataprosr' => DB::table('tasks')->where('lawyer', '=', Auth::id())->where('status', '=', 'просрочена')->count(),
+          'datawaiting' => DB::table('tasks')->where('lawyer', '=', Auth::id())->where('status', '=', 'ожидает')->count(),
+          'datainwork' => DB::table('tasks')->where('lawyer', '=', Auth::id())->where('status', '=', 'в работе')->count(),
           ]);
+       }
+
       }
 
 

@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\DB;
     public function index(Request $request){
 
       $calendar = $request->input('calendar');//month, year, day
-      $checkedlawyer = $request->input('checkedlawyer');//lawyer
+      if($request->input('checkedlawyer')){$checkedlawyer = $request->input('checkedlawyer');}//lawyer
 
         if(!empty($checkedlawyer)){ //checkedlawyer no empty
             if($calendar == 'week'){
@@ -47,8 +47,8 @@ use Illuminate\Support\Facades\DB;
 
             else{
               return view ('tasks/tasks', ['data' => Tasks::select("*")
-              ->orderBy('date', 'asc')
               ->where('lawyer', '=', $checkedlawyer)
+              ->orderBy('date', 'asc')
               ->get()],
               ['datalawyers' =>  User::all()]);
             }
@@ -56,7 +56,7 @@ use Illuminate\Support\Facades\DB;
           }
 
 
-        if(is_null($checkedlawyer)){ //checkedlawyer is empty
+        /*if(is_null($checkedlawyer)){ //checkedlawyer is empty
 
           if($calendar == 'week'){
             return view ('tasks/tasks', ['data' => Tasks::select("*")
@@ -92,7 +92,7 @@ use Illuminate\Support\Facades\DB;
             ['datalawyers' =>  User::all()]);
           }
 
-        }
+        }*/
 
 
         else{
