@@ -39,9 +39,13 @@
   <div class = "row">
 
       <form class = "row" action="" method="GET">
-      <h2 class="col-2 px-3">Задачи</h2>
+        <h2 class="col-2 px-3">Задачи</h2>
         <div class="col-8 d-flex justify-content-evenly">
-          <div class="">
+          <div class="">  
+            <a href="{{route('tasks')}}?checkedlawyer={{ Auth::user()->id}}" class="btn btn-outline-primary">все задачи</a>
+          </div>  
+
+          <div class="">          
             <input type="radio" class="btn-check" value="day" name="calendar" id="day"
               @if (app('request')->input('calendar') == 'day') checked @endif
               onchange="this.form.submit()">
