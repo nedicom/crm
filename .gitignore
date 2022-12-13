@@ -3,6 +3,7 @@
 /public/hot
 /public/storage
 /storage/*.key
+/app/Console/Commands/DsilyTask.php
 /vendor
 .htaccess
 .env

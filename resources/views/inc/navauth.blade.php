@@ -15,7 +15,7 @@
         </li>
 
 
-        <li class="nav-item"><a href="{{route('tasks')}}" class="nav-link {{ (request()->is('tasks*')) ? 'active' : '' }}">Задачи</a></li>
+        <li class="nav-item"><a href="{{route('tasks')}}?checkedlawyer={{ Auth::user()->id}}" class="nav-link {{ (request()->is('tasks*')) ? 'active' : '' }}">Задачи</a></li>
         <li class="nav-item"><a href="{{route('meetings')}}" class="nav-link {{ (request()->is('meetings*')) ? 'active' : '' }}">Заседания</a></li>
         <li class="nav-item"><a href="{{route('showservices')}}" class="nav-link {{ (request()->is('services*')) ? 'active' : '' }}">Услуги</a></li>
         <li class="nav-item"><a href="{{route('payments')}}" class="nav-link {{ (request()->is('payments*')) ? 'active' : '' }}">Платежи</a></li>

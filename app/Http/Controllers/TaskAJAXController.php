@@ -17,10 +17,14 @@ class TaskAjaxController extends Controller{
           if($status == 'waiting'){$statuscard = 'ожидает';}
           elseif($status=='timeleft'){$statuscard='просрочена';}
           elseif($status=='inwork'){$statuscard='в работе';}
-          elseif($status=='finished'){$statuscard='выполнена';}
+          elseif($status=='finished'){
+            $statuscard='выполнена';
+            $donetime= Carbon::now();          
+          }
           else{$statuscard='код не сработал';}
         $task = Tasks::find($id);
         $task -> status = $statuscard;
+        $task -> donetime = $donetime; //сохраняем время когда задача попала в выполненные
         $task -> save();
         return ($statuscard);
       }

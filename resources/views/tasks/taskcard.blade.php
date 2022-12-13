@@ -1,5 +1,5 @@
 <div class="my-3 d-inline-block shadow m-1 taskcard" onmousedown="mouseDown(this.id)" onmouseup="mouseUp(this.id)" 
-date="{{$el['date']['value']}}" id="{{$el -> id}}" style="width: 100%; 
+date="{{$el['date']['value']}}" id="{{$el -> id}}" style="width: 100%; font-size: 14px;
 @if (app('request')->input('calendar') == 'week')
 max-width:250px;
 @else max-width:300px;
@@ -37,7 +37,7 @@ max-width:250px;
                     <span>
                         @foreach($datalawyers as $ellawyer)
                         @if ($ellawyer -> id == $el -> postanovshik)  
-                        <img src="{{$ellawyer -> avatar}}" style="width: 40px; height:40px" class="rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="постановщик">
+                        <img src="{{$ellawyer -> avatar}}" style="width: 30px; height:30px" class="rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="постановщик">
                         @endif
                         @endforeach
                     </span>
@@ -49,14 +49,14 @@ max-width:250px;
                     <span>
                         @foreach($datalawyers as $ellawyer)
                         @if ($ellawyer -> id == $el -> lawyer)  
-                        <img src="{{$ellawyer -> avatar}}" style="width: 40px;  height:40px" class="rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="исполнитель">
+                        <img src="{{$ellawyer -> avatar}}" style="width: 30px;  height:30px" class="rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="исполнитель">
                         @endif
                         @endforeach
                     </span>
                     <span>
                         @foreach($datalawyers as $ellawyer)
                         @if ($ellawyer -> id == $el -> soispolintel)  
-                        <img src="{{$ellawyer -> avatar}}" style="width: 40px;  height:40px" class="rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="соисполнитель">
+                        <img src="{{$ellawyer -> avatar}}" style="width: 30px;  height:30px" class="rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="соисполнитель">
                         @endif
                         @endforeach
                     </span>
@@ -70,7 +70,7 @@ max-width:250px;
 
             <div class="mt-3 px-3 d-flex justify-content-center">
                 @if($el -> hrftodcm)
-                    <div class="col-4 px-1 mb-3">
+                    <div class="col-3 px-1 mb-3">
                     <a href="{{$el -> hrftodcm}}"class="btn btn-light w-100" target="_blank">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="Blue" class="bi bi-hdd" viewBox="0 0 16 16">
                             <path d="M4.5 11a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1zM3 10.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z"></path>
@@ -80,13 +80,13 @@ max-width:250px;
                     </div>
                 @endif   
 
-                <div class="col-4 px-1 mb-3">
+                <div class="col-3 px-1 mb-1">
                     <a class="btn btn-light w-100" href="{{ route ('showTaskById', $el->id) }}">
                     <i class="bi-three-dots"></i></a>
                 </div>
 
 
-                <div class="col-4 px-1 mb-3">
+                <div class="col-3 px-1 mb-1">
                     <a class="btn btn-light w-100" data-bs-toggle="collapse" href="#collapse{{$el -> id}}" role="button" aria-expanded="false" aria-controls="collapseExample">
                     <i class="bi bi-tag-fill"></i>
                     </a>

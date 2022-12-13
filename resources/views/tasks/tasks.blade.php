@@ -125,7 +125,7 @@
           <div class="col-3 columncard text-center" id="finished">
               <h5 class="page-title">выполнена</h5>
               @foreach($data as $el)
-                @if($el -> status == "выполнена")
+                @if(($el -> status == "выполнена") && ($el -> status == "выполнена"))
                   @include('tasks.taskcard')
                 @endif
               @endforeach            
