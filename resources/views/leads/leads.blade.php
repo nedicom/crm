@@ -44,4 +44,10 @@
     @include('inc./modal/leadsmodal/addlead')
     @include('inc./modal/leadsmodal/sources')
 
+  <script>
+    $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+    })
+  </script>
+
   @endsection

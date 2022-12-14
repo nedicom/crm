@@ -11,6 +11,7 @@ use App\Models\Tasks;
 use App\Models\Source;
 use App\Models\Services;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Builder;
 
 
 class ClientsController extends Controller{
@@ -32,25 +33,24 @@ class ClientsController extends Controller{
     }
 
     public function AllClients(Request $req){
-      $checkedlawyer = $statusclient = null;
-      $lawyertask = Auth::id();
+      $checkedlawyer = $statusclient = $lawyertask = null;
 
       if (!empty($req->status)){$statusclient='status';}
-      if (!empty($req->checkedlawyer)){$checkedlawyer='lawyer'; $lawyertask = $req->checkedlawyer;}   
+      if (!empty($req->checkedlawyer)){$checkedlawyer='lawyer'; $lawyertask = $req->checkedlawyer;}
+
       if (!empty($req->statustask)){
-        $statustask = $req->statustask;
-        return view ('clients/clients', ['data' => ClientsModel::whereRelation('tasksFunc', 'status', '=', $statustask)
-        //-> whereRelation('tasksFunc', 'lawyer', '=', $lawyertask)
-        -> where('name', 'like', '%'.$req->findclient.'%')
-        -> where($statusclient, $req->status)          
-        -> get()], ['datalawyers' =>  User::all(),
-        'dataservices' =>  Services::all(), 'datatasks' => Tasks::all(),
+      $statustask = $req->statustask;
+      return view ('clients/clients', ['data' => ClientsModel::whereHas('tasksFunc', function (Builder $query) use ($lawyertask, $statustask, $checkedlawyer) {      
+        $query->where('status', '=', $statustask)
+              ->where($checkedlawyer, '=',  $lawyertask);
+      }, '>=', 1)->get()],
+        ['datalawyers' =>  User::all(), 'dataservices' =>  Services::all(), 'datatasks' => Tasks::all(),
         'datasource' => Source::all(), 'datasource' => Source::all(),
         'dataprosr' => DB::table('tasks')->where('lawyer', '=', Auth::id())->where('status', '=', 'просрочена')->count(),
         'datawaiting' => DB::table('tasks')->where('lawyer', '=', Auth::id())->where('status', '=', 'ожидает')->count(),
         'datainwork' => DB::table('tasks')->where('lawyer', '=', Auth::id())->where('status', '=', 'в работе')->count(),
         ]);
-      }
+      }      
       else{
           return view ('clients/clients', ['data' => ClientsModel::
           where('name', 'like', '%'.$req->findclient.'%')

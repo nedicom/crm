@@ -59,13 +59,20 @@
 
           <div class="text-center">
             <h6 class="mb-2 px-3 text-muted text-truncate">{{$el -> name}}</h6>
-            <p class="mb-0 text-muted">{{$el -> phone}}</p>
-            <p class="mb-0 text-muted">{{$el -> email}}</p>
-            <p class="mb-0 text-muted">закреплен за: </br>@if($el -> userFunc -> name){{$el -> userFunc -> name}}@endif</p>
-
-            <hr class="bg-dark-lighten my-3">
-            <p class="mt-3 fw-semibold text-muted">Задач:
-              <strong>@if($el -> tasksFunc -> count()){{$el -> tasksFunc -> count()}}@endif</strong> </p>           
+            <div class="w-100 d-inline-flex justify-content-between align-items-center px-5">
+              <div>
+                <p class="mb-0 text-muted">{{$el -> phone}}</p>
+                <p class="mb-0 text-muted">{{$el -> email}}</p>
+              </div>
+              <div>
+              </div>
+              <div>
+                <img src="@if($el -> userFunc -> avatar){{$el -> userFunc -> avatar}}@endif" style="width: 30px;  height:30px"
+                class="rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top" 
+                title="@if($el -> userFunc -> name){{$el -> userFunc -> name}}@endif">
+              </div>
+            </div>
+            <hr class="bg-dark-lighten my-3">         
             <div class="mt-3 row d-flex justify-content-center">
                 <div class="col-4 mb-3">
                   <a class="btn btn-light w-100" href="{{ route ('showClientById', $el->id) }}">
@@ -89,5 +96,12 @@
     </div>
     @include('inc./modal/addclient')
     @include('inc/modal/addtask')
+
+    <script>
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+      return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+    </script>
 
     @endsection
