@@ -37,11 +37,11 @@
           
             <h2 class="px-2 text-truncate text-center" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" title="предмет" data-bs-content="{{$el -> subject}}"><strong>{{$el -> allstoimost}}</strong></h2>
 
-            <h5 class="px-2 text-truncate text-center" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" title="предоплата" data-bs-content="{{$el -> preduslugi}}"><strong>{{$el -> predoplata}}</strong></h5>
+            {{--<h5 class="px-2 text-truncate text-center" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" title="предоплата" data-bs-content="{{$el -> preduslugi}}"><strong>{{$el -> predoplata}}</strong></h5>
               @php $percent = (($el -> allstoimost) - $avg)/$avg*100; $percent = round($percent, 2); @endphp              
               @if ($percent>0) <span style ="background-color:DodgerBlue;" class="position-absolute top-0 start-50 translate-middle badge rounded-pill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Ваша сделка выгоднее других в среднем">+{{$percent}}%</span>
               @else <span style ="background-color:DimGray;" class="position-absolute top-0 start-50 translate-middle badge rounded-pill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Ваша сделка дешевле других, но не всегда это плохо">{{$percent}}%</span>
-              @endif  
+              @endif  --}}
           </div>
 
           <p class="px-2">{{$el -> created_at}}</p>
