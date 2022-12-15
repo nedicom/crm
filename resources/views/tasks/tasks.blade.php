@@ -15,9 +15,16 @@
     padding: 0.4em;
   }
   .task-placeholder {
-    border: 1px dotted black;
-    margin: 0 1em 1em 0;
-    height: 50px;
+    border-left: 2px solid red;
+    background-image: url('public/avatars/plus.png');
+    background-repeat: no-repeat;
+    background-position: center; 
+    background-size: contain;
+    height: 100px;
+  }
+
+  .columncard:hover{
+
   }
   
   </style>
@@ -42,11 +49,11 @@
         <h2 class="col-2 px-3">Задачи</h2>
         <div class="col-8 d-flex justify-content-evenly">
           <div class="">  
-            <a href="{{route('tasks')}}?checkedlawyer={{ Auth::user()->id}}" class="btn btn-outline-primary">все мои задачи</a>
+            <a href="{{route('tasks')}}?checkedlawyer={{ Auth::user()->id}}" class="btn btn-outline-primary">мои задачи</a>
           </div>  
 
           <div class="">          
-            <input type="radio" class="btn-check" value="day" name="calendar" id="day"
+            <input type="radio" class="btn-check btn-sm" value="day" name="calendar" id="day"
               @if (app('request')->input('calendar') == 'day') checked @endif
               onchange="this.form.submit()">
             <label class="btn btn-outline-success" for="day">День</label>
@@ -139,7 +146,7 @@
       @endif
 
         @if (app('request')->input('calendar') == 'week')
-        <h2 class="">Неделя</h2>
+        <h2 class=""></h2>
         @for ($i = 1; $i < 6; $i++)  
         <div style="width: 20%;"> 
           <h1 class="badge bg-secondary">{{$weekMap[$i]}}</h1>
@@ -157,21 +164,8 @@
           @endfor
         @endif
 
-        @if (app('request')->input('calendar') == 'day')
-        <h2 class="">Сегодня</h2>
-            @foreach($data as $el)
-            <div class="col-2 my-3">
-                @include('inc.calendar.task')
-            </div>
-            @endforeach
-        @endif
-
-
-
-
-
         @if (app('request')->input('calendar') == 'month')
-          <h2 class="">Месяц</h2>
+          <h2 class=""></h2>
           @for ($i = 1; $i < 8; $i++)  
           <div style="width: 14%;"> 
             <h1 class="badge bg-secondary">{{$weekMap[$i]}}</h1>
@@ -187,19 +181,40 @@
           @endfor
 
           @for ($i = 1; $i <= (cal_days_in_month(CAL_GREGORIAN, date('m'), date('Y'))); $i++)
-            <div class="my-3 col columncard" style="min-width: 14%; max-width: 15%; min-height: 100px" dayofmonth="{{$i}}">
-            
+            <div class="my-3 col columncard" style="min-width: 14%; max-width: 15%; min-height: 100px" dayofmonth="{{$i}}">            
               {{$i}}
                 @foreach($data as $el)                
                   @if($el['date']['currentDay'] == $i)
-                   @include('inc.calendar.task') 
+                   @include('inc.calendar.task')                  
                   @endif
               @endforeach
+
             </div>
           @endfor
         @endif
 
+        @if (app('request')->input('calendar') == 'day')
+        <h2 class=""></h2>
+            @for ($i = 8; $i < 22; $i++)  
+            <div class='row'> 
+              <div class='col-1 border-bottom py-1'> 
+                <span class="w-20  badge bg-secondary">{{$i}}.00</span>
+              </div>
+              <div style="min-height: 200px;" class="col-11 my-3 columncard" hourofday="{{$i}}">
+              @foreach($data as $el)
+              
+                @if($el['date']['currentHour'] == $i) 
+                  @include('tasks.taskcard') 
+                @else
+                <div class="taskcard inline-block"></div> 
+                @endif
+                
+              @endforeach
+              </div>
 
+            </div>
+            @endfor
+        @endif
 
 
 
@@ -219,16 +234,12 @@
  
 
 
-
-
-
-
           <script> 
           $( document ).ready(function() { 
             $( function() {
                 $( ".columncard" ).sortable({
                   connectWith: ".columncard",
-                  handle: ".task-header",
+                  handle: ".card",
                   cancel: ".task-toggle",
                   placeholder: "task-placeholder ui-corner-all",
                   opacity: 0.5,
@@ -242,16 +253,18 @@
                     if($input.attr( "dayofweek" )){var dayofweek =  $input.attr( "dayofweek" );}
                     else{var dayofweek = 0;};
                     if(ui.item.attr("date")){var date =  ui.item.attr("date");}
-                    else{var date = 0;};                                 
-                    
+                    else{var date = 0;};
+                    if($input.attr("hourofday")){var hourofday =  $input.attr("hourofday");}
+                    else{var hourofday = 0;};                    
                     if($input.attr( "dayofmonth" )){var dayofmonth =  $input.attr( "dayofmonth" );}
                     else{var dayofmonth = 0;};
                     
                     $.ajax({
                       method:"POST",
                       url: "{{ route('setstatus') }}",
-                      data: { id: id, status: status, date: date, dayofweek: dayofweek, dayofmonth: dayofmonth, _token: '{{csrf_token()}}' },
+                      data: { id: id, status: status, date: date, hourofday: hourofday, dayofweek: dayofweek, dayofmonth: dayofmonth, _token: '{{csrf_token()}}' },
                       success: function(data) {
+                        alert(data);
                       }                  
                     });
                   } 

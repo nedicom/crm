@@ -1,6 +1,6 @@
   <div class="d-inline-block shadow-sm m-1 taskcard" onmousedown="mouseDown(this.id)" onmouseup="mouseUp(this.id)" 
   date="{{$el['date']['value']}}" id="{{$el -> id}}" style="width: 100%; max-width:140px;">
-      <div id="card{{$el -> id}}">
+      <div id="card{{$el -> id}}" class="card">
           <div class="task-header d-flex justify-content-between align-items-center"> 
         
                   <span>

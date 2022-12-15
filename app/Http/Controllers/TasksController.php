@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\DB;
   class TasksController extends Controller{
 
     public function index(Request $request){
-
+      $checkedlawyer = null;
       $calendar = $request->input('calendar');//month, year, day
       if($request->input('checkedlawyer')){$checkedlawyer = $request->input('checkedlawyer');}//lawyer
 
@@ -56,7 +56,7 @@ use Illuminate\Support\Facades\DB;
           }
 
 
-        /*if(is_null($checkedlawyer)){ //checkedlawyer is empty
+        if(is_null($checkedlawyer)){ //checkedlawyer is empty
 
           if($calendar == 'week'){
             return view ('tasks/tasks', ['data' => Tasks::select("*")
@@ -92,7 +92,7 @@ use Illuminate\Support\Facades\DB;
             ['datalawyers' =>  User::all()]);
           }
 
-        }*/
+        }
 
 
         else{

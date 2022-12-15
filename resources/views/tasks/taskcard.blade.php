@@ -1,9 +1,11 @@
 <div class="my-3 d-inline-block shadow m-1 taskcard" onmousedown="mouseDown(this.id)" onmouseup="mouseUp(this.id)" 
 date="{{$el['date']['value']}}" id="{{$el -> id}}" style="width: 100%; font-size: 14px;
-@if (app('request')->input('calendar') == 'week')
-max-width:250px;
-@else max-width:300px;
-@endif">
+    @if (app('request')->input('calendar') == 'week')
+    max-width:250px;
+    @elseif (app('request')->input('calendar') == 'day')
+    max-width:250px;
+    @else max-width:300px;
+    @endif">
     <div class="card" id="card{{$el -> id}}">
         <div class="task-header px-3 pt-3 d-flex justify-content-between">
             <span>                

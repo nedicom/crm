@@ -21,6 +21,7 @@ class Tasks extends Model
                 'currentMonth' => Carbon::parse($value)->locale('ru_RU')->monthName,
                 'currentTime' => Carbon::parse($value)->format('H:i'),
                 'currentDay' => Carbon::parse($value)->format('j'),
+                'currentHour' => Carbon::parse($value)->format('H'),
               ],
             );
       }

@@ -47,6 +47,7 @@ class TaskAjaxController extends Controller{
         $task = Tasks::find($id);
         $task -> date = $newdate;
         $task -> save();
+        return ($newdate2);
         
       }
 
@@ -72,6 +73,16 @@ class TaskAjaxController extends Controller{
         
       }
 
+      if( !($request->get('hourofday') == 0) ){
+        $id = $request->get('id');
+        $hourofday = $request->get('hourofday');
+        $newhour = Carbon::now('Europe/London')->startOfDay()->addHours($hourofday);
+        $task = Tasks::find($id);
+        $task -> date = $newhour;
+        $task -> save();
+        return ($newhour);        
+      }
+      
     else{};
     }
 }
