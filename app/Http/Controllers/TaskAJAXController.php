@@ -46,9 +46,7 @@ class TaskAjaxController extends Controller{
         
         $task = Tasks::find($id);
         $task -> date = $newdate;
-        $task -> save();
-        return ($newdate2);
-        
+        $task -> save();        
       }
 
       if( !($request->get('dayofmonth') == 0) ){
@@ -69,8 +67,7 @@ class TaskAjaxController extends Controller{
         $task = Tasks::find($id);
         $task -> date = $newdate;
         $task -> save();
-        return ($newdate2);
-        
+        return ($newdate2);        
       }
 
       if( !($request->get('hourofday') == 0) ){

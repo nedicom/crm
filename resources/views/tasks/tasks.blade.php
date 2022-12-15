@@ -47,24 +47,27 @@
 
       <form class = "row" action="" method="GET">
         <h2 class="col-2 px-3">Задачи</h2>
-        <div class="col-8 d-flex justify-content-evenly">
+        <div class="col-8 d-flex justify-content-evenly align-items-center">
           <div class="">  
-            <a href="{{route('tasks')}}?checkedlawyer={{ Auth::user()->id}}" class="btn btn-outline-primary">мои задачи</a>
+            <a href="{{route('tasks')}}?checkedlawyer={{ Auth::user()->id}}" class="btn btn-outline-primary btn-sm">мои задачи</a>
           </div>  
 
           <div class="">          
             <input type="radio" class="btn-check btn-sm" value="day" name="calendar" id="day"
               @if (app('request')->input('calendar') == 'day') checked @endif
               onchange="this.form.submit()">
-            <label class="btn btn-outline-success" for="day">День</label>
-            <input type="radio" class="btn-check" value="week" name="calendar" id="week"
+            <label class="btn btn-outline-success btn-sm" for="day">День</label>
+
+            <input type="radio" class="btn-check btn-sm" value="week" name="calendar" id="week"
               @if (app('request')->input('calendar') == 'week') checked @endif
               onchange="this.form.submit()">
-            <label class="btn btn-outline-success" for="week">Неделя</label>
-            <input type="radio" class="btn-check" value="month" name="calendar" id="month"
+            <label class="btn btn-outline-success btn-sm" for="week">Неделя</label>
+
+            <input type="radio" class="btn-check btn-sm" value="month" name="calendar" id="month"
               @if (app('request')->input('calendar') == 'month') checked @endif
               onchange="this.form.submit()">
-            <label class="btn btn-outline-success" for="month">Месяц</label>
+            <label class="btn btn-outline-success btn-sm" for="month">Месяц</label>
+
           </div>
 
             <div class="">
@@ -79,8 +82,8 @@
             </div>
 
             <div class="">
-              <button type="submit" class="btn btn-primary">Применить</button>
-              <a href='tasks' class='button btn btn-secondary'>Сбросить</a>
+              <button type="submit" class="btn btn-primary btn-sm">Применить</button>
+              <a href='tasks' class='button btn btn-secondary btn-sm'>Сбросить</a>
             </div>
         </div>
       </form>
@@ -264,7 +267,6 @@
                       url: "{{ route('setstatus') }}",
                       data: { id: id, status: status, date: date, hourofday: hourofday, dayofweek: dayofweek, dayofmonth: dayofmonth, _token: '{{csrf_token()}}' },
                       success: function(data) {
-                        alert(data);
                       }                  
                     });
                   } 
