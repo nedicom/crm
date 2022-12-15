@@ -72,7 +72,7 @@
                   <div class="input-group form-group mb-3">
                     
                     <label class="input-group-text" for="duration"><i class="bi bi-stopwatch"></i></label>
-                    <input type = "number" name="duration" min="0.5" max="25" step="0.5" id="duration" class="form-control">
+                    <input type = "number" name="duration" min="0.5" max="25" step="0.5" id="duration" class="form-control" required>
                     <span class="input-group-text">час</span>
                   </div>
                 </div>
