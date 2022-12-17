@@ -13,15 +13,18 @@ use Illuminate\Support\Facades\DB;
   class TasksController extends Controller{
 
     public function index(Request $request){
-      $checkedlawyer = null;
+      $lawyerfilter = $typefilter = null;
+      $checkedlawyer = $type = null;
       $calendar = $request->input('calendar');//month, year, day
-      if($request->input('checkedlawyer')){$checkedlawyer = $request->input('checkedlawyer');}//lawyer
+      if($request->input('checkedlawyer')){$lawyerfilter='lawyer'; $checkedlawyer = $request->input('checkedlawyer');}//lawyer
+      if($request->input('type')){$typefilter='type'; $type = $request->input('type');}//type
 
-        if(!empty($checkedlawyer)){ //checkedlawyer no empty
+        //if(!empty($checkedlawyer)){ //checkedlawyer no empty
             if($calendar == 'week'){
               return view ('tasks/tasks', ['data' => Tasks::select("*")
               ->whereBetween('date', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
-              ->where('lawyer', '=', $checkedlawyer)
+              ->where($lawyerfilter, '=', $checkedlawyer)
+              ->where($typefilter, '=', $type)
               ->orderBy('date', 'asc')
               ->get()],
               ['datalawyers' =>  User::all()]);
@@ -30,7 +33,8 @@ use Illuminate\Support\Facades\DB;
             elseif($calendar == 'day'){
               return view ('tasks/tasks', ['data' => Tasks::select("*")
               ->whereBetween('date', [Carbon::now()->startOfDay(), Carbon::now()->endOfDay()])
-              ->where('lawyer', '=', $checkedlawyer)
+              ->where($lawyerfilter, '=', $checkedlawyer)
+              ->where($typefilter, '=', $type)
               ->orderBy('date', 'asc')
               ->get()],
               ['datalawyers' =>  User::all()]);
@@ -39,7 +43,8 @@ use Illuminate\Support\Facades\DB;
             elseif($calendar == 'month'){
               return view ('tasks/tasks', ['data' => Tasks::select("*")
               ->whereBetween('date', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])
-              ->where('lawyer', '=', $checkedlawyer)
+              ->where($lawyerfilter, '=', $checkedlawyer)
+              ->where($typefilter, '=', $type)
               ->orderBy('date', 'asc')
               ->get()],
               ['datalawyers' =>  User::all()]);
@@ -47,16 +52,17 @@ use Illuminate\Support\Facades\DB;
 
             else{
               return view ('tasks/tasks', ['data' => Tasks::select("*")
-              ->where('lawyer', '=', $checkedlawyer)
+              ->where($lawyerfilter, '=', $checkedlawyer)
+              ->where($typefilter, '=', $type)
               ->orderBy('date', 'asc')
               ->get()],
               ['datalawyers' =>  User::all()]);
             }
 
-          }
+         // }
 
 
-        if(is_null($checkedlawyer)){ //checkedlawyer is empty
+      /*  if(is_null($checkedlawyer)){ //checkedlawyer is empty
 
           if($calendar == 'week'){
             return view ('tasks/tasks', ['data' => Tasks::select("*")
@@ -99,7 +105,7 @@ use Illuminate\Support\Facades\DB;
           return view ('tasks/tasks', ['data' => Tasks::select("*")
           ->get()],
           ['datalawyers' =>  User::all()]);
-        }
+        }*/
 
 
     }
@@ -114,6 +120,7 @@ use Illuminate\Support\Facades\DB;
             $task -> duration = $req -> duration;
             $task -> clientid = $req -> clientidinput;
             if($req -> hrftodcm){$task -> hrftodcm = $req -> hrftodcm;};
+            if($req -> type){$task -> type = $req -> type;};
 
             $task -> postanovshik = Auth::user()->id;
             if($req -> tag){$task -> tag = $req -> tag;};
@@ -158,6 +165,7 @@ use Illuminate\Support\Facades\DB;
           if($req -> description){$task -> description = $req -> description;};
 
           if($req -> hrftodcm){$task -> hrftodcm = $req -> hrftodcm;};
+          if($req -> type){$task -> type = $req -> type;};
           if($req -> clientidinput){$task -> clientid = $req -> clientidinput;};  
 
           $task -> save();

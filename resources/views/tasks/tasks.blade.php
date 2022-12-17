@@ -42,12 +42,10 @@
 
 @section('main')
 
-{{-- start filter meetings--}}
-  <div class = "row">
-
+  <div class = "row">    
       <form class = "row" action="" method="GET">
         <h2 class="col-2 px-3">Задачи</h2>
-        <div class="col-8 d-flex justify-content-evenly align-items-center">
+        <div class="col-10 d-flex justify-content-evenly align-items-center">
           <div class="">  
             <a href="{{route('tasks')}}?checkedlawyer={{ Auth::user()->id}}" class="btn btn-outline-primary btn-sm">мои задачи</a>
           </div>  
@@ -82,19 +80,26 @@
             </div>
 
             <div class="">
+                    <select class="form-select" name="type" id="type" class="form-control">
+                        <option value="" @if (app('request')->input('type') == "") selected @endif >все типы</option>
+                        <option value="задача" @if (app('request')->input('type') == "задача") selected @endif >задача</option>
+                        <option value="заседание" @if (app('request')->input('type') == "заседание") selected @endif >заседание</option>
+                        <option value="допрос" @if (app('request')->input('type') == "допрос") selected @endif >допрос</option>                      
+                        <option value="звонок" @if (app('request')->input('type') == "звонок") selected @endif >звонок</option>
+                        <option value="консультация" @if (app('request')->input('type') == "консультация") selected @endif >консультация</option>
+                    </select>
+            </div>
+
+            <div class="">
               <button type="submit" class="btn btn-primary btn-sm">Применить</button>
               <a href='tasks' class='button btn btn-secondary btn-sm'>Сбросить</a>
             </div>
         </div>
       </form>
   </div>
-  {{-- end filter meetings--}}
 
 
-
-
-  {{-- start views for all meetings--}}
-      <div class="row" id="taskarea">
+  <div class="row" id="taskarea">
 
         @php
           $weekMap = [1 => 'Понедельник', 2 => 'Вторник', 3 => 'Среда', 4 => 'Четерг', 5 => 'Пятница', 6 => 'Суббота', 7 => 'Воскресенье'];

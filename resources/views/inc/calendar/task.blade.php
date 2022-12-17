@@ -1,8 +1,15 @@
   <div class="d-inline-block shadow-sm m-1 taskcard" onmousedown="mouseDown(this.id)" onmouseup="mouseUp(this.id)" 
-  date="{{$el['date']['value']}}" id="{{$el -> id}}" style="width: 100%; max-width:140px;">
-      <div id="card{{$el -> id}}" class="card">
-          <div class="task-header d-flex justify-content-between align-items-center"> 
-        
+  date="{{$el['date']['value']}}" id="{{$el -> id}}" style="width: 100%; max-width:180px;">
+      <div id="card{{$el -> id}}" class="card" style="
+                @if($el -> type == 'задача') border: 2px solid Lightgray; background-color: Ivory;
+                @elseif($el -> type == 'консультация') border: 3px solid LightGreen; background-color: WhiteSmoke ;
+                @elseif($el -> type == 'звонок') border: 3px solid LightSeaGreen; background-color: Linen;
+                @elseif($el -> type == 'заседание') border: 3px solid LightSalmon; background-color: MistyRose;
+                @elseif($el -> type == 'допрос') border: 3px solid CornflowerBlue; background-color: LightCyan ;
+                @else border: 3px solid Black; background-color: MistyRose;
+                @endif">
+                
+          <div class="task-header d-flex justify-content-between align-items-center">        
                   <span>
                     @foreach($datalawyers as $ellawyer)
                     @if ($ellawyer -> id == $el -> lawyer)  
@@ -11,12 +18,13 @@
                     </a>
                       @endif
                     @endforeach
-                  </span>    
-                  <div style="font-size: 12px;" class=" text-truncate text-center" tabindex="0" data-bs-toggle="popover" 
+                  </span>
+                  
+                  <div style="font-size: 12px;" class=" text-truncate text-center fw-normal" tabindex="0" data-bs-toggle="popover" 
                     data-bs-trigger="hover focus" title="{{$el -> name}}" data-bs-content="{{$el -> client}} - {{$el -> description}}">
                     <strong>{{$el -> name}}</strong>
                   </div>
-                  <span  style="position:relative; right:-10px;">
+                  <span  style="">
                       <i class="bi bi-tag-fill" id="tagspan{{$el -> id}}" style="color:  
                       @if($el -> tag == 'неважно') LightGray
                       @elseif($el -> tag == 'перенос') Aquamarine
@@ -25,7 +33,7 @@
                       @else Black
                       @endif                
                       ;"></i>
-                   </span> 
+                  </span>
           </div>                  
       </div>
 </div>

@@ -123,6 +123,18 @@ date="{{$el['date']['value']}}" id="{{$el -> id}}" style="width: 100%; font-size
                 @endif                
                 ;"></i>
             </span>
+
+            <span class="badge position-absolute top-0 start-50 translate-middle"
+               style="background-color:  
+                @if($el -> type == 'задача') CornflowerBlue 
+                @elseif($el -> type == 'консультация') LightGreen
+                @elseif($el -> type == 'звонок') LightSeaGreen
+                @elseif($el -> type == 'заседание') LightSalmon
+                @elseif($el -> type == 'допрос') CornflowerBlue
+                @else Black
+                @endif                
+                ;">{{$el -> type}}</span>
+            
         </div>
     </div>
 </div>

@@ -123,12 +123,14 @@
                 </div>
 
                 <div class="col-4 form-group mb-3">
-                  <label for="postanovshik">Укажите постановщика</label>
-                  <select class="form-select" name="postanovshik" id="postanovshik" class="form-control">
-                        @foreach($datalawyers as $el)
-                          <option value="{{$el -> id}}" @if ($data->postanovshik == $el -> id) selected @endif>{{$el -> name}}</option>
-                        @endforeach
-                  </select>
+                  <label for="type">Тип</label>
+                    <select class="form-select" name="type" id="type" class="form-control">
+                        <option value="задача" @if ($data->type == "задача") selected @endif >задача</option>
+                        <option value="заседание" @if ($data->type == "заседание") selected @endif >заседание</option>
+                        <option value="допрос" @if ($data->type == "допрос") selected @endif >допрос</option>                      
+                        <option value="звонок" @if ($data->type == "звонок") selected @endif >звонок</option>
+                        <option value="консультация" @if ($data->type == "консультация") selected @endif >консультация</option>
+                    </select>
                 </div>
                </div>
 

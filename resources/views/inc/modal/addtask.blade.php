@@ -114,6 +114,17 @@
 
               <div class="row">
                 <div class="col-4 form-group mb-3">
+                  <label for="type">Тип</label>
+                    <select class="form-select" name="type" id="type" class="form-control">
+                        <option value="задача">задача</option>
+                        <option value="заседание">заседание</option>
+                        <option value="допрос" >допрос</option>                      
+                        <option value="звонок" >звонок</option>
+                        <option value="консультация" >консультация</option>
+                    </select>
+                </div>
+
+                <div class="col-4 form-group mb-3">
                   <label for="lawyer">Укажите исполнителя <span class="text-danger">*</span></label>
                   <select class="form-select" name="lawyer" id="lawyer" class="form-control">
                         @foreach($datalawyers as $el)
