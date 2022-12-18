@@ -82,12 +82,28 @@
               @endif
             @endforeach
             <div class="col-2 px-3 py-4 border border-4 border-light rounded" style="background-color: Cornsilk;;">
-                  <span class="px-1 fw-normal bg-white border border-white rounded-top" style="font-size: 14px;!important">добавить задачу</span>   
-                  <div class="px-1 fw-normal bg-white border border-white rounded-end d-flex align-items-center "  style="height: 80px; overflow: hidden; position: relative;"> 
-                    <a class="btn w-100 nameToForm" href="#"
+                  <span class="px-1 fw-normal bg-white border border-white rounded-top" style="font-size: 14px;!important">добавить</span>   
+                  <div class="px-1 fw-normal bg-white border border-white rounded-end d-flex flex-wrap"  style="height: 80px; overflow: hidden; position: relative;"> 
+                    <div><a class="btn w-100 nameToForm" id="задача" onclick="Task(this.id)" href="#"
                     dataclient="{{$el -> name}}" datavalueid="{{$el -> id}}" data-bs-toggle="modal" data-bs-target="#taskModal"
                    target="_blank">
-                    <i class="bi-clipboard-plus"></i></a>
+                    <i class="bi-clipboard-plus"></i></a></div>
+                    <div><a class="btn w-100 nameToForm" id="звонок" onclick="myTask(this.id)" href="#"
+                    dataclient="{{$el -> name}}" datavalueid="{{$el -> id}}" data-bs-toggle="modal" data-bs-target="#taskModal"
+                   target="_blank">
+                    <i class="bi bi-phone"></i></a></div>
+                    <div><a class="btn w-100 nameToForm" id="консультация" onclick="myTask(this.id)" href="#"
+                    dataclient="{{$el -> name}}" datavalueid="{{$el -> id}}" data-bs-toggle="modal" data-bs-target="#taskModal"
+                   target="_blank">
+                    <i class="bi bi-chat-dots"></i></a></div>
+                    <div><a class="btn w-100 nameToForm" id="заседание" onclick="myTask(this.id)" href="#"
+                    dataclient="{{$el -> name}}" datavalueid="{{$el -> id}}" data-bs-toggle="modal" data-bs-target="#taskModal"
+                   target="_blank">
+                    <i class="bi bi-briefcase"></i></a></div>
+                    <div><a class="btn w-100 nameToForm" id="допрос" onclick="myTask(this.id)" href="#"
+                    dataclient="{{$el -> name}}" datavalueid="{{$el -> id}}" data-bs-toggle="modal" data-bs-target="#taskModal"
+                   target="_blank">
+                    <i class="bi bi-emoji-neutral"></i></a></div>
                   </div>                                         
               </div> 
           </div>
@@ -109,5 +125,47 @@
       return new bootstrap.Tooltip(tooltipTriggerEl)
     })
     </script>
+
+
+<script>
+          function myTask(clicked_id) {
+            var type = clicked_id;
+            document.getElementById("taskname").innerHTML = type;            
+            document.getElementById("nameoftask").value = type;
+            document.getElementById("duration").value = 1;
+            var collection = document.getElementsByClassName("hideme")
+              for (let i = 0; i < collection.length; i++) {
+                collection[i].style.display = "none";
+              }            
+            document.getElementById("type").value = type;
+            document.getElementById("lawyer").value = {{ Auth::user()->id}};
+            document.getElementById("soispolintel").value = {{ Auth::user()->id}};
+            var now = new Date();
+            now.setHours(23);
+            now.setMinutes(00);          
+            document.getElementById("date").value = now.toISOString().slice(0,16);
+          }
+        </script>
+
+        <script>
+          function Task(clicked_id) {
+            var type = clicked_id;
+            document.getElementById("taskname").innerHTML = type;             
+            document.getElementById("nameoftask").value = ''; 
+            document.getElementById("duration").value = 1;            
+            var collection = document.getElementsByClassName("hideme")
+              for (let i = 0; i < collection.length; i++) {
+                collection[i].style.display = "block";
+              }            
+            document.getElementById("type").value = type;
+            document.getElementById("lawyer").value = {{ Auth::user()->id}};
+            document.getElementById("soispolintel").value = {{ Auth::user()->id}};
+            var now = new Date();
+            now.setHours(23);
+            now.setMinutes(00);          
+            document.getElementById("date").value = now.toISOString().slice(0,16);
+          }
+        </script>
+
 
     @endsection

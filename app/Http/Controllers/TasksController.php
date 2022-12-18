@@ -113,7 +113,7 @@ use Illuminate\Support\Facades\DB;
         public function create(TasksRequest $req){
             $task = new Tasks();
 
-            $task -> name = $req -> name;
+            $task -> name = $req -> nameoftask;
             $task -> client = $req -> client;
             $task -> date = $req -> date;
             $task -> lawyer = $req -> lawyer;
@@ -152,7 +152,7 @@ use Illuminate\Support\Facades\DB;
         public function editTaskById($id, TasksRequest $req){
           $task = Tasks::find($id);
 
-          $task -> name = $req -> name;
+          $task -> name = $req -> nameoftask;
           $task -> client = $req -> client;
           $task -> date = $req -> date;
           $task -> lawyer = $req -> lawyer;

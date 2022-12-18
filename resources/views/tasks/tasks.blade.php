@@ -36,7 +36,19 @@
 
 @section('leftmenuone')
   <li class="nav-item text-center p-3">
-    <a class="text-white text-decoration-none" href="#" data-bs-toggle="modal" data-bs-target="#taskModal">Добавить задачу</a>
+    <a class="text-white text-decoration-none" id="задача" href="#" onclick="Task(this.id)" data-bs-toggle="modal" data-bs-target="#taskModal">Добавить задачу</a>
+  </li>
+  <li class="nav-item text-center p-3">
+    <a class="text-white text-decoration-none" id="консультация"  onclick="myTask(this.id)" href="#" data-bs-toggle="modal" data-bs-target="#taskModal">Добавить консультацию</a>
+  </li>
+  <li class="nav-item text-center p-3">
+    <a class="text-white text-decoration-none" id="звонок" onclick="myTask(this.id)" href="#" data-bs-toggle="modal" data-bs-target="#taskModal">Добавить звонок</a>
+  </li>
+  <li class="nav-item text-center p-3">
+    <a class="text-white text-decoration-none" id="заседание" onclick="myTask(this.id)" href="#" data-bs-toggle="modal" data-bs-target="#taskModal">Добавить заседание</a>
+  </li>
+  <li class="nav-item text-center p-3">
+    <a class="text-white text-decoration-none" id="допрос" onclick="myTask(this.id)" href="#" data-bs-toggle="modal" data-bs-target="#taskModal">Добавить допрос</a>
   </li>
 @endsection
 
@@ -68,7 +80,7 @@
 
           </div>
 
-            <div class="">
+            <div>
               <select class="form-select" name="checkedlawyer" id="checkedlawyer">
                 <option value=''>не выбрано</option>
                     @foreach($datalawyers as $el)
@@ -80,7 +92,7 @@
             </div>
 
             <div class="">
-                    <select class="form-select" name="type" id="type" class="form-control">
+                    <select class="form-select" class="form-control">
                         <option value="" @if (app('request')->input('type') == "") selected @endif >все типы</option>
                         <option value="задача" @if (app('request')->input('type') == "задача") selected @endif >задача</option>
                         <option value="заседание" @if (app('request')->input('type') == "заседание") selected @endif >заседание</option>
@@ -326,9 +338,50 @@
                 });
         </script>
 
+        <script>
+          function myTask(clicked_id) {
+            var type = clicked_id;
+            document.getElementById("taskname").innerHTML = type;            
+            document.getElementById("nameoftask").value = type;
+            document.getElementById("duration").value = 1;
+            var collection = document.getElementsByClassName("hideme")
+              for (let i = 0; i < collection.length; i++) {
+                collection[i].style.display = "none";
+              }            
+            document.getElementById("type").value = type;
+            document.getElementById("lawyer").value = {{ Auth::user()->id}};
+            document.getElementById("soispolintel").value = {{ Auth::user()->id}};
+            var now = new Date();
+            now.setHours(23);
+            now.setMinutes(00);          
+            document.getElementById("date").value = now.toISOString().slice(0,16);
+          }
+        </script>
+
+        <script>
+          function Task(clicked_id) {
+            var type = clicked_id;
+            document.getElementById("taskname").innerHTML = type;  
+            document.getElementById("nameoftask").value = '';
+            document.getElementById("duration").value = 1;
+            var collection = document.getElementsByClassName("hideme")
+              for (let i = 0; i < collection.length; i++) {
+                collection[i].style.display = "block";
+              }            
+            document.getElementById("type").value = type;
+            document.getElementById("lawyer").value = {{ Auth::user()->id}};
+            document.getElementById("soispolintel").value = {{ Auth::user()->id}};
+            var now = new Date();
+            now.setHours(23);
+            now.setMinutes(00);          
+            document.getElementById("date").value = now.toISOString().slice(0,16);
+          }
+        </script>
+
 
 
 
   @include('inc/modal/addtask')
+  @include('inc/modal/addtypetask')
 
 @endsection

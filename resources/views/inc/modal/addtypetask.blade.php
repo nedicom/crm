@@ -35,11 +35,11 @@
   });
 </script>
 
-  <div class="modal fade" id="taskModal">
+  <div class="modal fade" id="tasktypeModal">
     <div class="modal-dialog  modal-lg">
       <div class="modal-content">
           <div class ="modal-header">
-            <h2>+ <span id="taskname">задачу</span></h2>
+            <h2>Добавить другую задачу</h2>
           </div>
 
           <div class ="modal-body d-flex justify-content-center">
@@ -48,14 +48,14 @@
             <form action="{{route('addtask')}}" autocomplete="off" method="post">
               @csrf
 
-              <div class="form-group mb-3 hideme">
-                <label for="nameoftask">Укажите название задачи <span class="text-danger">*</span></label>
-                <input type = "text" name="nameoftask" placeholder="Получить решение по делу" value="{{ old('nameoftask') }}" placeholder="" id="nameoftask" class="form-control" required>
+              <div class="form-group mb-3">
+                <label for="name">Укажите название задачи <span class="text-danger">*</span></label>
+                <input type = "text" name="name" placeholder="Получить решение по делу" value="{{ old('name') }}" placeholder="" id="name" class="form-control" required>
               </div>
 
               <div class="form-group mb-3">
                 <label for="description">Описание</label>
-                <textarea rows="3" name="description" placeholder="Немного подробнее, если это нужно" id="description" class="form-control">{{ old('description') }}</textarea>
+                <textarea rows="3" name="description" placeholder="Немного подробнее о задаче (необязательно)" id="description" class="form-control">{{ old('description') }}</textarea>
               </div>
 
 
@@ -77,7 +77,7 @@
                   </div>
                 </div>
 
-                <div class="col-4 form-group mb-3 hideme">
+                <div class="col-4 form-group mb-3">
                   <label for="name">Яндекс-диск</label>
                   <input type = "url" name="hrftodcm" placeholder="https://disk.yandex.ru" id="hrftodcm" class="form-control">
                 </div>
@@ -91,7 +91,7 @@
                     </div>
                 </div>
 
-                <div class="col-3 form-group mb-3 hideme">
+                <div class="col-3 form-group mb-3">
                   <label for="tag">Сделайте отметку</label>
                   <select class="form-select" name="tag" id="tag">
                       <option value="неважно">неважно</option>
@@ -101,7 +101,7 @@
                   </select>
                  </div>
 
-                <div class="col-3 form-group mb-3 hideme">
+                <div class="col-3 form-group mb-3" hidden>
                   <label for="status">Cтатус</label>
                     <select class="form-select" name="status" id="status" class="form-control">
                         <option value="в работе">в работе</option>
@@ -113,15 +113,8 @@
               </div>
 
               <div class="row">
-                <div class="col-4 form-group mb-3 hideme">
-                  <label for="type">Тип</label>
-                    <select class="form-select" name="type" id="type" class="form-control">
-                        <option value="задача">задача</option>
-                        <option value="заседание">заседание</option>
-                        <option value="допрос" >допрос</option>                      
-                        <option value="звонок" >звонок</option>
-                        <option value="консультация" >консультация</option>
-                    </select>
+                <div class="col-4 form-group mb-3" hidden>
+                    <input name="type" id="typetask">
                 </div>
 
                 <div class="col-4 form-group mb-3">
@@ -133,7 +126,7 @@
                   </select>
                 </div>
 
-                <div class="col-4 form-group mb-3 hideme">
+                <div class="col-4 form-group mb-3">
                   <label for="soispolintel">Укажите соИсполнителя</label>
                   <select class="form-select" name="soispolintel" id="soispolintel" class="form-control">
                         @foreach($datalawyers as $el)
@@ -142,6 +135,8 @@
                   </select>
                 </div>
               </div>
+
+
 
               <input type="hidden" name="clientidinput" id="clientidinput" class="form-control">
 
