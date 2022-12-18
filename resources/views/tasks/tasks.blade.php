@@ -92,7 +92,7 @@
             </div>
 
             <div class="">
-                    <select class="form-select" class="form-control">
+                    <select class="form-select" name="type" id="type">
                         <option value="" @if (app('request')->input('type') == "") selected @endif >все типы</option>
                         <option value="задача" @if (app('request')->input('type') == "задача") selected @endif >задача</option>
                         <option value="заседание" @if (app('request')->input('type') == "заседание") selected @endif >заседание</option>
