@@ -70,14 +70,6 @@ use App\Http\Controllers\TaskAJAXController;
       Route::get('/clients/{id}/delete', 'ClientDelete')->name('Client-Delete');
     });
 
-    Route::controller(MeetingsController::class)->group(function () {
-      Route::get('/meetings', 'index')->name('meetings');
-      Route::post('/meetings/add', 'create')->name('addmeetings');
-      Route::get('/meetings/{id}', 'showMeetengById')->name('showMeetengById');
-      Route::post('/meetings/{id}/edit', 'editMeetengById')->name('editMeetengById');
-      Route::get('/meetings/{id}/delete', 'MeetingDelete')->name('MeetingDelete');
-    });
-
     Route::controller(TasksController::class)->group(function () {
       Route::get('/tasks', 'index')->name('tasks');
       Route::post('/tasks/add', 'create')->name('addtask');

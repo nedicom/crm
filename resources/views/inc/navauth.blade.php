@@ -9,14 +9,25 @@
           class="nav-link dropdown-toggle {{ (request()->is('clients*')) ? 'active' : '' }} {{ (request()->is('dogovor*')) ? 'active' : '' }}">Клиенты</a>
 
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="{{route('clients')}}?checkedlawyer={{ Auth::user()->id}}"">Все клиенты</a></li>
+            <li><a class="dropdown-item" href="{{route('clients')}}?checkedlawyer={{ Auth::user()->id}}">Все клиенты</a></li>
             <li><a class="dropdown-item" href="{{route('dogovor')}}">Договоры</a></li>
           </ul>      
         </li>
 
+        <li class="nav-item btn-group dropdown">
+          <a href="#" data-bs-toggle="dropdown" role="button" aria-expanded="false"
+          class="nav-link dropdown-toggle {{ (request()->is('tasks*')) ? 'active' : '' }}">Задачи</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{{route('tasks')}}?checkedlawyer={{ Auth::user()->id}}">Все события</a></li>
+              <li><a class="dropdown-item" href="{{route('tasks')}}?checkedlawyer={{ Auth::user()->id}}&type=задача">Задачи</a></li>
+              <li><a class="dropdown-item" href="{{route('tasks')}}?checkedlawyer={{ Auth::user()->id}}&type=консультация">Консультации</a></li>
+              <li><a class="dropdown-item" href="{{route('tasks')}}?checkedlawyer={{ Auth::user()->id}}&type=заседание">Заседания</a></li>
+              <li><a class="dropdown-item" href="{{route('tasks')}}?checkedlawyer={{ Auth::user()->id}}&type=допрос">Допросы</a></li>
+              <li><a class="dropdown-item" href="{{route('tasks')}}?checkedlawyer={{ Auth::user()->id}}&type=звонок">Звонки</a></li>
+            </ul>
+          </li>
 
-        <li class="nav-item"><a href="{{route('tasks')}}?checkedlawyer={{ Auth::user()->id}}" class="nav-link {{ (request()->is('tasks*')) ? 'active' : '' }}">Задачи</a></li>
-        <li class="nav-item"><a href="{{route('meetings')}}" class="nav-link {{ (request()->is('meetings*')) ? 'active' : '' }}">Заседания</a></li>
+
         <li class="nav-item"><a href="{{route('showservices')}}" class="nav-link {{ (request()->is('services*')) ? 'active' : '' }}">Услуги</a></li>
         <li class="nav-item"><a href="{{route('payments')}}" class="nav-link {{ (request()->is('payments*')) ? 'active' : '' }}">Платежи</a></li>
         <li class="nav-item"><a href="{{route('lawyers')}}" class="nav-link {{ (request()->is('lawyers*')) ? 'active' : '' }}">Юристы</a></li>
