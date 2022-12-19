@@ -42,8 +42,8 @@
               @csrf
 
               <div class="form-group mb-3">
-                <label for="name">Укажите название<span class="text-danger">*</span></label>
-                <input type = "text" name="name" placeholder="" id="name" value="{{$data->name}}" class="form-control" required>
+                <label for="nameoftask">Укажите название<span class="text-danger">*</span></label>
+                <input type = "text" name="nameoftask" placeholder="" id="nameoftask" value="{{$data->name}}" class="form-control" required>
               </div>
 
               <div class="form-group mb-3">
