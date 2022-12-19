@@ -34,8 +34,8 @@
             <div class="form-check form-switch">
               <input class="form-check-input" type="checkbox"
               id="flexSwitchCheckDefault" name="status" id="status" value="1"
-
-              @if (null !== app('request')->input('status'))checked @endif>
+              @if (app('request')->input('status') !== null) checked 
+              @endif>
 
               <label class="form-check-label fs-6" for="flexSwitchCheckDefault">Клиент в работе</label>
             </div>
