@@ -131,7 +131,7 @@ use Illuminate\Support\Facades\DB;
 
             $task -> save();
 
-            return redirect() -> route('tasks') -> with('success', 'Все в порядке, задача добавлена');
+            return redirect()->back()-> with('success', 'Все в порядке, событие добавлено');
         }
 
         public function tag(Request $request){
@@ -170,7 +170,7 @@ use Illuminate\Support\Facades\DB;
 
           $task -> save();
 
-          return redirect() -> route('showTaskById', $id) -> with('success', 'Все в порядке, задача обновлена');
+          return redirect() -> route('showTaskById', $id) -> with('success', 'Все в порядке, событие обновлено');
         }
 
         public function TaskDelete($id){
