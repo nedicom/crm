@@ -79,6 +79,24 @@ class TaskAjaxController extends Controller{
         $task -> save();
         return ($newhour);        
       }
+
+      if(($request->get('checkedvipolnena') == 'true') ){
+        $id = $request->get('id');
+        $task = Tasks::find($id);
+        $task -> status = 'выполнена';
+        $task -> save();
+        $checkedvipolnena = $request->get('checkedvipolnena');
+        return ($checkedvipolnena);        
+      }
+
+      if(($request->get('checkedvipolnena') == 'false') ){
+        $id = $request->get('id');
+        $task = Tasks::find($id);
+        $task -> status = 'ожидает';
+        $task -> save();
+        $checkedvipolnena = $request->get('checkedvipolnena');
+        return ($checkedvipolnena);        
+      }
       
     else{};
     }

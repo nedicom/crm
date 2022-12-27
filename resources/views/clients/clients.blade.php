@@ -67,14 +67,16 @@
           <div class="d-flex flex-wrap">            
             @foreach($el -> tasksFunc as $val)
               @if($val -> status !== 'выполнена')
-              <div class="col-2 px-3 py-4 border border-4 border-light rounded" style="background-color:
+              <div class="col-2 px-3 pb-4 pt-3 border border-4 border-light rounded" style="background-color:
                 @if($val -> status == 'просрочена') LightCoral
                 @elseif($val -> status == 'в работе') MediumAquaMarine
                 @elseif($val -> status == 'ожидает') Cornsilk
-                @else Cornsilk  @endif
-                
+                @else Cornsilk  @endif                
               ;">
-                  <span class="px-1 fw-normal bg-white border border-white rounded-top" style="font-size: 14px;!important">{{$val -> date['value']}}</span>   
+                <div class="d-flex justify-content-between">
+                  <span class="px-1 fw-normal bg-white border border-white rounded-top" style="font-size: 14px;!important">{{$val -> date['value']}} </span>
+                  <input class="form-check-input checkedvipolnena" autocomplete="off" type="checkbox" value="" id="{{$val -> id}}" data-bs-toggle="tooltip" data-bs-placement="top" title="выполнена">
+                </div>                   
                   <div class="px-1 fw-normal bg-white border border-white rounded-end"  style="height: 80px; overflow: hidden; position: relative;"> 
                     <a href="/tasks/{{$val -> id}}" style="font-size: 14px;!important" target="_blank">{{$val -> name}}</a>
                   </div>                                         
@@ -116,6 +118,19 @@
     </div>
 
     </div>
+
+    <div class="toast-container position-fixed my-2 top-0 start-50 translate-middle-x" aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px;">
+      <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" id="toast">
+        <div class="toast-header d-flex justify-content-between">
+          <strong class="mr-auto">Сообщение</strong>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Закрыть"></button>
+        </div>
+        <div class="toast-body" id="toast-body">
+            Все в порядке, клиент добавлен
+        </div>
+      </div>
+    </div>
+
     @include('inc./modal/addclient')
     @include('inc/modal/addtask')
 
@@ -127,7 +142,7 @@
     </script>
 
 
-<script>
+        <script>
           function myTask(clicked_id) {
             var type = clicked_id;
             document.getElementById("taskname").innerHTML = type;            
@@ -166,6 +181,41 @@
             document.getElementById("date").value = now.toISOString().slice(0,16);
           }
         </script>
+
+        <script> 
+          $( document ).ready(function() {
+            $(".checkedvipolnena").click(function(){ 
+                    var id =  this.id;
+                    var checkedvipolnena = this.checked;
+                    
+                    $.ajax({
+                      method:"POST",
+                      url: "{{ route('setstatus') }}",
+                      data: { id: id, checkedvipolnena: checkedvipolnena, _token: '{{csrf_token()}}' },
+                      success: function(data) {                    
+                        var toast = document.getElementById('toast');
+                        var toastbody = document.getElementById('toast-body');
+                          if(data=="true"){                       
+                          $( toast ).addClass( "show");
+                          $( toastbody ).html("Выполнена!");
+                            setTimeout(function() {
+                                $(toast).removeClass('show');
+                            }, 1000)
+                          }
+                          if(data=="false"){                       
+                          $( toast ).addClass( "show");
+                          $( toastbody ).html("Ожидает!");
+                            setTimeout(function() {
+                                $(toast).removeClass('show');
+                            }, 1000)
+                          }
+                      }                  
+                    });
+            });
+           });
+        </script>
+
+
 
 
     @endsection
