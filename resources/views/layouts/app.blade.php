@@ -66,4 +66,7 @@
 
     @yield('content') {{--user register form--}}
   </body>
+
+  @yield('footerscript')
+
 </html>

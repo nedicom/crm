@@ -35,6 +35,14 @@
   });
 </script>
 
+  <script>
+    $(document).ready(function(){
+      $.datetimepicker.setLocale('ru');
+      $('#date').datetimepicker({
+    });
+  });
+  </script>
+
   <div class="modal fade" id="taskModal">
     <div class="modal-dialog  modal-lg">
       <div class="modal-content">
@@ -63,7 +71,7 @@
               <div class="row">
                 <div class="col-4 form-group mb-3">
                   <label for="date">Время начала: <span class="text-danger">*</span></label>
-                  <input type="datetime-local" id="date" class="form-control" name="date"
+                  <input type="text" id="date" class="form-control" name="date"
                         min="{{ date('Y-m-d H:i') }}">
                 </div>
 

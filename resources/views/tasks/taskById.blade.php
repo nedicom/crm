@@ -1,8 +1,12 @@
 @extends('layouts.app')
 
 @section('head')
+  <link rel="stylesheet" type="text/css" href="/resources/datetimepicker/jquery.datetimepicker.css"/ >
 @endsection
 
+@section('footerscript')
+<script src="/resources/datetimepicker/build/jquery.datetimepicker.full.min.js"></script>
+@endsection
 
 @section('title')
   Задача

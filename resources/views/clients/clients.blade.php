@@ -1,5 +1,22 @@
 @extends('layouts.app')
 
+  @section('head')
+  <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js" integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" type="text/css" href="/resources/datetimepicker/jquery.datetimepicker.css"/ >
+  <script>
+    $(document).ready(function(){
+      $.datetimepicker.setLocale('ru');
+      $('#date').datetimepicker({
+    });
+  });
+  </script>
+  @endsection
+
+  @section('footerscript')
+  <script src="/resources/datetimepicker/build/jquery.datetimepicker.full.min.js"></script>
+  @endsection
+
 @section('title')
   Все клиенты
 @endsection
