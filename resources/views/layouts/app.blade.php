@@ -27,7 +27,7 @@
 
               <div style="margin-left: 13%; width: 86%;
                min-height:1000px;
-               background: linear-gradient(to top right, #f9f4ff, #FFF);">
+               background: linear-gradient(to right, #F0F8FF, #FFF);">
                 @include('inc.navauth')
                 @include('inc.maincontent')
 

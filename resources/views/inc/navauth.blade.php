@@ -1,4 +1,4 @@
-<div class="col-10 p-3 shadow-sm">
+<div class="col-10 p-3 shadow-sm bg-white">
     <header class="d-flex justify-content-evenly">
 
       <ul class="nav nav-pills">
