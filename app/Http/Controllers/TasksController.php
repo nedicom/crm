@@ -41,8 +41,15 @@ use Illuminate\Support\Facades\DB;
             }
 
             elseif($calendar == 'month'){
+              if($addmonts = $request->input('months')){
+                $addmonts = ($request->input('months')); 
+              }
+              else{$addmonts = ((Carbon::now()->month)-1);
+              }
+              //dd((Carbon::now()->month)-1);                           
+              //$localmonth = $gettmonth->locale('ru_RU')->monthName;
               return view ('tasks/tasks', ['data' => Tasks::select("*")
-              ->whereBetween('date', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])
+              ->whereBetween('date', [Carbon::now()->startOfYear()->addMonth($addmonts), Carbon::now()->startOfYear()->addMonth($addmonts+1)])
               ->where($lawyerfilter, '=', $checkedlawyer)
               ->where($typefilter, '=', $type)
               ->orderBy('date', 'asc')

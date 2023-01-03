@@ -25,7 +25,6 @@
   }
 
   .columncard:hover{
-
   }
   
   </style>
@@ -61,8 +60,8 @@
 
   <div class = "row">    
       <form class = "row" action="" method="GET">
-        <h2 class="col-2 px-3">Задачи</h2>
-        <div class="col-10 d-flex justify-content-evenly align-items-center">
+        <h2 class="col-1 px-3">Задачи</h2>
+        <div class="col-12 d-flex justify-content-evenly align-items-center">
           <div class="">  
             <a href="{{route('tasks')}}?checkedlawyer={{ Auth::user()->id}}" class="btn btn-outline-primary btn-sm">мои задачи</a>
           </div>  
@@ -85,6 +84,25 @@
 
           </div>
 
+          @if (app('request')->input('calendar') == 'month')
+              <div class="">
+                      <select class="form-select" name="months" id="months">
+                          <option value="0" @if (app('request')->input('months') == "0") selected @endif >январь</option>
+                          <option value="1" @if (app('request')->input('months') == "1") selected @endif >февраль</option>
+                          <option value="2" @if (app('request')->input('months') == "2") selected @endif >март</option>
+                          <option value="3" @if (app('request')->input('months') == "3") selected @endif >апрель</option>                      
+                          <option value="4" @if (app('request')->input('months') == "4") selected @endif >май</option>
+                          <option value="5" @if (app('request')->input('months') == "5") selected @endif >июнь</option>
+                          <option value="5" @if (app('request')->input('months') == "6") selected @endif >июль</option>
+                          <option value="5" @if (app('request')->input('months') == "7") selected @endif >август</option>
+                          <option value="5" @if (app('request')->input('months') == "8") selected @endif >сентябрь</option>
+                          <option value="5" @if (app('request')->input('months') == "9") selected @endif >октябрь</option>
+                          <option value="5" @if (app('request')->input('months') == "10") selected @endif >ноябрь</option>
+                          <option value="5" @if (app('request')->input('months') == "11") selected @endif >декабрь</option>
+                      </select>
+              </div>
+            @endif
+            
             <div>
               <select class="form-select" name="checkedlawyer" id="checkedlawyer">
                 <option value=''>не выбрано</option>
@@ -121,9 +139,6 @@
         @php
           $weekMap = [1 => 'Понедельник', 2 => 'Вторник', 3 => 'Среда', 4 => 'Четерг', 5 => 'Пятница', 6 => 'Суббота', 7 => 'Воскресенье'];
         @endphp
-
-
-
 
        @if (app('request')->input('calendar') == '')        
         <div class="row pt-4">
@@ -170,7 +185,7 @@
         </div>
       @endif
 
-        @if (app('request')->input('calendar') == 'week')
+      @if (app('request')->input('calendar') == 'week')
         <h2 class=""></h2>
         @for ($i = 1; $i < 6; $i++)  
         <div style="width: 20%;"> 
@@ -187,38 +202,39 @@
             </div>
          
           @endfor
-        @endif
+      @endif
 
-        @if (app('request')->input('calendar') == 'month')
-          <h2 class=""></h2>
-          @for ($i = 1; $i < 8; $i++)  
-          <div style="width: 14%;"> 
-            <h1 class="badge bg-secondary">{{$weekMap[$i]}}</h1>
-          </div>
-          @endfor
-          @php 
-            $time = mktime(0, 0, 0, date('n'), 1, date('Y'));
-            $firstday = (date('w', $time) + 6) % 7; //воскресенье сделаем 7-м днем, а не первым
-            $daycount = date('t', $time);
-          @endphp
-          @for ($i = 0; $i < $firstday; $i++)
-            <div class="my-3 col" style="min-width: 14%; max-width: 15%; min-height: 100px"></div>
-          @endfor
-
-          @for ($i = 1; $i <= (cal_days_in_month(CAL_GREGORIAN, date('m'), date('Y'))); $i++)
-            <div class="my-3 col columncard" style="min-width: 14%; max-width: 15%; min-height: 100px" dayofmonth="{{$i}}">            
-              {{$i}}
-                @foreach($data as $el)                
-                  @if($el['date']['currentDay'] == $i)
-                   @include('inc.calendar.task')                  
-                  @endif
-              @endforeach
-
+      @if (app('request')->input('calendar') == 'month')
+          <div class="mt-2" style="display: grid; grid-template-columns: 14% 14% 14% 14% 14% 14% 14%;">
+            @for ($i = 1; $i < 8; $i++)  
+            <div class="text-center"> 
+              <h1 class="badge bg-secondary">{{$weekMap[$i]}}</h1>
             </div>
-          @endfor
-        @endif
+            @endfor
+            @php 
+              $time = mktime(0, 0, 0, date('n'), 1, date('Y'));
+              $firstday = (date('w', $time) + 6) % 7; //воскресенье сделаем 7-м днем, а не первым
+              $daycount = date('t', $time);
+            @endphp
+            @for ($i = 0; $i < $firstday; $i++)
+              <div class="my-3" style="min-height: 100px"></div>
+            @endfor
 
-        @if (app('request')->input('calendar') == 'day')
+            @for ($i = 1; $i <= (cal_days_in_month(CAL_GREGORIAN, date('m'), date('Y'))); $i++)           
+              <div class="columncard bg-white m-1 " style="min-height: 100px" dayofmonth="{{$i}}">
+                <span class="px-2">{{$i}}</span>                   
+                      @foreach($data as $el)                
+                        @if($el['date']['currentDay'] == $i)
+                        @include('inc.calendar.task')                  
+                        @endif
+                    @endforeach
+                  
+              </div>
+            @endfor
+          </div>
+      @endif
+
+      @if (app('request')->input('calendar') == 'day')
         <h2 class=""></h2>
             @for ($i = 8; $i < 22; $i++)  
             <div class='row'> 
@@ -239,7 +255,7 @@
 
             </div>
             @endfor
-        @endif
+      @endif
 
 
 
