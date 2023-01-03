@@ -108,7 +108,7 @@
               <div><i class="fa-solid fa-list-check"></i></div>            
             </h5>
                   @if(count($all['alltasks']) == 0) 
-                  <h1 class="card-text">
+                  <h1 class="card-text">0
                   </h1>
                   @endif            
             <table class="table table-sm">
