@@ -8,6 +8,15 @@
   <li class="nav-item text-center p-3">
     <a class="text-white text-decoration-none" href="#" data-bs-toggle="modal" data-bs-target="#editleadModal">Редактировать лид</a>
   </li>
+  <li class="nav-item text-center p-3">
+    <a class="text-white text-decoration-none" href="#" data-bs-toggle="modal" data-bs-target="#modalleadtowork">В работу</a>
+  </li>
+  <li class="nav-item text-center p-3">
+    <a class="text-white text-decoration-none" href="#" data-bs-toggle="modal" data-bs-target="#modalleadtoclient">В клиента</a>
+  </li>
+  <li class="nav-item text-center p-3">
+    <a class="text-white text-decoration-none" href="#" data-bs-toggle="modal" data-bs-target="#modalleaddelete">Удалить</a>
+  </li>
 @endsection
 
 @section('main')

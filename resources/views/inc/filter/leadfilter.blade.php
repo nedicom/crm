@@ -21,25 +21,15 @@
           </div>
 
           <div class="col-2">
-                <select class="form-select" name="checkedsources" id="checkedsources">
-                    <option value="">источник</option>
-                    <option value="сайт" @if ('сайт' == (app('request')->input('checkedsources'))) selected @endif>
-                      сайт
-                    </option>
-                    <option value="рекомендация" @if ('рекомендация' == (app('request')->input('checkedsources'))) selected @endif>
-                      рекомендация
-                    </option>
-                    <option value="с улицы" @if ('с улицы' == (app('request')->input('checkedsources'))) selected @endif>
-                      с улицы
-                    </option>
-                    <option value="не знаю источник" @if ('не знаю источник' == (app('request')->input('checkedsources'))) selected @endif>
-                      не знаю источник
-                    </option>
-                    <option value="сайт ПФР" @if ('сайт ПФР' == (app('request')->input('checkedsources'))) selected @endif>
-                      сайт ПФР
-                    </option>
-                </select>
-          </div>
+                  <select class="form-select" name="checkedsources" id="checkedsources">
+                    <option value="">Источник</option>
+                        @foreach($datasource as $el)
+                          <option value="{{$el -> name}}" @if (($el -> name) == (app('request')->input('checkedsources'))) selected @endif>
+                            {{$el -> name}}
+                          </option>
+                        @endforeach
+                  </select>
+            </div>
 
 
             <div class="col-2">

@@ -84,25 +84,36 @@
           <div class="d-flex flex-wrap">            
             @foreach($el -> tasksFunc as $val)
               @if($val -> status !== 'выполнена')
-              <div class="col-2 px-3 pb-4 pt-3 border border-4 border-light rounded" style="background-color:
+              <div class="col-2 px-3 py-3 border border-4 border-light" style="background-color:
                 @if($val -> status == 'просрочена') LightCoral
                 @elseif($val -> status == 'в работе') MediumAquaMarine
                 @elseif($val -> status == 'ожидает') Cornsilk
                 @else Cornsilk  @endif                
               ;">
-                <div class="d-flex justify-content-between">
-                  <span class="px-1 fw-normal bg-white border border-white rounded-top" style="font-size: 14px;!important">{{$val -> date['value']}} </span>
+                <div class="d-flex justify-content-between bg-white px-2 pt-1">
+                  <span class="fw-normal" style="font-size: 14px;!important">{{$val -> date['value']}} </span>
+                  @if($val -> type == 'консультация')
+                  <i class="bi bi-chat-dots"  data-bs-toggle="tooltip" data-bs-placement="top" title="это консультация"></i>
+                  @elseif($val -> type == 'заседание')
+                  <i class="bi bi bi-briefcase"  data-bs-toggle="tooltip" data-bs-placement="top" title="это заседание"></i>
+                  @elseif($val -> type == 'допрос')
+                  <i class="bi bi bi-emoji-neutral"  data-bs-toggle="tooltip" data-bs-placement="top" title="это допрос"></i>
+                  @elseif($val -> type == 'звонок')
+                  <i class="bi bi-phone"  data-bs-toggle="tooltip" data-bs-placement="top" title="это звонок"></i>
+                  @else
+                  <i class="bi bi-clipboard"  data-bs-toggle="tooltip" data-bs-placement="top" title="это обычная задача"></i>
+                  @endif
                   <input class="form-check-input checkedvipolnena" autocomplete="off" type="checkbox" value="" id="{{$val -> id}}" data-bs-toggle="tooltip" data-bs-placement="top" title="выполнена">
                 </div>                   
-                  <div class="px-1 fw-normal bg-white border border-white rounded-end"  style="height: 80px; overflow: hidden; position: relative;"> 
+                  <div class="px-1 fw-normal bg-white border border-white"  style="height: 80px; overflow: hidden; position: relative;"> 
                     <a href="/tasks/{{$val -> id}}" style="font-size: 14px;!important" target="_blank">{{$val -> name}}</a>
                   </div>                                         
               </div>                       
               @endif
             @endforeach
-            <div class="col-2 px-3 py-4 border border-4 border-light rounded" style="background-color: Cornsilk;;">
-                  <span class="px-1 fw-normal bg-white border border-white rounded-top" style="font-size: 14px;!important">добавить</span>   
-                  <div class="px-1 fw-normal bg-white border border-white rounded-end d-flex flex-wrap"  style="height: 80px; overflow: hidden; position: relative;"> 
+              <div class="col-2 px-3 py-3 border border-4 border-light" style="background-color: Cornsilk;;">
+                  <span class="px-1 fw-normal bg-white border border-white" style="font-size: 14px;!important">добавить</span>   
+                  <div class="px-1 fw-normal bg-white border border-white d-flex flex-wrap"  style="height: 80px; overflow: hidden; position: relative;"> 
                     <div><a class="btn w-100 nameToForm" id="задача" onclick="Task(this.id)" href="#"
                     dataclient="{{$el -> name}}" datavalueid="{{$el -> id}}" data-bs-toggle="modal" data-bs-target="#taskModal"
                    target="_blank">
