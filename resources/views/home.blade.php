@@ -44,7 +44,7 @@
 
   @section('main')
     <div class="row"> 
-        <h2 class="px-3 col-8">Показатели</h2>
+        <h3 class="px-3 col-8 pb-3">Показатели <small class="text-muted">@if ('day' == (request()->get('date'))) сегодня @else месяц @endif</small></h3>
     
         <div class="col-4">
           <form enctype="multipart/form-data" action="{{route('add-avatar')}}" method="post">
@@ -67,7 +67,7 @@
         <div class = "card border-light">
           <div class="card-body">
             <h5 class="card-title d-flex justify-content-between">
-              <div>Клиенты сегодня</div>
+              <div>Клиенты</div>
               <div><i class="fa-sharp fa-solid fa-person"></i></div>            
             </h5>
                   @if(count($all['allclients']) == 0) 
@@ -89,7 +89,7 @@
         <div class = "card border-light">
           <div class="card-body">
             <h5 class="card-title d-flex justify-content-between">
-              <div>Договоры сегодня</div>
+              <div>Договоры</div>
               <div><i class="fa-sharp fa-solid fa-file-word"></i></div>            
             </h5>
                   @if(count($all['alldogovors']) == 0) 
@@ -111,7 +111,7 @@
         <div class = "card border-light">
           <div class="card-body">
             <h5 class="card-title d-flex justify-content-between">
-              <div>Платежи сегодня</div>
+              <div>Платежи</div>
               <div><i class="fa-sharp fa-solid fa-file-invoice-dollar"></i></div>            
             </h5>
                   @if(count($all['allpayments']) == 0) 
@@ -135,7 +135,7 @@
         <div class = "card border-light">
           <div class="card-body">
             <h5 class="card-title d-flex justify-content-between">
-              <div>Задачи поставлены сегодня</div>
+              <div>Задачи поставлены</div>
               <div><i class="fa-solid fa-list-check"></i></div>            
             </h5>
                   @if(count($all['alltasks']) == 0) 
@@ -157,7 +157,7 @@
         <div class = "card border-light">
           <div class="card-body">
           <h5 class="card-title d-flex justify-content-between">
-              <div>Задачи на сегодня</div>
+              <div>Задачи</div>
               <div><i class="fa-sharp fa-solid fa-calendar-day"></i></div>            
             </h5>
                   @if(count($all['alltaskstoday']) == 0) 
@@ -208,7 +208,7 @@
         <div class = "card border-light">
           <div class="card-body">
           <h5 class="card-title d-flex justify-content-between">
-              <div>Лиды сегодня</div>
+              <div>Лиды</div>
               <div><i class="fa-sharp fa-solid fa-person-circle-plus"></i></div>            
             </h5>
                   @if(count($all['allleads']) == 0) 
