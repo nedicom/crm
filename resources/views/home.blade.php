@@ -9,7 +9,38 @@
   @endsection
 
   @section('leftmenuone')
-      @endsection
+  <form action="{{route('home')}}" class="my-3" method="get" id = "fltr">
+    
+    <div class="d-inline-flex flex-column px-3 m-1 mb-3">
+      <div class="form-check">
+        <input class="btn-check"  onchange="sellwr()" type="radio" name="date" id="day" value="day"  @if ('day' == (request()->get('date'))) checked @endif>
+        <label class="btn btn-light" for="day">
+          День
+        </label>
+        <input class="btn-check" onchange="sellwr()" type="radio" name="date" id="month" value="month"  @if ('month' == (request()->get('date'))) checked @endif>
+        <label class="btn btn-light" for="month">
+          Месяц
+        </label>  
+      </div>
+    </div>
+
+    @if (auth()->user()->role == 'admin')
+      <div class="px-3 m-1">   
+        <select class="form-select form-select-sm" onchange="sellwr()" name="lawyer">
+        <option value="">юрист</option>
+          @foreach($data['datalawyers'] as $el)
+          <option value="{{$el -> id}}" @if ($el -> id == (request()->get('lawyer'))) selected @endif>{{$el -> name}}</option>
+          @endforeach
+        </select>
+      </div>
+    @endif  
+  <form>
+  <script>
+    function sellwr() {
+        fltr.submit();
+      }
+  </script>
+  @endsection
 
   @section('main')
     <div class="row"> 
