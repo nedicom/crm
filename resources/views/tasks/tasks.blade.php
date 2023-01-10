@@ -186,21 +186,20 @@
       @endif
 
       @if (app('request')->input('calendar') == 'week')
-        <h2 class=""></h2>
-        @for ($i = 1; $i < 6; $i++)  
-        <div style="width: 20%;"> 
-          <h1 class="badge bg-secondary">{{$weekMap[$i]}}</h1>
-        </div>
+      <div class="mt-2" style="display: grid; grid-template-columns: 20% 20% 20% 20% 20%;"> 
+        @for ($i = 1; $i < 6; $i++)        
+          <div class="text-center"> <h1 class="badge bg-secondary">{{$weekMap[$i]}}</h1></div>        
         @endfor
           @for ($i = 1; $i < 6; $i++)           
-            <div class="my-3 columncard" style="font-size:12px; width: 20%;" dayofweek="{{$i}}"> 
+          <div class="columncard bg-white m-1" style="font-size:12px; min-height: 400px" dayofweek="{{$i}}">
+              <span class="px-2"> </span>  
               @foreach($data as $el)              
                 @if($el['date']['day'] == $weekMap[$i])
-                  @include('tasks.taskcard')                  
+                  @include('tasks.taskcard')             
                 @endif
               @endforeach
-            </div>
-         
+          
+      </div> 
           @endfor
       @endif
 
@@ -241,7 +240,7 @@
               <div class='col-1 border-bottom py-1'> 
                 <span class="w-20  badge bg-secondary">{{$i}}.00</span>
               </div>
-              <div style="min-height: 200px;" class="col-11 my-3 columncard" hourofday="{{$i}}">
+              <div style="min-height: 200px;" class="col-11  bg-white my-3 columncard" hourofday="{{$i}}">
               @foreach($data as $el)
               
                 @if($el['date']['currentHour'] == $i) 
