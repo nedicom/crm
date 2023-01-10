@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'da70cec0c1b8ab44f3e992318ae22de3864c48c6',
+        'reference' => '368554b03af6b51febf07cab93c9e652b2023c3e',
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
@@ -30,6 +30,15 @@
             'replaced' => array(
                 0 => '*',
             ),
+        ),
+        'defstudio/telegraph' => array(
+            'pretty_version' => 'v1.28.0',
+            'version' => '1.28.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../defstudio/telegraph',
+            'aliases' => array(),
+            'reference' => '65d7c407594b02e2ff7712b81d722462da7df220',
+            'dev_requirement' => false,
         ),
         'dflydev/dot-access-data' => array(
             'pretty_version' => 'v3.0.2',
@@ -370,7 +379,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'da70cec0c1b8ab44f3e992318ae22de3864c48c6',
+            'reference' => '368554b03af6b51febf07cab93c9e652b2023c3e',
             'dev_requirement' => false,
         ),
         'laravel/pint' => array(
@@ -958,6 +967,15 @@
             'aliases' => array(),
             'reference' => '2b79cf6ed40946b64ac6713d7d2da8a9d87f612b',
             'dev_requirement' => true,
+        ),
+        'spatie/laravel-package-tools' => array(
+            'pretty_version' => '1.13.8',
+            'version' => '1.13.8.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../spatie/laravel-package-tools',
+            'aliases' => array(),
+            'reference' => '781a2f637237e69c277eb401063acf15e2b4156b',
+            'dev_requirement' => false,
         ),
         'symfony/console' => array(
             'pretty_version' => 'v6.1.7',
