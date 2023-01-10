@@ -2,6 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use DefStudio\Telegraph\Controllers\WebhookController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::post('/telegraph/5941198915:AAFpQD_AvVJfiXjH6gaD3oBZgxbe06sTvyc/webhook', [WebhookController::class, 'handle'])->name('telegraph.webhook');
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
