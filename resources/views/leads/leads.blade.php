@@ -20,25 +20,28 @@
 
 
   @include('inc/filter.leadfilter')
-
     <div class="row">
-      <div class="col-4 text-center">
-        <h4 class="page-title">поступил</h4>
-        @foreach($data as $el)
-          @if($el -> status == "поступил")
-            @include('leads/leadcard')
-          @endif
-        @endforeach
-      </div>
-
-      <div class="col-8 text-center">
-        <h4 class="page-title">в работе</h4>
-        @foreach($data as $el)
-          @if($el -> status !== "поступил")
-            @include('leads/leadcard')
-          @endif
-        @endforeach
-      </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Дата обращения</th>
+            <th scope="col">Суть проблемы</th>
+            <th scope="col">Имя клиента</th>
+            <th scope="col">Телефон</th>
+            <th scope="col">Консультация</th>
+            <th scope="col">Результат</th>
+            <th scope="col">Ответственный юрист</th>
+            <th scope="col">Привлек</th>
+            <th scope="col">Источник</th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach($data as $el)
+            @include('leads/leadrow')
+          @endforeach
+        </tbody>
+      </table>
     </div>
 
     @include('inc./modal/leadsmodal/addlead')
