@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Tasks;
 
 class CalendarController extends Controller{ 
-    public function calendar($lawyer){
-        return view ('inc/calendar/calendar', ['data' => Tasks::where('lawyer', $lawyer)]);
+    public function calendar($lawyerid){
+        return view ('inc/calendar/calendar', ['data' => Tasks::where('lawyer', $lawyerid)->get()]);
       }
 }
 /* use for google

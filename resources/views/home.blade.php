@@ -45,7 +45,7 @@
   @section('main')
     <div class="row"> 
         <h3 class="px-3 col-8 pb-3">Показатели <small class="text-muted">@if ('day' == (request()->get('date'))) сегодня @else месяц @endif</small></h3>
-    
+        
         <div class="col-4">
           <form enctype="multipart/form-data" action="{{route('add-avatar')}}" method="post">
             @csrf
@@ -58,6 +58,18 @@
               </div>
             </div>
           </form>
+
+          <div class="pt-2">
+                <!-- The button used to copy the text -->
+                <label  for="calendarurl" class="visually-hidden"  >Копировать ссылку</label>            
+                <!-- The text field -->
+                <div class="input-group">
+                <div class="input-group-text" id="btnurl" onclick="copyUrl()">копировать ссылку</div>
+                <input class="form-control" type="text" value="https://crm.nedicom.ru/calendar/{{auth()->user()->id}}" id="calendarurl">
+                </div>
+          </div>
+
+       
         </div>
     </div> 
    
@@ -292,3 +304,20 @@
 
    </div>
   @endsection
+
+  <script>
+function copyUrl() {
+  // Get the text field
+  var copyText = document.getElementById("calendarurl");
+
+  // Select the text field
+  copyText.select();
+  copyText.setSelectionRange(0, 99999); // For mobile devices
+
+  // Copy the text inside the text field
+  navigator.clipboard.writeText(copyText.value);
+  
+  // Alert the copied text
+  document.getElementById("btnurl").innerText = 'ссылка скопирована';
+}
+</script>

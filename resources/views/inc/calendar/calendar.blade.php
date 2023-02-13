@@ -3,23 +3,23 @@ VERSION:2.0
 CALSCALE:GREGORIAN
 
 @foreach($data as $el)
-{{$el -> id}}
+    BEGIN:VEVENT
+    SUMMARY:{{$el -> name}}
+    DTSTART;TZID=America/New_York:{{$el -> donetime}}
+    DTEND;TZID=America/New_York:20230214T103500
+    LOCATION:Crimea
+    DESCRIPTION: {{$el -> description}}
+    STATUS:CONFIRMED
+    SEQUENCE:3
+    BEGIN:VALARM
+    TRIGGER:-PT10M
+    DESCRIPTION:Pickup Reminder
+    ACTION:DISPLAY
+    END:VALARM
+    END:VEVENT
 @endforeach
 
-BEGIN:VEVENT
-SUMMARY:тестовове событие
-DTSTART;TZID=America/New_York:20230214T103400
-DTEND;TZID=America/New_York:20230214T103500
-LOCATION:1000 Broadway Ave.\, Brooklyn
-DESCRIPTION: Access-A-Ride to 900 Jay St.\, Brooklyn
-STATUS:CONFIRMED
-SEQUENCE:3
-BEGIN:VALARM
-TRIGGER:-PT10M
-DESCRIPTION:Pickup Reminder
-ACTION:DISPLAY
-END:VALARM
-END:VEVENT
+
 
 BEGIN:VEVENT
 SUMMARY:тестовове событие 2
