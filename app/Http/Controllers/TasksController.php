@@ -153,7 +153,6 @@ use Illuminate\Support\Facades\DB;
 
         public function showTaskById($request){
           return view ('tasks/taskById', ['data' => Tasks::find($request)], ['datalawyers' =>  User::all()]);
-
         }
 
         public function editTaskById($id, TasksRequest $req){
@@ -183,7 +182,5 @@ use Illuminate\Support\Facades\DB;
         public function TaskDelete($id){
             Tasks::find($id)->delete();
             return redirect() -> route('tasks') -> with('success', 'Все в порядке, задача удалена');
-
         }
-
     }

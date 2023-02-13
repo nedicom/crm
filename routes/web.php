@@ -8,12 +8,15 @@ use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\LawyersController;
 use App\Http\Controllers\PaymentsController;
 use App\Http\Controllers\LeadsController;
+
 use App\Http\Controllers\TasksController;
-use App\Http\Controllers\MeetingsController;
 use App\Http\Controllers\SourceController;
 use App\Http\Controllers\DogovorController;
 use App\Http\Controllers\GetclientAJAXController;
 use App\Http\Controllers\TaskAJAXController;
+
+
+use App\Http\Controllers\CalendarController;
 
   Route::get('/', function () {
       return redirect('/home');
@@ -27,8 +30,10 @@ use App\Http\Controllers\TaskAJAXController;
 
   Route::get('/contacts', function () {return view('contacts');})->middleware('auth');
 
-
-
+  //CalDav for yandex and other
+  Route::controller(CalendarController::class)->group(function () {
+    Route::get('/calendar/{lawyer}', 'calendar')->name('calendar');
+  });
 
   Route::middleware(['verified'])->group(function () {
 
