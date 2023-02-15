@@ -1,39 +1,32 @@
-BEGIN:VCALENDAR
-VERSION:2.0
-CALSCALE:GREGORIAN
-
+BEGIN:VCALENDAR<br>
+VERSION:2.0<br>
+CALSCALE:GREGORIAN<br>
 @foreach($data as $el)
-    BEGIN:VEVENT
-    SUMMARY:{{$el -> name}}
-    DTSTART;TZID=America/New_York:{{$el -> donetime}}
-    DTEND;TZID=America/New_York:20230214T103500
-    LOCATION:Crimea
-    DESCRIPTION: {{$el -> description}}
-    STATUS:CONFIRMED
-    SEQUENCE:3
-    BEGIN:VALARM
-    TRIGGER:-PT10M
-    DESCRIPTION:Pickup Reminder
-    ACTION:DISPLAY
-    END:VALARM
-    END:VEVENT
+    BEGIN:VEVENT<br>
+    SUMMARY:{{ Str::limit($el->name, 50) }}<br>
+    DTSTART;TZID=Europe/Moscow:@php    
+    $datetime = new DateTime($el->date['value']);
+    echo date_format($datetime,"Ymd");
+    echo "T";
+    echo date_format($datetime,"His");
+    @endphp<br>
+    DTEND;TZID=Europe/Moscow:@php   
+    $oldDate = date('Y-m-d H:i:s', strtotime($el->date['value']. ' + 30 minutes'));
+    $datetime2 = new DateTime($oldDate);
+    echo date_format($datetime2,"Ymd");
+    echo "T";
+    echo date_format($datetime2,"His");
+    @endphp<br>
+    LOCATION:Crimea<br>
+    DESCRIPTION: {{ Str::limit($el->description, 50) }}<br>
+    COLOR:turquoise
+    STATUS:CONFIRMED<br>
+    SEQUENCE:3<br>
+    BEGIN:VALARM<br>
+    TRIGGER:-PT10M<br>
+    DESCRIPTION:Напоминалка<br>
+    ACTION:DISPLAY<br>
+    END:VALARM<br>
+    END:VEVENT<br>
 @endforeach
-
-
-
-BEGIN:VEVENT
-SUMMARY:тестовове событие 2
-DTSTART;TZID=America/New_York:20230215T103400
-DTEND;TZID=America/New_York:20230215T103500
-LOCATION:900 Jay St.\, Brooklyn
-DESCRIPTION: Access-A-Ride to 1000 Broadway Ave.\, Brooklyn
-STATUS:CONFIRMED
-SEQUENCE:3
-BEGIN:VALARM
-TRIGGER:-PT10M
-DESCRIPTION:Pickup Reminder
-ACTION:DISPLAY
-END:VALARM
-END:VEVENT
-
-END:VCALENDAR
+END:VCALENDAR<br>
