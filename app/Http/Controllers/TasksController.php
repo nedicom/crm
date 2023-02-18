@@ -104,7 +104,7 @@ use Illuminate\Support\Facades\DB;
 
 
         public function showTaskById($request){
-          $task = Tasks::find($request);
+           $task = Tasks::find($request);
            if($task -> lawyer == Auth::user()->id){
             $task -> new = 0;
             $task -> save();

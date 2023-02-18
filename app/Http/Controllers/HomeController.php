@@ -22,7 +22,21 @@ use Carbon\Carbon;
     }
 
     public function index(Request $req){
-      
+
+      $tasks = Tasks::where('lawyer', Auth::user()->id)-> get();
+        foreach($tasks as $el){
+          //dd([$el -> date][0]['value']);
+          //dd(Carbon::today());
+          //dd(Carbon::now()->gte([$el -> date][0]['value']));
+          if(Carbon::now()->gte([$el -> date][0]['value']) && $el -> status != 'выполнена'){
+            //dd('test');
+          //if(Carbon::today()->eq([$el -> date][0]['value'])){
+            $el -> status = 'просрочена';
+            $el -> save();
+        }
+     }
+
+
       if($req -> input('lawyer')){
         $crtuser = $req -> input('lawyer');
       }
@@ -87,6 +101,9 @@ use Carbon\Carbon;
               -> get(),
               'alltaskstime' => Tasks::where('lawyer', $crtuser)
               -> where('status', 'просрочена')
+              -> get(),
+              'alltasksnew' => Tasks::where('lawyer', $crtuser)
+              -> where('new', 1)
               -> get(),
               'allpayments' => Payments::where('nameOfAttractioner', $crtuser)
               -> $where('created_at', (Carbon::today()))

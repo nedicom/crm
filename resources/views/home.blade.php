@@ -73,7 +73,115 @@
         </div>
     </div> 
    
-   <div class = "row">
+  
+  <div class = "row">
+
+  <div class = "row  mt-2">
+      <div class = "col-4">
+        <div class = "card border-light">
+          <div class="card-body">
+            <h5 class="card-title d-flex justify-content-between">
+              <div>Задачи поставлены</div>
+              <div><i class="fa-solid fa-list-check"></i></div>            
+            </h5>
+                  @if(count($all['alltasks']) == 0) 
+                  <h1 class="card-text">0
+                  </h1>
+                  @endif            
+            <table class="table table-sm">
+              <tbody>
+                  @foreach($all['alltasks'] as $el)
+                  <tr class="my-3"><td><a href="tasks/{{$el->id}}" class="text-decoration-none" target="_blank">{{$el->name}}</a></td><td>{{$el->client}}</td></tr>
+                  @endforeach
+              </tbody>
+            </table>            
+          </div>
+        </div>
+      </div>
+
+      <div class = "col-4">
+
+      </div>
+
+      <div class = "col-4">
+        <div class = "card border-light">
+          <div class="card-body">
+          <h5 class="card-title d-flex justify-content-between">
+              <div>Задачи просрочены</div>
+              <div><i class="fa-sharp fa-solid fa-exclamation"></i></div>            
+            </h5>
+                  @if(count($all['alltaskstime']) == 0) 
+                  <h1 class="card-text">0
+                  </h1>
+                  @endif            
+            <table class="table table-sm">
+              <tbody>
+                  @foreach($all['alltaskstime'] as $el)
+                    <tr class="my-3">                      
+                        <td><a href="tasks/{{$el->id}}" class="text-decoration-none" target="_blank">{{$el->name}}</a></td><td>{{$el["date"]["value"]}}</td>
+                    </tr>
+                    @endforeach
+              </tbody>
+            </table>            
+          </div>
+        </div>
+      </div>
+
+
+  <div class = "row  mt-2">
+      <div class = "col-4">
+        <div class = "card border-light">
+          <div class="card-body">
+            <h5 class="card-title d-flex justify-content-between">
+              <div>Новые задачи</div>
+              <div><i class="fa-sharp fa-regular fa-circle"  style="--fa-primary-color: dodgerblue;"></i></div>            
+            </h5>
+                  @if(count($all['alltasksnew']) == 0) 
+                  <h1 class="card-text">0
+                  </h1>
+                  @endif            
+            <table class="table table-sm">
+              <tbody>
+                  @foreach($all['alltasksnew'] as $el)
+                  <tr class="my-3"><td><a href="tasks/{{$el->id}}" class="text-decoration-none" target="_blank">{{$el->name}}</a></td><td>{{$el->client}}</td></tr>
+                  @endforeach
+              </tbody>
+            </table>            
+          </div>
+        </div>
+      </div>
+
+      <div class = "col-4">
+        <div class = "card border-light">
+          <div class="card-body">
+          <h5 class="card-title d-flex justify-content-between">
+              <div>Задачи</div>
+              <div><i class="fa-sharp fa-solid fa-calendar-day"></i></div>            
+            </h5>
+                  @if(count($all['alltaskstoday']) == 0) 
+                  <h1 class="card-text">0
+                  </h1>
+                  @endif            
+            <table class="table table-sm">
+              <tbody>
+                  @foreach($all['alltaskstoday'] as $el)
+                    <tr class="my-3">                      
+                        <td><a href="tasks/{{$el->id}}" class="text-decoration-none" target="_blank">{{$el->name}}</a></td><td>{{$el->client}}</td>
+                    </tr>
+                    @endforeach
+              </tbody>
+            </table>            
+          </div>
+        </div>
+      </div>
+
+      <div class = "col-4">
+
+      
+      </div>
+
+
+
     <div class = "row">
       <div class = "col-4">
         <div class = "card border-light">
@@ -142,77 +250,7 @@
       </div>
     </div>
 
-    <div class = "row  mt-2">
-      <div class = "col-4">
-        <div class = "card border-light">
-          <div class="card-body">
-            <h5 class="card-title d-flex justify-content-between">
-              <div>Задачи поставлены</div>
-              <div><i class="fa-solid fa-list-check"></i></div>            
-            </h5>
-                  @if(count($all['alltasks']) == 0) 
-                  <h1 class="card-text">0
-                  </h1>
-                  @endif            
-            <table class="table table-sm">
-              <tbody>
-                  @foreach($all['alltasks'] as $el)
-                  <tr class="my-3"><td><a href="tasks/{{$el->id}}" class="text-decoration-none" target="_blank">{{$el->name}}</a></td><td>{{$el->client}}</td></tr>
-                  @endforeach
-              </tbody>
-            </table>            
-          </div>
-        </div>
-      </div>
-
-      <div class = "col-4">
-        <div class = "card border-light">
-          <div class="card-body">
-          <h5 class="card-title d-flex justify-content-between">
-              <div>Задачи</div>
-              <div><i class="fa-sharp fa-solid fa-calendar-day"></i></div>            
-            </h5>
-                  @if(count($all['alltaskstoday']) == 0) 
-                  <h1 class="card-text">0
-                  </h1>
-                  @endif            
-            <table class="table table-sm">
-              <tbody>
-                  @foreach($all['alltaskstoday'] as $el)
-                    <tr class="my-3">                      
-                        <td><a href="tasks/{{$el->id}}" class="text-decoration-none" target="_blank">{{$el->name}}</a></td><td>{{$el->client}}</td>
-                    </tr>
-                    @endforeach
-              </tbody>
-            </table>            
-          </div>
-        </div>
-      </div>
-
-      <div class = "col-4">
-        <div class = "card border-light">
-          <div class="card-body">
-          <h5 class="card-title d-flex justify-content-between">
-              <div>Задачи просрочены</div>
-              <div><i class="fa-sharp fa-solid fa-exclamation"></i></div>            
-            </h5>
-                  @if(count($all['alltaskstime']) == 0) 
-                  <h1 class="card-text">0
-                  </h1>
-                  @endif            
-            <table class="table table-sm">
-              <tbody>
-                  @foreach($all['alltaskstime'] as $el)
-                    <tr class="my-3">                      
-                        <td><a href="tasks/{{$el->id}}" class="text-decoration-none" target="_blank">{{$el->name}}</a></td><td>{{$el["date"]["value"]}}</td>
-                    </tr>
-                    @endforeach
-              </tbody>
-            </table>            
-          </div>
-        </div>
-      </div>
-
+   
     </div>
 
     <div class = "row mt-2">
