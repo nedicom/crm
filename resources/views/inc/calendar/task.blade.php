@@ -12,10 +12,10 @@
           <div class="task-header d-flex justify-content-between align-items-center">        
                   <span>
                     @foreach($datalawyers as $ellawyer)
-                    @if ($ellawyer -> id == $el -> lawyer)  
-                    <a class="w-100" href="{{ route ('showTaskById', $el->id) }}">
-                      <img src="{{$ellawyer -> avatar}}" style="width: 20px;" class="rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="исполнитель">
-                    </a>
+                      @if ($ellawyer -> id == $el -> lawyer)  
+                        <a class="w-100" href="{{ route ('showTaskById', $el->id) }}">
+                          <img src="{{$ellawyer -> avatar}}" style="width: 20px;" class="rounded-circle" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="исполнитель">
+                        </a>
                       @endif
                     @endforeach
                   </span>
@@ -34,6 +34,13 @@
                       @endif                
                       ;"></i>
                   </span>
+                  @if($el -> new == 1)
+                    <span  style="position: absolute; top:-15px; right:-10px;">
+                      <span class="badge rounded-pill bg-danger">
+                        new
+                      </span>
+                    </span>
+                  @endif
           </div>                  
       </div>
 </div>

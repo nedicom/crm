@@ -126,6 +126,7 @@ use Illuminate\Support\Facades\DB;
             $task -> lawyer = $req -> lawyer;
             $task -> duration = $req -> duration;
             $task -> clientid = $req -> clientidinput;
+            $task -> new = 1;
             if($req -> hrftodcm){$task -> hrftodcm = $req -> hrftodcm;};
             if($req -> type){$task -> type = $req -> type;};
 
@@ -152,6 +153,9 @@ use Illuminate\Support\Facades\DB;
 
 
         public function showTaskById($request){
+          $task = Tasks::find($request);
+          $task -> new = 0;
+          $task -> save();
           return view ('tasks/taskById', ['data' => Tasks::find($request)], ['datalawyers' =>  User::all()]);
         }
 

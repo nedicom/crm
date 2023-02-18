@@ -32,7 +32,7 @@ use App\Http\Controllers\CalendarController;
 
   //CalDav for yandex and other
   Route::controller(CalendarController::class)->group(function () {
-    Route::get('/calendar/{lawyerid}.ics', 'calendar')->name('calendar');
+    Route::get('/calendar/{lawyerid}', 'calendar')->name('calendar');
   });
 
   Route::middleware(['verified'])->group(function () {

@@ -224,7 +224,7 @@
                 <span class="px-2">{{$i}}</span>                   
                       @foreach($data as $el)                
                         @if($el['date']['currentDay'] == $i)
-                        @include('inc.calendar.task')                  
+                          @include('inc.calendar.task')                  
                         @endif
                     @endforeach
                   
