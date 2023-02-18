@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use DefStudio\Telegraph\Controllers\WebhookController;
+use DefStudio\Telegraph\Controllers\BotController;
 
 
 
@@ -17,9 +17,5 @@ use DefStudio\Telegraph\Controllers\WebhookController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::post('/telegraph/{token}/webhook', [WebhookController::class, 'handle'])->name('telegraph.webhook');
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::get('/bot', [BotController::class, 'handle'])->name('bot');
 

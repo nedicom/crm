@@ -15,8 +15,10 @@ use App\Http\Controllers\DogovorController;
 use App\Http\Controllers\GetclientAJAXController;
 use App\Http\Controllers\TaskAJAXController;
 
-
+use App\Http\Controllers\BotController;
 use App\Http\Controllers\CalendarController;
+
+Route::get('/bot', [BotController::class, 'index'])->name('bot');
 
   Route::get('/', function () {
       return redirect('/home');
