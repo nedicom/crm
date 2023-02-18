@@ -67,54 +67,6 @@ use Illuminate\Support\Facades\DB;
             }
 
          // }
-
-
-      /*  if(is_null($checkedlawyer)){ //checkedlawyer is empty
-
-          if($calendar == 'week'){
-            return view ('tasks/tasks', ['data' => Tasks::select("*")
-            ->whereBetween('date', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
-            ->orderBy('date', 'asc')
-            ->get()],
-            ['datalawyers' =>  User::all()]);
-          }
-
-          elseif($calendar == 'day'){
-            return view ('tasks/tasks', ['data' => Tasks::select("*")
-            ->whereBetween('date', [Carbon::now()->startOfDay(), Carbon::now()->endOfDay()])
-            ->orderBy('date', 'asc')
-            ->get()],
-            ['datalawyers' =>  User::all()]);
-          }
-
-          elseif($calendar == 'month'){
-            return view ('tasks/tasks', ['data' => Tasks::select("*")
-            ->whereBetween('date', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()])
-            ->orderBy('date', 'asc')
-            ->get()],
-            ['datalawyers' =>  User::all()]);
-          }
-
-          else{
-            return view ('tasks/tasks', ['data' => Tasks::select("*")
-            ->where('lawyer', (Auth::user()->id))
-            ->orWhere('soispolintel', (Auth::user()->id))
-            ->orWhere('postanovshik', (Auth::user()->id))
-            ->orderBy('date', 'asc')
-            ->get()],
-            ['datalawyers' =>  User::all()]);
-          }
-
-        }
-
-
-        else{
-          return view ('tasks/tasks', ['data' => Tasks::select("*")
-          ->get()],
-          ['datalawyers' =>  User::all()]);
-        }*/
-
-
     }
 
         public function create(TasksRequest $req){
@@ -134,7 +86,6 @@ use Illuminate\Support\Facades\DB;
             if($req -> tag){$task -> tag = $req -> tag;};
             if($req -> soispolintel){$task -> soispolintel = $req -> soispolintel;};
             if($req -> description){$task -> description = $req -> description;};
-
             $task -> status = 'ожидает';
 
             $task -> save();
@@ -154,8 +105,10 @@ use Illuminate\Support\Facades\DB;
 
         public function showTaskById($request){
           $task = Tasks::find($request);
-          $task -> new = 0;
-          $task -> save();
+           if($task -> lawyer == Auth::user()->id){
+            $task -> new = 0;
+            $task -> save();
+          }
           return view ('tasks/taskById', ['data' => Tasks::find($request)], ['datalawyers' =>  User::all()]);
         }
 
