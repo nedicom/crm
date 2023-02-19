@@ -34,6 +34,9 @@ class BotController extends Controller
             if(!empty($data['message']['text']) && $data['message']['text'] == '/start') {
                 $text = 'Давайте выберем юриста.';
                 }
+            else{
+                $text = 'test';
+            }
 
                 /*$keyboard = [];
                 $k = 0;
