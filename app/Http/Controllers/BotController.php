@@ -15,20 +15,7 @@ class BotController extends Controller
 
         $token = "5941198915:AAFpQD_AvVJfiXjH6gaD3oBZgxbe06sTvyc";
         
-        //$urldata = "https://api.telegram.org/bot". $token ."/getUpdates";
-        
-        /* Curl case
-        $curlSession = curl_init();
-            curl_setopt($curlSession, CURLOPT_URL, $urldata);
-            curl_setopt($curlSession, CURLOPT_RETURNTRANSFER, true);
-            //$jsonData = json_decode(curl_exec($curlSession));
-            $jsonData = curl_exec($curlSession);
-            curl_close($curlSession);
-            $textMessage = $jsonData;
-            */
-
-        //$textMessage = file_get_contents($urldata);
-          
+                
 
         /*
         $tasks = Tasks::where('lawyer', 2)-> get();
@@ -36,14 +23,7 @@ class BotController extends Controller
         foreach($tasks as $el){
             $textMessage .= $el -> name;
         }
-        //$textMessage = urlencode($textMessage);   
         */
-
-        /*$textMessage = 'test';
-        $chat_id = 922556670;
-        $urlQuery = "https://api.telegram.org/bot". $token ."/sendMessage?chat_id=". $chat_id ."&text=" . $textMessage;
-
-        return file_get_contents($urlQuery);*/
 
             //post
 
@@ -56,7 +36,7 @@ class BotController extends Controller
                 }
 
             $getQuery = array(
-                "chat_id" 	=> 922556670,
+                "chat_id" 	=> $data['message']['chat']['id'],
                 "text"  	=> $text,
                 "parse_mode" => "html",
             );
