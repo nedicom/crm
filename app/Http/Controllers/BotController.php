@@ -46,7 +46,6 @@ class BotController extends Controller
 
             $getQuery = array(
                 "chat_id" 	=> $data['message']['chat']['id'],
-                //'reply_markup' => json_encode($keyboard),
                 "parse_mode" => "html",
             );
 
@@ -56,11 +55,15 @@ class BotController extends Controller
                 $getQuery['reply_markup'] = json_encode($keyboard);                
                 }
 
-            if(!empty($message)){
+            elseif(!empty($message) && $message == 'просроченные'){
                 $text = 'Вы выбрали  - '.$message;
                 $getQuery['text'] =  $text;               
                 $getQuery['reply_markup'] = json_encode($taskkeyboard);
                 }
+
+            else{
+                $text = 'Вы выбрали  - '.$message;
+            }
 
                 /*
             $keyboard = [
