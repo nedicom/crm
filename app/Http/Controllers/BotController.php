@@ -31,8 +31,8 @@ class BotController extends Controller
             $data = json_decode($data, true);
             file_put_contents(__DIR__ . '/message.txt', print_r($data, true));
 
-            if(!empty($data['message']['text'])) {
-                $text = $data['message']['text'];
+            if(!empty($data['message']['text']) && $data['message']['text'] == '/start') {
+                $text = 'Давайте выберем юриста.';
                 }
 
             $keyboard = [
