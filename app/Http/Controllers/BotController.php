@@ -37,7 +37,11 @@ class BotController extends Controller
             $userkeyboard = [];
             $k = 1;
 
-
+            foreach (User::all() as $lawyer) {
+                $userkeyboard[$k] = [$lawyer->name];
+                $keyboard['keyboard'][$k] = [$lawyer->name];
+                $k++;
+            }
 
             $getQuery = array(
                 "chat_id" 	=> $data['message']['chat']['id'],
@@ -48,11 +52,7 @@ class BotController extends Controller
             if(!empty($data['message']['text']) && $data['message']['text'] == '/start') {
                 $text = 'Давайте выберем юриста.';                
                 $getQuery['text'] =  $text;
-                foreach (User::all() as $lawyer) {
-                    $userkeyboard[$k] = [$lawyer->name];
-                    $keyboard['keyboard'][$k] = [$lawyer->name];
-                    $k++;
-                }
+
                 $getQuery['reply_markup'] = json_encode($keyboard);                
                 }
 
