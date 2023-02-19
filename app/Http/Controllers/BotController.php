@@ -59,7 +59,7 @@ class BotController extends Controller
                     $text = 'Вы выбрали  - '.$data['message']['text'];
                     $getQuery['text'] =  $text;
                     $keyboard = [];
-                    $keyboard['keyboard'][0] = ['просроченные'];
+                    $keyboard['keyboard'][0] = ['просроченные']; $keyboard['keyboard'][1] = ['новые']; $keyboard['keyboard'][2] = ['на сегодня'];
                     $getQuery['reply_markup'] = json_encode($keyboard);
                     }
                     else{
