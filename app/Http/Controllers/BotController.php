@@ -33,13 +33,11 @@ class BotController extends Controller
             file_put_contents(__DIR__ . '/message.txt', print_r($data, true));
             
 
-
+            $keyboard = [];
+            $k = 0;   
             
             if(!empty($data['message']['text']) && $data['message']['text'] == '/start') {
-                $text = 'Давайте выберем юриста.';
-
-                $keyboard = [];
-                $k = 0;    
+                $text = 'Давайте выберем юриста.';                 
                 foreach (User::all() as $lawyer) {
                     $keyboard['keyboard'][$k] = [$lawyer->name];
                     $k++;
