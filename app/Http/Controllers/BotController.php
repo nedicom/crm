@@ -50,14 +50,14 @@ class BotController extends Controller
                 "parse_mode" => "html",
             );
 
-            if(!empty($data['message']['text']) && $data['message']['text'] == '/start') {
+            if(!empty($message) && $message == '/start') {
                 $text = 'Давайте выберем юриста.';                
                 $getQuery['text'] =  $text;
                 $getQuery['reply_markup'] = json_encode($keyboard);                
                 }
 
-            if(!empty($data['message']['text']) && ){
-                $text = 'Вы выбрали  - '.$data['message']['text'];
+            if(!empty($message) && ){
+                $text = 'Вы выбрали  - '.$message;
                 $getQuery['text'] =  $text;               
                 $getQuery['reply_markup'] = json_encode($taskkeyboard);
                 }
