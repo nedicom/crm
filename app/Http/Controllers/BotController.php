@@ -35,7 +35,7 @@ class BotController extends Controller
 
             $keyboard['keyboard'][0] = ['в начало'];
             $userkeyboard = [];
-            $taskkeyboard['keyboard'][0] = ['просроченные', 'новые', 'на сегодня']; 
+            $taskkeyboard = array('keyboard' => array ('просроченные', 'новые', 'на сегодня'));
             $k = 1;
 
             foreach (User::all() as $lawyer) {
