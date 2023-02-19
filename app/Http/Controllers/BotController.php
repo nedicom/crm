@@ -41,9 +41,13 @@ class BotController extends Controller
                 $text = 'Давайте выберем юриста.';
                 $getQuery['text'] =  $text;
                 }
-            else{
-                $text = 'test';
-            }
+                elseif(!empty($data['message']['text']) && $data['message']['text'] == '/марк') {
+                    $text = 'Марк';
+                    $getQuery['text'] =  $text;
+                    }
+                    else{
+                        $text = 'test';
+                    }
 
                 /*$keyboard = [];
                 $k = 0;
