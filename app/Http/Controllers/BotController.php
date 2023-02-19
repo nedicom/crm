@@ -31,10 +31,11 @@ class BotController extends Controller
             $data = json_decode($data, true);
             //file_put_contents(__DIR__ . '/message.txt', print_r($data, true));
             $message = $data['message']['text'];
-
+            file_put_contents(__DIR__ . '/message.txt', print_r($message, true));
 
             $keyboard['keyboard'][0] = ['в начало'];
             $userkeyboard = [];
+            $taskkeyboard['keyboard'][0] = ['просроченные']; $keyboard['keyboard'][1] = ['новые']; $keyboard['keyboard'][2] = ['на сегодня'];
             $k = 1;
 
             foreach (User::all() as $lawyer) {
@@ -52,20 +53,14 @@ class BotController extends Controller
             if(!empty($data['message']['text']) && $data['message']['text'] == '/start') {
                 $text = 'Давайте выберем юриста.';                
                 $getQuery['text'] =  $text;
-
                 $getQuery['reply_markup'] = json_encode($keyboard);                
                 }
 
-                elseif(!empty($data['message']['text']) && in_array($message, $userkeyboard)){
-                    $text = 'Вы выбрали  - '.$data['message']['text'];
-                    $getQuery['text'] =  $text;
-                    $keyboard = [];
-                    $keyboard['keyboard'][0] = ['просроченные']; $keyboard['keyboard'][1] = ['новые']; $keyboard['keyboard'][2] = ['на сегодня'];
-                    $getQuery['reply_markup'] = json_encode($keyboard);
-                    }
-                    else{
-                        $text = 'test';
-                    }
+            if(!empty($data['message']['text'])){
+                $text = 'Вы выбрали  - '.$data['message']['text'];
+                $getQuery['text'] =  $text;                
+                $getQuery['reply_markup'] = json_encode($taskkeyboard);
+                }
 
                 /*
             $keyboard = [
