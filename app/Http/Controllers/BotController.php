@@ -25,17 +25,15 @@ class BotController extends Controller
     $chat_id = 922556670;
     
     $textMessage = $jsonData;
-//    $textMessage = 'test';
-//get
 
-$tasks = Tasks::where('lawyer', 2)-> get();
-
-$textMessage = "";
-
-foreach($tasks as $el){
-    $textMessage .= $el -> name;
-}
-//$textMessage = urlencode($textMessage);
+        /*
+    $tasks = Tasks::where('lawyer', 2)-> get();
+    $textMessage = "";
+    foreach($tasks as $el){
+        $textMessage .= $el -> name;
+    }
+    //$textMessage = urlencode($textMessage);   
+    */
 
 $urlQuery = "https://api.telegram.org/bot". $token ."/sendMessage?chat_id=". $chat_id ."&text=" . $textMessage;
 
