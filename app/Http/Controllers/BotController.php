@@ -39,7 +39,7 @@ class BotController extends Controller
             $k = 1;
 
             foreach (User::all() as $lawyer) {
-                $userkeyboard[$k] = [$lawyer->name];
+                $userkeyboard[] = $lawyer->name;
                 $keyboard['keyboard'][$k] = [$lawyer->name];
                 $k++;
             }
