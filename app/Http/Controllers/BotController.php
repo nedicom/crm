@@ -31,12 +31,15 @@ class BotController extends Controller
             $data = json_decode($data, true);
             //file_put_contents(__DIR__ . '/message.txt', print_r($data, true));
 
-            $keyboard = ['в начало'];
+
+
+            $keyboard['keyboard'][0] = ['в начало'];
             $k = 1;
-                foreach (User::all() as $lawyer) {
-                    $keyboard['keyboard'][$k] = [$lawyer->name];
-                    $k++;
-                }
+
+            foreach (User::all() as $lawyer) {
+                $keyboard['keyboard'][$k] = [$lawyer->name];
+                $k++;
+            }
 
             $getQuery = array(
                 "chat_id" 	=> $data['message']['chat']['id'],
@@ -47,7 +50,7 @@ class BotController extends Controller
             if(!empty($data['message']['text']) && $data['message']['text'] == '/start') {
                 $text = 'Давайте выберем юриста.';
                 $getQuery['text'] =  $text;
-                $getQuery['reply_markup'] =  json_encode($keyboard);
+                $getQuery['reply_markup'] = json_encode($keyboard);
                 }
                 elseif(!empty($data['message']['text']) && $data['message']['text'] == '/марк') {
                     $text = 'Марк';
