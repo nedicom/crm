@@ -41,7 +41,7 @@ class BotController extends Controller
                 foreach (User::all() as $lawyer) {
                     $keyboard['keyboard'][$k] = [$lawyer->name];
                     $k++;
-                }*/
+                }
 
 
             $keyboard = [
@@ -49,12 +49,12 @@ class BotController extends Controller
                     [['text'=>'Кнопка 1'],['text'=>'Кнопка 2']] // Первый ряд кнопок
                     ,['Простая кнопка',['text'=>'Кнопка 4']] // Второй ряд кнопок
                     ]
-                ];
+                ];*/
 
             $getQuery = array(
                 "chat_id" 	=> $data['message']['chat']['id'],
                 "text"  	=> $text,
-                'reply_markup' => json_encode($keyboard),
+                //'reply_markup' => json_encode($keyboard),
                 "parse_mode" => "html",
             );
             $ch = curl_init("https://api.telegram.org/bot". $token ."/sendMessage?" . http_build_query($getQuery));
