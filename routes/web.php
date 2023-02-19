@@ -18,7 +18,7 @@ use App\Http\Controllers\TaskAJAXController;
 use App\Http\Controllers\BotController;
 use App\Http\Controllers\CalendarController;
 
-Route::post('/bot', [BotController::class, 'index'])->name('bot');
+Route::post('/bot', [BotController::class, 'index'])->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class])->name('bot');
  
   Route::get('/', function () {
       return redirect('/home');
