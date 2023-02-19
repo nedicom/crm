@@ -46,6 +46,10 @@ class BotController extends Controller
         return file_get_contents($urlQuery);*/
 
             //post
+
+            $data = file_get_contents('php://input');
+            $data = json_decode($data, true);
+            file_put_contents(__DIR__ . '/message.txt', print_r($data, true));
             
             $getQuery = array(
                 "chat_id" 	=> 922556670,
@@ -61,8 +65,7 @@ class BotController extends Controller
             $resultQuery = curl_exec($ch);
             curl_close($ch);
 
-            //echo $resultQuery;
-            
+            echo $resultQuery;          
 
     }
 }
