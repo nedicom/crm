@@ -33,8 +33,7 @@ class BotController extends Controller
 
 
 
-            $keyboard['keyboard'][0] = ['в начало'];
-            $k = 1;
+
 
 
 
@@ -44,18 +43,24 @@ class BotController extends Controller
                 "parse_mode" => "html",
             );
 
-            if(!empty($data['message']['text']) && $data['message']['text'] == '/start') {
+            if($data['message']['text'] == '/start' || $data['message']['text'] == 'в начало') {
                 $text = 'Давайте выберем юриста.';
                 
                 $getQuery['text'] =  $text;
+
+                $keyboard['keyboard'][0] = ['в начало'];
+                $userkeyboard = [];
+                $k = 1;
+
                 foreach (User::all() as $lawyer) {
+                    $userkeyboard[$k] = [$lawyer->name];
                     $keyboard['keyboard'][$k] = [$lawyer->name];
                     $k++;
                 }
-                $getQuery['reply_markup'] = json_encode($keyboard);
+                $getQuery['reply_markup'] = json_encode($keyboard);                
                 }
 
-                elseif(!empty($data['message']['text'])){
+                elseif(!empty($data['message']['text']) &&  in_array($data['message']['text'], $keyboard)){
                     $text = 'Вы выбрали  - '.$data['message']['text'];
                     $getQuery['text'] =  $text;
                     $keyboard = [];
