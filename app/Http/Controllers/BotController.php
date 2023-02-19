@@ -31,7 +31,6 @@ class BotController extends Controller
             $data = json_decode($data, true);
             //file_put_contents(__DIR__ . '/message.txt', print_r($data, true));
             $message = $data['message']['text'];
-            file_put_contents(__DIR__ . '/message.txt', print_r($message, true));
 
             $keyboard['keyboard'][0] = ['в начало'];
             $userkeyboard = [];
@@ -59,7 +58,7 @@ class BotController extends Controller
 
             if(!empty($data['message']['text'])){
                 $text = 'Вы выбрали  - '.$data['message']['text'];
-                $getQuery['text'] =  print_r($userkeyboard);                
+                $getQuery['text'] =  print_r($keyboard);                
                 $getQuery['reply_markup'] = json_encode($taskkeyboard);
                 }
 
