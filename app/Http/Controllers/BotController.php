@@ -56,7 +56,7 @@ class BotController extends Controller
                 $getQuery['reply_markup'] = json_encode($keyboard);                
                 }
 
-            if(!empty($message) && ){
+            if(!empty($message)){
                 $text = 'Вы выбрали  - '.$message;
                 $getQuery['text'] =  $text;               
                 $getQuery['reply_markup'] = json_encode($taskkeyboard);
