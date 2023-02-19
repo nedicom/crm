@@ -27,21 +27,17 @@ class BotController extends Controller
 
             //post
 
-            
             $data = file_get_contents('php://input');            
             $data = json_decode($data, true);
-            //file_put_contents(__DIR__ . '/message.txt', print_r($data, true));
-            
+            file_put_contents(__DIR__ . '/message.txt', print_r($data, true));
 
-
-            
             if(!empty($data['message']['text']) && $data['message']['text'] == '/start') {
                 $text = 'Давайте выберем юриста.';
                 }
 
                 $keyboard = [];
                 $k = 0;
-    
+
                 foreach (User::all() as $lawyer) {
                     $keyboard['keyboard'][$k] = [$lawyer->name];
                     $k++;
