@@ -37,15 +37,24 @@ class BotController extends Controller
             
             if(!empty($data['message']['text']) && $data['message']['text'] == '/start') {
                 $text = 'Давайте выберем юриста.';
-                }
 
                 $keyboard = [];
-                $k = 0;
-    
+                $k = 0;    
                 foreach (User::all() as $lawyer) {
                     $keyboard['keyboard'][$k] = [$lawyer->name];
                     $k++;
                 }
+
+                $getQuery = array(
+                    "chat_id" 	=> $data['message']['chat']['id'],
+                    "text"  	=> $text,
+                    'reply_markup' => json_encode($keyboard),
+                    "parse_mode" => "html",
+                );
+
+                }
+
+
 
 
             /*$keyboard = [
@@ -55,12 +64,7 @@ class BotController extends Controller
                     ]
                 ];*/
 
-            $getQuery = array(
-                "chat_id" 	=> $data['message']['chat']['id'],
-                "text"  	=> $text,
-                'reply_markup' => json_encode($keyboard),
-                "parse_mode" => "html",
-            );
+
             $ch = curl_init("https://api.telegram.org/bot". $token ."/sendMessage?" . http_build_query($getQuery));
             curl_setopt($ch, CURLOPT_POST, true);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
