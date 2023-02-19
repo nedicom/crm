@@ -46,8 +46,7 @@ class BotController extends Controller
             );
 
             if(!empty($data['message']['text']) && $data['message']['text'] == '/start') {
-                $text = 'Давайте выберем юриста.';
-                
+                $text = 'Давайте выберем юриста.';                
                 $getQuery['text'] =  $text;
                 foreach (User::all() as $lawyer) {
                     $userkeyboard[$k] = [$lawyer->name];
@@ -57,7 +56,7 @@ class BotController extends Controller
                 $getQuery['reply_markup'] = json_encode($keyboard);                
                 }
 
-                elseif(!empty($data['message']['text']) &&  in_array($data['message']['text'], $keyboard)){
+                elseif(!empty($data['message']['text']) &&  in_array($data['message']['text'], $userkeyboard)){
                     $text = 'Вы выбрали  - '.$data['message']['text'];
                     $getQuery['text'] =  $text;
                     $keyboard = [];
