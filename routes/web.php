@@ -19,7 +19,7 @@ use App\Http\Controllers\BotController;
 use App\Http\Controllers\CalendarController;
 
 Route::post('/bot', [BotController::class, 'index'])->name('bot');
-
+ 
   Route::get('/', function () {
       return redirect('/home');
   });
