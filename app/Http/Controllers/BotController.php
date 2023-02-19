@@ -45,16 +45,14 @@ class BotController extends Controller
                     $k++;
                 }
 
+                }
+
                 $getQuery = array(
                     "chat_id" 	=> $data['message']['chat']['id'],
                     "text"  	=> $text,
                     'reply_markup' => json_encode($keyboard),
                     "parse_mode" => "html",
                 );
-
-                }
-
-
 
 
             /*$keyboard = [
