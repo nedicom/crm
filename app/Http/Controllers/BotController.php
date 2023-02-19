@@ -39,14 +39,14 @@ class BotController extends Controller
         //$textMessage = urlencode($textMessage);   
         */
 
-        $textMessage = 'test';
+        /*$textMessage = 'test';
         $chat_id = 922556670;
         $urlQuery = "https://api.telegram.org/bot". $token ."/sendMessage?chat_id=". $chat_id ."&text=" . $textMessage;
 
-        return file_get_contents($urlQuery);
+        return file_get_contents($urlQuery);*/
 
             //post
-            /*
+            
             $getQuery = array(
                 "chat_id" 	=> 922556670,
                 "text"  	=> "Новое сообщение из формы",
@@ -61,7 +61,7 @@ class BotController extends Controller
             curl_close($ch);
 
             //echo $resultQuery;
-            */
+            
 
     }
 }
