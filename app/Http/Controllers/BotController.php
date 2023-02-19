@@ -30,7 +30,7 @@ class BotController extends Controller
             $data = file_get_contents('php://input');            
             $data = json_decode($data, true);
             //file_put_contents(__DIR__ . '/message.txt', print_r($data, true));
-
+            $message = $data['message']['text'];
 
 
             $keyboard['keyboard'][0] = ['в начало'];
@@ -56,7 +56,7 @@ class BotController extends Controller
                 $getQuery['reply_markup'] = json_encode($keyboard);                
                 }
 
-                elseif(!empty($data['message']['text']) &&  in_array($data['message']['text'], $userkeyboard)){
+                elseif(!empty($data['message']['text']) && in_array($message, $userkeyboard)){
                     $text = 'Вы выбрали  - '.$data['message']['text'];
                     $getQuery['text'] =  $text;
                     $keyboard = [];
