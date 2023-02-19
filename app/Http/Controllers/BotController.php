@@ -55,7 +55,7 @@ class BotController extends Controller
                 $getQuery['reply_markup'] = json_encode($keyboard);                
                 }
 
-            elseif(!empty($message) && $message == 'просроченные'){
+            elseif(!empty($message) && $message == 'Марк'){
                 $text = 'Вы выбрали  - '.$message;
                 $getQuery['text'] =  $text;               
                 $getQuery['reply_markup'] = json_encode($taskkeyboard);
