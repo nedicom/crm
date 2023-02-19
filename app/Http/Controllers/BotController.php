@@ -47,14 +47,17 @@ class BotController extends Controller
 
             //post
 
-            $data = file_get_contents('php://input');
-            echo $data;
+            $data = file_get_contents('php://input');            
             $data = json_decode($data, true);
             file_put_contents(__DIR__ . '/message.txt', print_r($data, true));
 
+            if(!empty($data['message']['text'])) {
+                $text = $data['message']['text'];
+                }
+
             $getQuery = array(
                 "chat_id" 	=> 922556670,
-                "text"  	=> "Новое сообщение из формы",
+                "text"  	=> $text,
                 "parse_mode" => "html",
             );
             $ch = curl_init("https://api.telegram.org/bot". $token ."/sendMessage?" . http_build_query($getQuery));
