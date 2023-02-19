@@ -33,7 +33,9 @@ class BotController extends Controller
 
 
 
-
+            $keyboard['keyboard'][0] = ['в начало'];
+            $userkeyboard = [];
+            $k = 1;
 
 
 
@@ -43,15 +45,10 @@ class BotController extends Controller
                 "parse_mode" => "html",
             );
 
-            if($data['message']['text'] == '/start' || $data['message']['text'] == 'в начало') {
+            if(!empty($data['message']['text']) && $data['message']['text'] == '/start') {
                 $text = 'Давайте выберем юриста.';
                 
                 $getQuery['text'] =  $text;
-
-                $keyboard['keyboard'][0] = ['в начало'];
-                $userkeyboard = [];
-                $k = 1;
-
                 foreach (User::all() as $lawyer) {
                     $userkeyboard[$k] = [$lawyer->name];
                     $keyboard['keyboard'][$k] = [$lawyer->name];
