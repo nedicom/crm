@@ -31,7 +31,7 @@ class BotController extends Controller
             file_put_contents(__DIR__ . '/message.txt', print_r($data, true));
             $message = $data['message']['text'];
 
-            $keyboard = ['keyboard' => ['в начало'], 'one_time_keyboard' => true];
+            $keyboard = ['keyboard' => [['в начало'], 'one_time_keyboard' => true]];
             
             $tasklist = ['в начало', 'просроченные', 'новые', 'на сегодня'];
             $taskkeyboard = ['inline_keyboard'=>[
