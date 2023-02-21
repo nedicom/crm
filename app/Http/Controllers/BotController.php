@@ -30,7 +30,6 @@ class BotController extends Controller
             $data = json_decode($data, true);
             file_put_contents(__DIR__ . '/message.txt', print_r($data, true));
             $message = $data['message']['text'];
-            $callback_query = $data['callback_query'];
 
             $keyboard['keyboard'][0] = ['в начало'];
             
@@ -50,6 +49,7 @@ class BotController extends Controller
                 "parse_mode" => "html",
             );
 
+
             if(!empty($message) && $message == '/start') {
                 $text = 'Давайте выберем юриста.';                
                 $getQuery['text'] =  $text;
@@ -63,12 +63,6 @@ class BotController extends Controller
                 }
             
             elseif(!empty($message) && in_array($message, $tasklist)){
-                $text = 'тут будут задачи';
-                $getQuery['text'] =  $text;               
-                $getQuery['reply_markup'] = json_encode($taskkeyboard);
-                }
-
-            elseif(isset($callback_query)){
                 $text = 'тут будут задачи';
                 $getQuery['text'] =  $text;               
                 $getQuery['reply_markup'] = json_encode($taskkeyboard);
