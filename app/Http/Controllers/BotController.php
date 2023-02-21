@@ -31,7 +31,7 @@ class BotController extends Controller
             file_put_contents(__DIR__ . '/message.txt', print_r($data, true));
             $message = $data['message']['text'];
 
-            $keyboard = ['keyboard' => [['в начало'], 'one_time_keyboard' => true]];
+            $button = ['в начало'];
             
             $tasklist = ['в начало', 'просроченные', 'новые', 'на сегодня'];
             $taskkeyboard = ['inline_keyboard'=>[
@@ -46,8 +46,7 @@ class BotController extends Controller
             $userlist = [];
             foreach (User::all() as $lawyer) {
                 $userlist[] = $lawyer->name;
-                $keyboard['keyboard'][$k] = [$lawyer->name];
-                $k++;
+                array_push($button, $lawyer->name);
             }
 
             $getQuery = array(
@@ -76,6 +75,8 @@ class BotController extends Controller
             else{
                 $text = 'Вы выбрали  - '.$message;
             }
+
+            $keyboard = ['keyboard' => [$button]];
 
                 /*
             $keyboard = [
