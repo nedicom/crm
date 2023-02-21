@@ -34,7 +34,7 @@ class BotController extends Controller
             $keyboard['keyboard'][0] = ['в начало'];
             
             $tasklist = ['в начало', 'просроченные', 'новые', 'на сегодня'];
-            $taskkeyboard = ['keyboard'=>[['text'=>'В начало'],['просроченные'],['новые'], ['на сегодня']]];
+            $taskkeyboard = ['keyboard'=>[['в начало'],['просроченные'],['новые'], ['на сегодня']]];
             $k = 1;
 
             $userlist = [];
@@ -59,7 +59,6 @@ class BotController extends Controller
             elseif(!empty($message) && in_array($message, $userlist)){
                 $text = 'Вы выбрали  - '.$message;
                 $getQuery['text'] =  $text;               
-                //$getQuery['reply_markup'] = json_encode($taskkeyboard);
                 $getQuery['reply_markup'] = json_encode($taskkeyboard);
                 }
             
@@ -67,7 +66,6 @@ class BotController extends Controller
                 $text = 'тут будут задачи';
                 $getQuery['text'] =  $text;               
                 $getQuery['reply_markup'] = json_encode($taskkeyboard);
-                //$getQuery['reply_markup'] = json_encode(array('inline_keyboard' => $taskkeyboard));
                 }
 
             else{
