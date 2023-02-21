@@ -31,13 +31,11 @@ class BotController extends Controller
             file_put_contents(__DIR__ . '/message.txt', print_r($data, true));
             $message = $data['message']['text'];
 
-            //$keyboard['keyboard'][0] = ['в начало'];
-            $button = ['в начало'];
-
-
+            $keyboard['keyboard'][0] = ['в начало'];
+            
             $tasklist = ['в начало', 'просроченные', 'новые', 'на сегодня'];
             $taskkeyboard = ['inline_keyboard'=>[
-                                                    [['text'=>'в начало', 'callback_data' => 'zero']],
+                                                    [['text'=>'в начало', 'callback_data' => 'plz']],
                                                     [['text'=>'просроченные', 'callback_data' => 'pld']],
                                                     [['text'=>'новые', 'callback_data' => 'new']], 
                                                     [['text'=>'на сегодня', 'callback_data' => 'today']]
@@ -48,11 +46,9 @@ class BotController extends Controller
             $userlist = [];
             foreach (User::all() as $lawyer) {
                 $userlist[] = $lawyer->name;
-                array_push($button, [$lawyer->name]);
-                //$keyboard['keyboard'][$k] = [$lawyer->name];
-                //$k++;
+                $keyboard['keyboard'][$k] = [$lawyer->name];
+                $k++;
             }
-            $keyboard = ['keyboard' => [$button]];
 
             $getQuery = array(
                 "chat_id" 	=> $data['message']['chat']['id'],
