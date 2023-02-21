@@ -31,11 +31,11 @@ class BotController extends Controller
             file_put_contents(__DIR__ . '/message.txt', print_r($data, true));
             $message = $data['message']['text'];
 
-            $button = ['в начало'];
+            $keyboard['keyboard'][0] = ['в начало'];
             
             $tasklist = ['в начало', 'просроченные', 'новые', 'на сегодня'];
             $taskkeyboard = ['inline_keyboard'=>[
-                                                    [['text'=>'в начало', 'callback_data' => 'start']],
+                                                    [['text'=>'в начало', 'callback_data' => 'zero']],
                                                     [['text'=>'просроченные', 'callback_data' => 'pld']],
                                                     [['text'=>'новые', 'callback_data' => 'new']], 
                                                     [['text'=>'на сегодня', 'callback_data' => 'today']]
@@ -46,7 +46,8 @@ class BotController extends Controller
             $userlist = [];
             foreach (User::all() as $lawyer) {
                 $userlist[] = $lawyer->name;
-                array_push($button, [$lawyer->name]);
+                $keyboard['keyboard'][$k] = [$lawyer->name];
+                $k++;
             }
 
             $getQuery = array(
@@ -58,7 +59,6 @@ class BotController extends Controller
             if(!empty($message) && $message == '/start') {
                 $text = 'Давайте выберем юриста.';                
                 $getQuery['text'] =  $text;
-                $keyboard = ['keyboard' => [$button]];
                 $getQuery['reply_markup'] = json_encode($keyboard);                
                 }
 
@@ -76,8 +76,6 @@ class BotController extends Controller
             else{
                 $text = 'Вы выбрали  - '.$message;
             }
-
-            
 
                 /*
             $keyboard = [
