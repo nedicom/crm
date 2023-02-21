@@ -31,14 +31,14 @@ class BotController extends Controller
             file_put_contents(__DIR__ . '/message.txt', print_r($data, true));
             $message = $data['message']['text'];
 
-            $keyboard['keyboard'][0] = ['в начало'];
+            $keyboard = ['keyboard' => ['в начало'], 'one_time_keyboard' => true];
             
             $tasklist = ['в начало', 'просроченные', 'новые', 'на сегодня'];
             $taskkeyboard = ['inline_keyboard'=>[
-                                                    [['text'=>'в начало', 'callback_data' => 'plz']],
-                                                    [['text'=>'в начало', 'callback_data' => 'plz']],
-                                                    [['text'=>'в начало', 'callback_data' => 'plz']], 
-                                                    [['text'=>'в начало', 'callback_data' => 'plz']]
+                                                    [['text'=>'в начало', 'callback_data' => 'start']],
+                                                    [['text'=>'просроченные', 'callback_data' => 'pld']],
+                                                    [['text'=>'новые', 'callback_data' => 'new']], 
+                                                    [['text'=>'на сегодня', 'callback_data' => 'today']]
                                                 ], 
             'one_time_keyboard' => true];
             $k = 1;
