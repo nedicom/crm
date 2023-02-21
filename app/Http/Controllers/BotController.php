@@ -34,7 +34,7 @@ class BotController extends Controller
             $keyboard['keyboard'][0] = ['в начало'];
             
             $tasklist = ['в начало', 'просроченные', 'новые', 'на сегодня'];
-            $taskkeyboard = ['keyboard'=>[[['text'=>'в начало', 'callback_data' => 'plz']],['просроченные'],['новые'], ['на сегодня']], 'one_time_keyboard' => true];
+            $taskkeyboard = ['inline_keyboard'=>[[['text'=>'в начало', 'callback_data' => 'plz']]], 'one_time_keyboard' => true];
             $k = 1;
 
             $userlist = [];
