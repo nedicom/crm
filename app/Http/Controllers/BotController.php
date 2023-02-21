@@ -46,7 +46,7 @@ class BotController extends Controller
             $userlist = [];
             foreach (User::all() as $lawyer) {
                 $userlist[] = $lawyer->name;
-                array_push($button, $lawyer->name);
+                array_push($button, [$lawyer->name]);
             }
 
             $getQuery = array(
@@ -58,7 +58,7 @@ class BotController extends Controller
             if(!empty($message) && $message == '/start') {
                 $text = 'Давайте выберем юриста.';                
                 $getQuery['text'] =  $text;
-                $keyboard = ['keyboard' => $button];
+                $keyboard = ['keyboard' => [[$button]];
                 $getQuery['reply_markup'] = json_encode($keyboard);                
                 }
 
