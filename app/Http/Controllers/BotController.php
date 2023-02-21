@@ -58,7 +58,7 @@ class BotController extends Controller
             if(!empty($message) && $message == '/start') {
                 $text = 'Давайте выберем юриста.';                
                 $getQuery['text'] =  $text;
-                $keyboard = ['keyboard' => [[$button]]];
+                $keyboard = ['keyboard' => $button];
                 $getQuery['reply_markup'] = json_encode($keyboard);                
                 }
 
