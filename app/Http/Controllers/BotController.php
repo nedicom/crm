@@ -46,7 +46,7 @@ class BotController extends Controller
             $userlist = [];
             foreach (User::all() as $lawyer) {
                 $userlist[] = $lawyer->name;
-                array_push($button, $lawyer->name);
+                array_push($button, [$lawyer->name]);
             }
 
             $getQuery = array(
