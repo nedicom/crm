@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Tasks;
 use App\Models\User;
+use App\Models\ClientsModel;
 use Carbon\Carbon;
 
 class BotController extends Controller
@@ -85,7 +86,11 @@ class BotController extends Controller
             }
 
             if($clientchoise == '/client'){
-                $getQuery['text'] =  'это клиент';
+                $client = ClientsModel::where('id', $message)-> get();
+                    if(count($client)){
+                        $getQuery['text'] =  'это клиент';
+                    }
+                $getQuery['text'] =  'Номер клиента неправильный. Попробуйте еще раз';
             }
             
             if($checkpass == $pass){
