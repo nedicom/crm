@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 use App\Models\Tasks;
 use App\Models\User;
 use App\Models\ClientsModel;
@@ -87,12 +88,12 @@ class BotController extends Controller
 
             if($clientchoise == '/client'){
                 $client = ClientsModel::where('id', $message)-> get();
+                $name = DB::table('clients_models')->where('id', $message)->value('name');
                     if(count($client)){
                         $tasks = Tasks::where('clientid', $message)->where('status', '!=', 'выполнена')-> get();
                         $textMessage = $client['name'];
                         if(count($tasks)){
                             foreach($tasks as $el){
-                                $textMessage .= '<b>'.$el -> name.'</b>'."\n";
                                 $textMessage .= $el['date']['currentDay'].' '.$el['date']['currentMonth'].', '.$el['date']['currentTime']."\n";
                                 $textMessage .=  $el -> status."\n";
                                 $textMessage .= '<i>'.$el -> description.'</i>'."\n"."\n";
