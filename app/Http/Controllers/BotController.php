@@ -33,6 +33,7 @@ class BotController extends Controller
             }
             else{
                 $checkpass = 0;
+                $clientchoise = 0;
             }
 
         $keyboard['keyboard'][0] = ['в начало'];
