@@ -89,7 +89,7 @@ class BotController extends Controller
                 $client = ClientsModel::where('id', $message)-> get();
                     if(count($client)){
                         $tasks = Tasks::where('clientid', $message)->where('status', '!=', 'выполнена')-> get();
-                        $textMessage = '<b>'.$client -> name.'</b>'."\n";
+                        $textMessage = '<b>'.print_r($client).'</b>'."\n";
                         if(count($tasks)){
                             foreach($tasks as $el){
                                 $textMessage .= '<b>'.$el -> name.'</b>'."\n";
