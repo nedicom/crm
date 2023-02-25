@@ -26,6 +26,7 @@ class BotController extends Controller
         $obj = json_decode($jsonobj);
             if (json_last_error() === 0) {
                 $checkpass = $obj->pass;
+                $clientchoise = 'itsclient';
             }
             else{
                 $checkpass = 0;
@@ -59,10 +60,16 @@ class BotController extends Controller
                 if($message == '/start'){
                     $getQuery['text'] =  'Введите пароль';
                 }
+                elseif($message == '/client'){
+                    $getQuery['text'] =  'Введите уникальный номер клиента';
+                    $userchoise = ['pass' => 0, 'userchoise' => 0, 'clientchoise' => '/client'];
+                    $json = json_encode($userchoise);
+                    Storage::disk('local')->put($urlfile, print_r($json, true));
+                }
                 elseif($message == $pass){
                     $getQuery['text'] =  'Вы ввели пароль правильно. Давайте выберем юриста.';  
                     $getQuery['reply_markup'] = json_encode($keyboard);
-                    $userchoise = ['pass' => $pass, 'userchoise' => 0];
+                    $userchoise = ['pass' => $pass, 'userchoise' => 0, 'clientchoise' => 0];
                     $json = json_encode($userchoise);
                     Storage::disk('local')->put($urlfile, print_r($json, true));
                 }
@@ -70,13 +77,17 @@ class BotController extends Controller
                     $getQuery['text'] =  'Пароль неправильный. Введите заново';
                 }
             }
+
+            if($clientchoise == 'itsclient'){
+                $getQuery['text'] =  'это клиент';
+            }
             
             if($checkpass == $pass){
                 if(in_array($message, $userlist)){
                     $getQuery['text'] = 'Вы выбрали  - '.$message;
                     $getQuery['reply_markup'] = json_encode($taskkeyboard);
                     $key = array_search($message, $userlist);
-                    $userchoise = ['pass' => $checkpass, 'userchoise' => $key];
+                    $userchoise = ['pass' => $checkpass, 'userchoise' => $key, 'clientchoise' => 0];
                     $json = json_encode($userchoise);
                     Storage::disk('local')->put($urlfile, print_r($json, true));
                 }
@@ -121,7 +132,7 @@ class BotController extends Controller
                 }
                 else{
                     $getQuery['text'] =  'Введите пароль';
-                    $userchoise = ['pass' => 0, 'userchoise' => 0];
+                    $userchoise = ['pass' => 0, 'userchoise' => 0, 'clientchoise' => 0];
                     $json = json_encode($userchoise);
                     Storage::disk('local')->put($urlfile, print_r($json, true));
                 }
