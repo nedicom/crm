@@ -2,100 +2,138 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Tasks;
 use App\Models\User;
+use Carbon\Carbon;
 
 class BotController extends Controller
 {
     public function index() {
-
-        //setting webhok
-        //https://api.telegram.org/bot5941198915:AAFpQD_AvVJfiXjH6gaD3oBZgxbe06sTvyc/setWebhook?url=https://crm.nedicom.ru/bot
-
-        $token = "5941198915:AAFpQD_AvVJfiXjH6gaD3oBZgxbe06sTvyc";
+        /**
+         * Setting webhok
+         * https://api.telegram.org/bot5941198915:AAFpQD_AvVJfiXjH6gaD3oBZgxbe06sTvyc/setWebhook?url=https://crm.nedicom.ru/bot
+         */
         
-                
+        $token = "5941198915:AAFpQD_AvVJfiXjH6gaD3oBZgxbe06sTvyc";
+        $inputdata = file_get_contents('php://input');
+        $pass = 123;
+        $data = json_decode($inputdata, true);
+        $chatid	= $data['message']['chat']['id'];
+        $message = $data['message']['text'];
+        $urlfile = 'pass/'.$chatid.'.txt';
+        $jsonobj = Storage::get($urlfile);
+        $obj = json_decode($jsonobj);
+            if (json_last_error() === 0) {
+                $checkpass = $obj->pass;
+            }
+            else{
+                $checkpass = 0;
+            }
 
-        /*
-        $tasks = Tasks::where('lawyer', 2)-> get();
-        $textMessage = "";
-        foreach($tasks as $el){
-            $textMessage .= $el -> name;
-        }
-        */
-
-            //post
-            $data = file_get_contents('php://input');
-            $data = json_decode($data, true);
-            file_put_contents(__DIR__ . '/message.txt', print_r($data, true));
-            $message = $data['message']['text'];
-
-            $keyboard['keyboard'][0] = ['в начало'];
-            
-            $tasklist = ['в начало', 'просроченные', 'новые', 'на сегодня'];
-            $taskkeyboard = ['inline_keyboard'=>[
-                                                    [['text'=>'в начало', 'callback_data' => 'plz']],
-                                                    [['text'=>'просроченные', 'callback_data' => 'pld']],
-                                                    [['text'=>'новые', 'callback_data' => 'new']], 
-                                                    [['text'=>'на сегодня', 'callback_data' => 'today']]
-                                                ], 
-            'one_time_keyboard' => true];
-            $k = 1;
-
-            $userlist = [];
+        $keyboard['keyboard'][0] = ['в начало'];
+        $tasklist = ['просроченные', 'новые', 'на сегодня'];
+        $taskkeyboard = ['keyboard'=>[
+                                                [['text'=>'в начало', 'callback_data' => 'plz']],
+                                                [['text'=>'просроченные', 'callback_data' => 'pld']],
+                                                [['text'=>'новые', 'callback_data' => 'new']], 
+                                                [['text'=>'на сегодня', 'callback_data' => 'today']]
+                                            ], 
+                        'one_time_keyboard' => true];
+        $k = 1;
+        $userlist = [];
             foreach (User::all() as $lawyer) {
-                $userlist[] = $lawyer->name;
+                $userlist[$lawyer->id] = $lawyer->name;
                 $keyboard['keyboard'][$k] = [$lawyer->name];
                 $k++;
             }
 
-            $getQuery = array(
-                "chat_id" 	=> $data['message']['chat']['id'],
-                "parse_mode" => "html",
-            );
-
-
-            if(!empty($message) && $message == '/start') {
-                $text = 'Давайте выберем юриста.';                
-                $getQuery['text'] =  $text;
-                $getQuery['reply_markup'] = json_encode($keyboard);                
+        $getQuery = array(
+            "chat_id" 	=> $data['message']['chat']['id'],
+            "parse_mode" => "html",
+        );
+          
+      
+        if(!empty($message)) {
+            if($checkpass !== $pass){
+                if($message == '/start'){
+                    $getQuery['text'] =  'Введите пароль';
                 }
-
-            elseif(!empty($message) && in_array($message, $userlist)){
-                $text = 'Вы выбрали  - '.$message;
-                $getQuery['text'] =  $text;               
-                $getQuery['reply_markup'] = json_encode($taskkeyboard);
+                elseif($message == $pass){
+                    $getQuery['text'] =  'Вы ввели пароль правильно. Давайте выберем юриста.';  
+                    $getQuery['reply_markup'] = json_encode($keyboard);
+                    $userchoise = ['pass' => $pass, 'userchoise' => 0];
+                    $json = json_encode($userchoise);
+                    Storage::disk('local')->put($urlfile, print_r($json, true));
                 }
-            
-            elseif(!empty($message) && in_array($message, $tasklist)){
-                $text = 'тут будут задачи';
-                $getQuery['text'] =  $text;               
+                else{
+                    $getQuery['text'] =  'Пароль неправильный. Введите заново';
                 }
-
-            else{
-                $text = 'Вы выбрали  - '.$message;
             }
-
-                /*
-            $keyboard = [
-                'keyboard'=>[
-                    [['text'=>'Кнопка 1'],['text'=>'Кнопка 2']] // Первый ряд кнопок
-                    ,['Простая кнопка',['text'=>'Кнопка 4']] // Второй ряд кнопок
-                    ]
-                ];*/
-
-
-            $ch = curl_init("https://api.telegram.org/bot". $token ."/sendMessage?" . http_build_query($getQuery));
-            curl_setopt($ch, CURLOPT_POST, true);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-            curl_setopt($ch, CURLOPT_HEADER, false);
-
-            $resultQuery = curl_exec($ch);
-            curl_close($ch);
-
-            echo $resultQuery;          
-
+            
+            if($checkpass == $pass){
+                if(in_array($message, $userlist)){
+                    $getQuery['text'] = 'Вы выбрали  - '.$message;
+                    $getQuery['reply_markup'] = json_encode($taskkeyboard);
+                    $key = array_search($message, $userlist);
+                    $userchoise = ['pass' => $checkpass, 'userchoise' => $key];
+                    $json = json_encode($userchoise);
+                    Storage::disk('local')->put($urlfile, print_r($json, true));
+                }
+                
+                elseif(in_array($message, $tasklist)){
+                    $userchoise = $obj->userchoise;
+                    if($message == 'новые'){
+                        $tasks = Tasks::where('new', 1)->where('lawyer', $userchoise)-> get();
+                    }
+                    elseif($message == 'просроченные'){
+                        $oldtasks = Tasks::where('lawyer', $userchoise)-> get();
+                            foreach($oldtasks as $oldel){
+                                if(Carbon::now()->gte([$oldel -> date][0]['value']) && $oldel -> status != 'выполнена'){
+                                    $oldel -> status = 'просрочена';
+                                    $oldel -> save();
+                                  }
+                            }
+                        $tasks = Tasks::where('status', 'просрочена')->where('lawyer', $userchoise)-> get();
+                    }
+                    elseif($message == 'на сегодня'){
+                        $tasks = Tasks::whereBetween('date', [Carbon::now()->startOfDay(), Carbon::now()->endOfDay()])->where('lawyer', $userchoise)-> get();
+                    }
+                    else{
+                        $getQuery['text'] =  'пропробуйте еще раз';
+                    }
+                    
+                    $textMessage = "";
+                    
+                    if(count($tasks)){
+                        foreach($tasks as $el){
+                            $textMessage .= '<b>'.$el -> name.'</b>'."\n";
+                            $textMessage .= $el['date']['currentDay'].' '.$el['date']['currentMonth'].', '.$el['date']['currentTime']."\n";
+                            $textMessage .=  $el -> client."\n";
+                            $textMessage .= '<i>'.$el -> description.'</i>'."\n"."\n";
+                        }
+                    }
+                    else{
+                        $textMessage = 'нет задач';
+                        $getQuery['reply_markup'] = json_encode($taskkeyboard);
+                    }
+                    $getQuery['text'] =  $textMessage;
+                }
+                else{
+                    $getQuery['text'] =  'Введите пароль';
+                    $userchoise = ['pass' => 0, 'userchoise' => 0];
+                    $json = json_encode($userchoise);
+                    Storage::disk('local')->put($urlfile, print_r($json, true));
+                }
+            }
+        }
+            
+        $ch = curl_init("https://api.telegram.org/bot". $token ."/sendMessage?" . http_build_query($getQuery));
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_HEADER, false);
+        $resultQuery = curl_exec($ch);
+        curl_close($ch);
     }
 }
