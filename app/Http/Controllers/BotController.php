@@ -93,10 +93,9 @@ class BotController extends Controller
                         $json = json_encode($userchoise);
                         Storage::disk('local')->put($urlfile, print_r($json, true));
                     }
-                $getQuery['text'] =  'Номер клиента неправильный.';
-                $userchoise = ['pass' => 0, 'userchoise' => 0, 'clientchoise' => 0];
-                $json = json_encode($userchoise);
-                Storage::disk('local')->put($urlfile, print_r($json, true));
+                    else{
+                        $getQuery['text'] =  'Пароль клиента неправильный. Попробуйте еще раз.';
+                    }
             }
             
             if($checkpass == $pass){
