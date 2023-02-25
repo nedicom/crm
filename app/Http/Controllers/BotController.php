@@ -59,7 +59,7 @@ class BotController extends Controller
       
         if(!empty($message)) {
             if($checkpass !== $pass && $clientchoise !== '/client'){
-                if($message == '/start' || $message = 'в начало'){
+                if($message == '/start' || $message == 'в начало'){
                     $getQuery['text'] =  'Введите пароль';
                     $userchoise = ['pass' => 0, 'userchoise' => 0, 'clientchoise' => 0];
                     $json = json_encode($userchoise);
