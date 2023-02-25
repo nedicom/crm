@@ -24,6 +24,7 @@ class BotController extends Controller
         $chatid	= $data['message']['chat']['id'];
         $message = $data['message']['text'];
         $urlfile = 'pass/'.$chatid.'.txt';
+        Storage::put($urlfile, 'test');
         $jsonobj = Storage::get($urlfile);
         $obj = json_decode($jsonobj);
             if (json_last_error() === 0) {
