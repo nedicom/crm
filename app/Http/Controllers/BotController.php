@@ -160,7 +160,7 @@ class BotController extends Controller
                     $getQuery['text'] =  $textMessage;
                 }
                 else{
-                    $getQuery['text'] =  'Введите пароль';
+                    $getQuery['text'] =  'Введите пароль или начните заново';
                     $userchoise = ['pass' => 0, 'userchoise' => 0, 'clientchoise' => 0];
                     $json = json_encode($userchoise);
                     Storage::disk('local')->put($urlfile, print_r($json, true));
