@@ -56,7 +56,7 @@ class BotController extends Controller
           
       
         if(!empty($message)) {
-            if($checkpass !== $pass){
+            if($checkpass !== $pass && $clientchoise !== 'itsclient'){
                 if($message == '/start'){
                     $getQuery['text'] =  'Введите пароль';
                     $userchoise = ['pass' => 0, 'userchoise' => 0, 'clientchoise' => 0];
@@ -64,7 +64,7 @@ class BotController extends Controller
                     Storage::disk('local')->put($urlfile, print_r($json, true));
                 }
                 elseif($message == '/client'){
-                    $getQuery['text'] =  'Введите уникальный номер клиента';
+                    $getQuery['text'] =  'Введите уникальный пароль клиента';
                     $userchoise = ['pass' => 0, 'userchoise' => 0, 'clientchoise' => '/client'];
                     $json = json_encode($userchoise);
                     Storage::disk('local')->put($urlfile, print_r($json, true));
