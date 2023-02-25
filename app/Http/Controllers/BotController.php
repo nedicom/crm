@@ -61,20 +61,21 @@ class BotController extends Controller
           
       
         if(!empty($message)) {
-            if($checkpass !== $pass && $clientchoise !== '/client'){
-                if($message == '/start' || $message == 'в начало'){
-                    $getQuery['text'] =  'Введите пароль';
-                    $userchoise = ['pass' => 0, 'userchoise' => 0, 'clientchoise' => 0];
-                    $json = json_encode($userchoise);
-                    Storage::put($urlfile, print_r($json, true));
-                }
-                elseif($message == '/client'){
-                    $getQuery['text'] =  'Введите уникальный пароль клиента';
-                    $userchoise = ['pass' => 0, 'userchoise' => 0, 'clientchoise' => '/client'];
-                    $json = json_encode($userchoise);
-                    Storage::put($urlfile, print_r($json, true));
-                }
-                elseif($message == $pass){
+            if($message == '/start' || $message == 'в начало'){
+                $getQuery['text'] =  'Введите пароль';
+                $userchoise = ['pass' => 0, 'userchoise' => 0, 'clientchoise' => 0];
+                $json = json_encode($userchoise);
+                Storage::put($urlfile, print_r($json, true));
+            }
+            if($message == '/client'){
+                $getQuery['text'] =  'Введите уникальный пароль клиента';
+                $userchoise = ['pass' => 0, 'userchoise' => 0, 'clientchoise' => '/client'];
+                $json = json_encode($userchoise);
+                Storage::put($urlfile, print_r($json, true));
+            }
+            
+            if($checkpass !== $pass){ 
+                if($message == $pass){
                     $getQuery['text'] =  'Вы ввели пароль правильно. Давайте выберем юриста.';  
                     $getQuery['reply_markup'] = json_encode($keyboard);
                     $userchoise = ['pass' => $pass, 'userchoise' => 0, 'clientchoise' => 0];
