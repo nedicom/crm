@@ -74,7 +74,7 @@ class BotController extends Controller
                 Storage::put($urlfile, print_r($json, true));
             }
             
-            if($checkpass !== $pass){ 
+            if($checkpass !== $pass && $message !== '/start'){ 
                 if($message == $pass){
                     $getQuery['text'] =  'Вы ввели пароль правильно. Давайте выберем юриста.';  
                     $getQuery['reply_markup'] = json_encode($keyboard);
