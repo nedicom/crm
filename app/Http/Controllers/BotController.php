@@ -89,8 +89,14 @@ class BotController extends Controller
                 $client = ClientsModel::where('id', $message)-> get();
                     if(count($client)){
                         $getQuery['text'] =  'это клиент';
+                        $userchoise = ['pass' => 0, 'userchoise' => 0, 'clientchoise' => 0];
+                        $json = json_encode($userchoise);
+                        Storage::disk('local')->put($urlfile, print_r($json, true));
                     }
-                $getQuery['text'] =  'Номер клиента неправильный. Попробуйте еще раз';
+                $getQuery['text'] =  'Номер клиента неправильный.';
+                $userchoise = ['pass' => 0, 'userchoise' => 0, 'clientchoise' => 0];
+                $json = json_encode($userchoise);
+                Storage::disk('local')->put($urlfile, print_r($json, true));
             }
             
             if($checkpass == $pass){
