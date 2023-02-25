@@ -117,6 +117,7 @@ class BotController extends Controller
                     }
             }
             
+            
             if($checkpass == $pass){
                 if(in_array($message, $userlist)){
                     $getQuery['text'] = 'Вы выбрали  - '.$message;
