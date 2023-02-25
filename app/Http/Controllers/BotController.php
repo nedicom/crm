@@ -90,13 +90,14 @@ class BotController extends Controller
                     if(count($client)){
                         $tasks = Tasks::where('clientid', $message)->where('status', '!=', 'выполнена')-> get();
                         $textMessage = "";
-                        foreach($tasks as $el){
-                            $textMessage .= '<b>'.$el -> name.'</b>'."\n";
-                            $textMessage .= $el['date']['currentDay'].' '.$el['date']['currentMonth'].', '.$el['date']['currentTime']."\n";
-                            $textMessage .=  $el -> status."\n";
-                            $textMessage .= '<i>'.$el -> description.'</i>'."\n"."\n";
+                        if(count($tasks)){
+                            foreach($tasks as $el){
+                                $textMessage .= '<b>'.$el -> name.'</b>'."\n";
+                                $textMessage .= $el['date']['currentDay'].' '.$el['date']['currentMonth'].', '.$el['date']['currentTime']."\n";
+                                $textMessage .=  $el -> status."\n";
+                                $textMessage .= '<i>'.$el -> description.'</i>'."\n"."\n";
+                            }
                         }
-
                         $getQuery['text'] =  $textMessage;
                         $userchoise = ['pass' => 0, 'userchoise' => 0, 'clientchoise' => 0];
                         $json = json_encode($userchoise);
