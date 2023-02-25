@@ -26,7 +26,7 @@ class BotController extends Controller
         $obj = json_decode($jsonobj);
             if (json_last_error() === 0) {
                 $checkpass = $obj->pass;
-                $clientchoise = 'itsclient';
+                $clientchoise = $obj->clientchoise;
             }
             else{
                 $checkpass = 0;
@@ -78,7 +78,7 @@ class BotController extends Controller
                 }
                 else{
                     $getQuery['text'] =  'Пароль неправильный. Введите заново';
-                    $userchoise = ['pass' => 0, 'userchoise' => 0, 'clientchoise' => '/client'];
+                    $userchoise = ['pass' => 0, 'userchoise' => 0, 'clientchoise' => 0];
                     $json = json_encode($userchoise);
                     Storage::disk('local')->put($urlfile, print_r($json, true));
                 }
