@@ -78,7 +78,7 @@ class BotController extends Controller
                     Storage::disk('local')->put($urlfile, print_r($json, true));
                 }
                 else{
-                    $getQuery['text'] =  'Пароль неправильный. Введите заново';
+                    $getQuery['text'] =  'Пароль неправильный или Вы зашли не туда. Введите пароль еще раз или начните заново';
                     $userchoise = ['pass' => 0, 'userchoise' => 0, 'clientchoise' => 0];
                     $json = json_encode($userchoise);
                     Storage::disk('local')->put($urlfile, print_r($json, true));
@@ -104,7 +104,10 @@ class BotController extends Controller
                         Storage::disk('local')->put($urlfile, print_r($json, true));
                     }
                     else{
-                        $getQuery['text'] =  'Пароль клиента неправильный. Попробуйте еще раз.';
+                        $getQuery['text'] =  'Пароль клиента неправильный. Начните заново';
+                        $userchoise = ['pass' => 0, 'userchoise' => 0, 'clientchoise' => 0];
+                        $json = json_encode($userchoise);
+                        Storage::disk('local')->put($urlfile, print_r($json, true));
                     }
             }
             
