@@ -98,6 +98,9 @@ class BotController extends Controller
                                 $textMessage .= '<i>'.$el -> description.'</i>'."\n"."\n";
                             }
                         }
+                        else{
+                            $getQuery['text'] = 'У клиента нет задач';
+                        }
                         $getQuery['text'] =  $textMessage;
                         $userchoise = ['pass' => 0, 'userchoise' => 0, 'clientchoise' => 0];
                         $json = json_encode($userchoise);
