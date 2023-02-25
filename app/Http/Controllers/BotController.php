@@ -24,17 +24,18 @@ class BotController extends Controller
         $chatid	= $data['message']['chat']['id'];
         $message = $data['message']['text'];
         $urlfile = 'pass/'.$chatid.'.txt';
-        Storage::put($urlfile, 'test');
+        //Storage::put($urlfile, 'test');
         $jsonobj = Storage::get($urlfile);
         $obj = json_decode($jsonobj);
+        $checkpass = 0;
+        $clientchoise = 0;
             if (json_last_error() === 0) {
                 $checkpass = $obj->pass;
                 $clientchoise = $obj->clientchoise;
             }
-            else{
-                $checkpass = 0;
-                $clientchoise = 0;
-            }
+
+
+
 
         $keyboard['keyboard'][0] = ['в начало'];
         $tasklist = ['просроченные', 'новые', 'на сегодня'];
