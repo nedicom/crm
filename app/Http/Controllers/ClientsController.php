@@ -24,8 +24,11 @@ class ClientsController extends Controller{
         $client -> source = $req -> input('source');
         $client -> status = $req -> input('status');
         $client -> lawyer = $req -> input('lawyer');
-        if(!is_null($req -> input('address'))) {$client -> address = $req -> input('address');}
-        
+        if(!is_null($req -> input('address'))) {
+          $client -> address = $req -> input('address');
+        }
+        $value = rand(0, 1000000);
+        $client -> tgid = $value;
       
         $client -> save();
 

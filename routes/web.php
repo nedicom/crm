@@ -14,7 +14,7 @@ use App\Http\Controllers\SourceController;
 use App\Http\Controllers\DogovorController;
 use App\Http\Controllers\GetclientAJAXController;
 use App\Http\Controllers\TaskAJAXController;
-
+use App\Http\Controllers\TestController;
 use App\Http\Controllers\BotController;
 use App\Http\Controllers\CalendarController;
 
@@ -101,7 +101,7 @@ Route::post('/bot', [BotController::class, 'index'])->withoutMiddleware([\App\Ht
       Route::post('/lawyers/add', [LawyersController::class, 'submit'])->name('add-lawyer');
   });
 
-//Route::get('/test', [MeetingsController::class, 'index'])->name('test');
+   Route::get('/test', [TestController::class, 'test'])->name('test');
 
 
    // Route::get('ajax',function() {return view('message');});

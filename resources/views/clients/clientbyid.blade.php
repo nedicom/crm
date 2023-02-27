@@ -31,6 +31,7 @@
           <p class="mb-0 text-muted">{{$data -> phone}}</p>
           <p class="mb-0 text-muted">{{$data -> email}}</p>
           <p class="mb-0 text-muted">закреплен за: </br>{{$data -> userFunc -> name}}</p>
+          <p class="mb-0 text-muted">Код telegram: @if (auth()->user()->role == 'admin' || auth()->user()->id == $data -> lawyer) {{$data -> tgid}} @else скрыто @endif</p>
           <hr class="bg-dark-lighten my-3">
           <div class="mt-3 px-3 row d-flex justify-content-center">
               <div class="col-4 mb-3">
