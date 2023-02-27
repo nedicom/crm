@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use App\Models\Tasks;
 use App\Models\User;
-use App\Models\ClientsModel;
 use Carbon\Carbon;
 
 class BotController extends Controller
@@ -81,10 +80,10 @@ class BotController extends Controller
                     Storage::put($urlfile, print_r($json, true));
                 }
                 elseif($clientchoise == '/client'){
-                    $client = ClientsModel::where('tgid', $message)-> get();
+                    $client = DB::table('clients_models')->where('tgid', $message)-> value('id');
                     
-                        if(count($client)){
-                            $tasks = Tasks::where('clientid', $message)->where('status', '!=', 'выполнена')-> get();
+                        if(!empty($client)){
+                            $tasks = Tasks::where('clientid', $client)->where('status', '!=', 'выполнена')-> get();
                             $name = DB::table('clients_models')->where('thid', $message)->value('name');
                             $textMessage = '<b>'.$name.'</b>'."\n";
                             if(count($tasks)){
