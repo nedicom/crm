@@ -9,16 +9,9 @@ class TestController extends Controller
 {
    
     public function test(){
-        $tgid = 0;
-        //$test = DB::table('clients_models')->where('id', 1)->get();
-        $test = [];
-        if(count($test)){
-            $test = 0;
-        }
-        else{
-            $test = 1;
-        }
+        $message = 18;
+        $name = DB::table('clients_models')->where('tgid', $message)->value('name');
         
-        return view ('test', ['data' => $test]);
+        return view ('test', ['data' => $name]);
     }
 }
