@@ -81,11 +81,11 @@ class BotController extends Controller
                     Storage::put($urlfile, print_r($json, true));
                 }
                 elseif($clientchoise == '/client'){
-                    $client = ClientsModel::where('id', $message)-> get();
+                    $client = ClientsModel::where('tgid', $message)-> get();
                     
                         if(count($client)){
                             $tasks = Tasks::where('clientid', $message)->where('status', '!=', 'выполнена')-> get();
-                            $name = DB::table('clients_models')->where('id', $message)->value('name');
+                            $name = DB::table('clients_models')->where('thid', $message)->value('name');
                             $textMessage = '<b>'.$name.'</b>'."\n";
                             if(count($tasks)){
                                 foreach($tasks as $el){
