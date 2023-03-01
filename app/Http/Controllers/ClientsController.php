@@ -89,6 +89,9 @@ class ClientsController extends Controller{
         if(!is_null($req -> input('email'))) {$client -> email = $req -> input('email');}
         $client -> source = $req -> input('source');
         $client -> status = $req -> input('status');
+        if($req -> input('status') == 'выполнена'){
+          $client -> status = 0;
+        };
         $client -> lawyer = $req -> input('lawyer');
         if(!is_null($req -> input('address'))) {$client -> address = $req -> input('address');}
         
