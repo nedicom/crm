@@ -77,8 +77,6 @@ class PaymentsController extends Controller{
         return redirect() -> route('payments') -> with('success', 'Все в порядке, платеж добавлен');
     }
         //конец создания платежа
-
-
     public function showpayments(Request $req){
 
           $nameOfAttractioner = null; 
@@ -131,19 +129,19 @@ class PaymentsController extends Controller{
               ->whereYear('created_at', $year)
               ->get()], ['months' => $months, 'month' => $month, 'datalawyers' =>  User::all(), 'dataservices' =>  Services::all(), 'dataclients' =>  ClientsModel::all()]);          
             }
-      }
+    }
 
-      public function showPaymentById($id){
+    public function showPaymentById($id){
           return view ('showPaymentById', ['data' => Payments::with('serviceFunc', 'AttractionerFunc', 'sellerFunc', 'developmentFunc')
           ->find($id)], ['datalawyers' =>  User::all(), 'dataservices' =>  Services::all(), 'dataclients' =>  ClientsModel::all()]);
       }
 
       //обновление платежа
 
-      public function PaymentUpdateSubmit($id, PaymentsRequest $req){
+    public function PaymentUpdateSubmit($id, PaymentsRequest $req){
           
-        $payment = Payments::find($id);
-          $summ = $req -> input('summ');                                 // поступивший платеж
+          $payment = Payments::find($id);
+          $summ = $req -> input('summ'); // поступивший платеж
           $payment -> summ = $summ;
 
           $serviceid = $req -> input('service');
@@ -201,7 +199,7 @@ class PaymentsController extends Controller{
 
           return redirect() -> route('showPaymentById', $id) -> with('success', 'Все в порядке, платеж обновлен');
 
-      }
+    }
       //конец обновления платежа
 
 
