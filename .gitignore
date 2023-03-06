@@ -15,3 +15,8 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
+/bootstrap/ssr
+/vendor
+.env.production
+/.fleet
+
