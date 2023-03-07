@@ -55,8 +55,10 @@ use Carbon\Carbon;
       else{
         $where = 'whereDate';
       }
-      
-        return view('home', ['data' =>
+
+        return view('home', [
+            'user' => Auth::user(),
+            'data' =>
           [
             'clients' => ClientsModel::with('userFunc')
               -> where('lawyer', $crtuser)
@@ -88,7 +90,7 @@ use Carbon\Carbon;
             'datalawyers' =>  User::all()
             ],
           ],
-          
+
           ['all' =>
             ['allclients' => ClientsModel:: where('lawyer', $crtuser)
               -> $where('created_at', (Carbon::today()))
@@ -120,7 +122,7 @@ use Carbon\Carbon;
               -> get(),
             ]
          ]
-         
+
       );
 
     }

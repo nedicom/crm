@@ -10,7 +10,7 @@
 
   @section('leftmenuone')
   <form action="{{route('home')}}" class="my-3" method="get" id = "fltr">
-    
+
     <div class="d-inline-flex flex-column px-3 m-1 mb-3">
       <div class="form-check">
         <input class="btn-check"  onchange="sellwr()" type="radio" name="date" id="day" value="day"  @if ('day' == (request()->get('date'))) checked @endif>
@@ -20,12 +20,12 @@
         <input class="btn-check" onchange="sellwr()" type="radio" name="date" id="month" value="month"  @if ('month' == (request()->get('date'))) checked @endif>
         <label class="btn btn-light" for="month">
           Месяц
-        </label>  
+        </label>
       </div>
     </div>
 
     @if (auth()->user()->role == 'admin')
-      <div class="px-3 m-1">   
+      <div class="px-3 m-1">
         <select class="form-select form-select-sm" onchange="sellwr()" name="lawyer">
         <option value="">юрист</option>
           @foreach($data['datalawyers'] as $el)
@@ -33,7 +33,7 @@
           @endforeach
         </select>
       </div>
-    @endif  
+    @endif
   <form>
   <script>
     function sellwr() {
@@ -43,15 +43,26 @@
   @endsection
 
   @section('main')
-    <div class="row"> 
+    <div class="row">
         <h3 class="px-3 col-8 pb-3">Показатели <small class="text-muted">@if ('day' == (request()->get('date'))) сегодня @else месяц @endif</small></h3>
-        
+
         <div class="col-4">
+            <div class="mb-2">
+                @if($user->tg_id)
+                    Бот-информер подключен.
+                @else
+                    Для подключения бота-инфомера к своему аккаунту
+                    <a href="{{ config('app.bot_staff.link') }}?start={{ base64_encode($user->id) }}">
+                        перейдите по ссылке</a>.
+                @endif
+
+            </div>
+
           <form enctype="multipart/form-data" action="{{route('add-avatar')}}" method="post">
             @csrf
             <div class="row">
               <div class="col-8">
-                <input class="form-control" type="file" id="avatar" name="avatar" accept=".png, .jpg, .jpeg" required>            
+                <input class="form-control" type="file" id="avatar" name="avatar" accept=".png, .jpg, .jpeg" required>
               </div>
               <div class="col-4">
                 <input type="submit" value="сменить аватар" class="btn btn-secondary">
@@ -61,7 +72,7 @@
 
           <div class="pt-2">
                 <!-- The button used to copy the text -->
-                <label  for="calendarurl" class="visually-hidden"  >Копировать ссылку</label>            
+                <label  for="calendarurl" class="visually-hidden"  >Копировать ссылку</label>
                 <!-- The text field -->
                 <div class="input-group">
                 <div class="input-group-text" id="btnurl" onclick="copyUrl()">копировать ссылку</div>
@@ -69,11 +80,11 @@
                 </div>
           </div>
 
-       
+
         </div>
-    </div> 
-   
-  
+    </div>
+
+
   <div class = "row">
 
   <div class = "row  mt-2">
@@ -82,19 +93,19 @@
           <div class="card-body">
             <h5 class="card-title d-flex justify-content-between">
               <div>Задачи поставлены</div>
-              <div><i class="fa-solid fa-list-check"></i></div>            
+              <div><i class="fa-solid fa-list-check"></i></div>
             </h5>
-                  @if(count($all['alltasks']) == 0) 
+                  @if(count($all['alltasks']) == 0)
                   <h1 class="card-text">0
                   </h1>
-                  @endif            
+                  @endif
             <table class="table table-sm">
               <tbody>
                   @foreach($all['alltasks'] as $el)
                   <tr class="my-3"><td><a href="tasks/{{$el->id}}" class="text-decoration-none" target="_blank">{{$el->name}}</a></td><td>{{$el->client}}</td></tr>
                   @endforeach
               </tbody>
-            </table>            
+            </table>
           </div>
         </div>
       </div>
@@ -108,21 +119,21 @@
           <div class="card-body">
           <h5 class="card-title d-flex justify-content-between">
               <div>Задачи просрочены</div>
-              <div><i class="fa-sharp fa-solid fa-exclamation"></i></div>            
+              <div><i class="fa-sharp fa-solid fa-exclamation"></i></div>
             </h5>
-                  @if(count($all['alltaskstime']) == 0) 
+                  @if(count($all['alltaskstime']) == 0)
                   <h1 class="card-text">0
                   </h1>
-                  @endif            
+                  @endif
             <table class="table table-sm">
               <tbody>
                   @foreach($all['alltaskstime'] as $el)
-                    <tr class="my-3">                      
+                    <tr class="my-3">
                         <td><a href="tasks/{{$el->id}}" class="text-decoration-none" target="_blank">{{$el->name}}</a></td><td>{{$el["date"]["value"]}}</td>
                     </tr>
                     @endforeach
               </tbody>
-            </table>            
+            </table>
           </div>
         </div>
       </div>
@@ -134,19 +145,19 @@
           <div class="card-body">
             <h5 class="card-title d-flex justify-content-between">
               <div>Новые задачи</div>
-              <div><i class="fa-sharp fa-regular fa-circle"  style="--fa-primary-color: dodgerblue;"></i></div>            
+              <div><i class="fa-sharp fa-regular fa-circle"  style="--fa-primary-color: dodgerblue;"></i></div>
             </h5>
-                  @if(count($all['alltasksnew']) == 0) 
+                  @if(count($all['alltasksnew']) == 0)
                   <h1 class="card-text">0
                   </h1>
-                  @endif            
+                  @endif
             <table class="table table-sm">
               <tbody>
                   @foreach($all['alltasksnew'] as $el)
                   <tr class="my-3"><td><a href="tasks/{{$el->id}}" class="text-decoration-none" target="_blank">{{$el->name}}</a></td><td>{{$el->client}}</td></tr>
                   @endforeach
               </tbody>
-            </table>            
+            </table>
           </div>
         </div>
       </div>
@@ -156,28 +167,28 @@
           <div class="card-body">
           <h5 class="card-title d-flex justify-content-between">
               <div>Задачи</div>
-              <div><i class="fa-sharp fa-solid fa-calendar-day"></i></div>            
+              <div><i class="fa-sharp fa-solid fa-calendar-day"></i></div>
             </h5>
-                  @if(count($all['alltaskstoday']) == 0) 
+                  @if(count($all['alltaskstoday']) == 0)
                   <h1 class="card-text">0
                   </h1>
-                  @endif            
+                  @endif
             <table class="table table-sm">
               <tbody>
                   @foreach($all['alltaskstoday'] as $el)
-                    <tr class="my-3">                      
+                    <tr class="my-3">
                         <td><a href="tasks/{{$el->id}}" class="text-decoration-none" target="_blank">{{$el->name}}</a></td><td>{{$el->client}}</td>
                     </tr>
                     @endforeach
               </tbody>
-            </table>            
+            </table>
           </div>
         </div>
       </div>
 
       <div class = "col-4">
 
-      
+
       </div>
 
 
@@ -188,19 +199,19 @@
           <div class="card-body">
             <h5 class="card-title d-flex justify-content-between">
               <div>Клиенты</div>
-              <div><i class="fa-sharp fa-solid fa-person"></i></div>            
+              <div><i class="fa-sharp fa-solid fa-person"></i></div>
             </h5>
-                  @if(count($all['allclients']) == 0) 
+                  @if(count($all['allclients']) == 0)
                   <h1 class="card-text">0
                   </h1>
-                  @endif            
+                  @endif
             <table class="table table-sm">
               <tbody>
                   @foreach($all['allclients'] as $el)
                   <tr class="my-3"><td><a href="clients/{{$el->id}}" class="text-decoration-none" target="_blank">{{$el->name}}</a></td><td>{{$el->phone}}</td><td>{{$el->source}}</td></tr>
                   @endforeach
               </tbody>
-            </table>            
+            </table>
           </div>
         </div>
       </div>
@@ -210,19 +221,19 @@
           <div class="card-body">
             <h5 class="card-title d-flex justify-content-between">
               <div>Договоры</div>
-              <div><i class="fa-sharp fa-solid fa-file-word"></i></div>            
+              <div><i class="fa-sharp fa-solid fa-file-word"></i></div>
             </h5>
-                  @if(count($all['alldogovors']) == 0) 
+                  @if(count($all['alldogovors']) == 0)
                   <h1 class="card-text">0
                   </h1>
-                  @endif            
+                  @endif
             <table class="table table-sm">
               <tbody>
                   @foreach($all['alldogovors'] as $el)
                   <tr class="my-3"><td><a href="public/{{$el->url}}" class="text-decoration-none" target="_blank">{{$el->name}}<i class="bi bi-cloud-download mx-3"> </i></a></td><td>{{$el->allstoimost}}</td></tr>
                   @endforeach
               </tbody>
-            </table>            
+            </table>
           </div>
         </div>
       </div>
@@ -232,25 +243,25 @@
           <div class="card-body">
             <h5 class="card-title d-flex justify-content-between">
               <div>Платежи</div>
-              <div><i class="fa-sharp fa-solid fa-file-invoice-dollar"></i></div>            
+              <div><i class="fa-sharp fa-solid fa-file-invoice-dollar"></i></div>
             </h5>
-                  @if(count($all['allpayments']) == 0) 
+                  @if(count($all['allpayments']) == 0)
                   <h1 class="card-text">0
                   </h1>
-                  @endif            
+                  @endif
             <table class="table table-sm">
               <tbody>
                   @foreach($all['allpayments'] as $el)
                   <tr class="my-3"><td><a href="payments/{{$el->id}}" class="text-decoration-none" target="_blank">{{$el->client}}</a></td><td>{{$el->summ}}</td></tr>
                   @endforeach
               </tbody>
-            </table>            
+            </table>
           </div>
         </div>
       </div>
     </div>
 
-   
+
     </div>
 
     <div class = "row mt-2">
@@ -259,19 +270,19 @@
           <div class="card-body">
           <h5 class="card-title d-flex justify-content-between">
               <div>Лиды</div>
-              <div><i class="fa-sharp fa-solid fa-person-circle-plus"></i></div>            
+              <div><i class="fa-sharp fa-solid fa-person-circle-plus"></i></div>
             </h5>
-                  @if(count($all['allleads']) == 0) 
+                  @if(count($all['allleads']) == 0)
                   <h1 class="card-text">0
                   </h1>
-                  @endif            
+                  @endif
             <table class="table table-sm">
               <tbody>
                   @foreach($all['allleads'] as $el)
                   <tr class="my-3"><td><a href="leads/{{$el->id}}" class="text-decoration-none" target="_blank">{{$el->name}}</a></td><td>{{$el->phone}}</td></tr>
                   @endforeach
               </tbody>
-            </table>            
+            </table>
           </div>
         </div>
       </div>
@@ -281,25 +292,25 @@
             <div class="card-body">
             <h5 class="card-title d-flex justify-content-between">
               <div>Лиды просрочены</div>
-              <div><i class="fa-sharp fa-solid fa-person-walking-luggage"></i></div>            
+              <div><i class="fa-sharp fa-solid fa-person-walking-luggage"></i></div>
             </h5>
-                    @if(count($all['allleadsoverdue']) == 0) 
+                    @if(count($all['allleadsoverdue']) == 0)
                     <h1 class="card-text">0
                     </h1>
-                    @endif            
+                    @endif
               <table class="table table-sm">
                 <tbody>
                     @foreach($all['allleadsoverdue'] as $el)
                     <tr class="my-3"><td><a href="leads/{{$el->id}}" class="text-decoration-none" target="_blank">{{$el->name}}</a></td><td>{{$el->phone}}</td></tr>
                     @endforeach
                 </tbody>
-              </table>            
+              </table>
             </div>
           </div>
         </div>
-    </div>   
+    </div>
 
-  
+
 
      <div class = "row">
          <div class="card m-3 pb-5 w-75">
@@ -354,8 +365,9 @@ function copyUrl() {
 
   // Copy the text inside the text field
   navigator.clipboard.writeText(copyText.value);
-  
+
   // Alert the copied text
   document.getElementById("btnurl").innerText = 'ссылка скопирована';
 }
 </script>
+</div>

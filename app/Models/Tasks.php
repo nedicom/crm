@@ -11,6 +11,8 @@ class Tasks extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['*'];
+
     protected function date(): Attribute
       {$weekMap = [1 => 'Понедельник', 2 => 'Вторник', 3 => 'Среда', 4 => 'Четерг', 5 => 'Пятница', 6 => 'Суббота', 7 => 'Воскресенье'];
             return Attribute::make(
