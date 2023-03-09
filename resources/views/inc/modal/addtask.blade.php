@@ -136,7 +136,7 @@
                   <label for="lawyer">Укажите исполнителя <span class="text-danger">*</span></label>
                   <select class="form-select" name="lawyer" id="lawyer" class="form-control">
                         @foreach($datalawyers as $el)
-                          <option value="{{$el -> id}}">{{$el -> name}}</option>
+                          <option value="{{$el -> id}}" @if ((Auth::user()->id) == $el -> id) selected @endif>{{$el -> name}}</option>
                         @endforeach
                   </select>
                 </div>
@@ -145,7 +145,7 @@
                   <label for="soispolintel">Укажите соИсполнителя</label>
                   <select class="form-select" name="soispolintel" id="soispolintel" class="form-control">
                         @foreach($datalawyers as $el)
-                          <option value="{{$el -> id}}">{{$el -> name}}</option>
+                          <option value="{{$el -> id}}" @if ((Auth::user()->id) == $el -> id) selected @endif>{{$el -> name}}</option>
                         @endforeach
                   </select>
                 </div>
