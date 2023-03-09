@@ -23,7 +23,7 @@
   </div>
   <div class="toast-body">
        {{session('success')}}
-       @if(session('url'))
+       @if(session('url') && is_string(session('url')))
         <a href="{{session('url')}}">Скачать договор</a>
        @endif
   </div>

@@ -15,8 +15,8 @@ class BotController extends Controller
          * Setting webhok
          * https://api.telegram.org/bot5941198915:AAFpQD_AvVJfiXjH6gaD3oBZgxbe06sTvyc/setWebhook?url=https://crm.nedicom.ru/bot
          */
-        
-        $token = "5941198915:AAFpQD_AvVJfiXjH6gaD3oBZgxbe06sTvyc";
+
+        $token = config('app.bot_client.token');
         $inputdata = file_get_contents('php://input');
         $pass = 123;
         $data = json_decode($inputdata, true);
@@ -41,9 +41,9 @@ class BotController extends Controller
         $taskkeyboard = ['keyboard'=>[
                                                 [['text'=>'в начало', 'callback_data' => 'plz']],
                                                 [['text'=>'просроченные', 'callback_data' => 'pld']],
-                                                [['text'=>'новые', 'callback_data' => 'new']], 
+                                                [['text'=>'новые', 'callback_data' => 'new']],
                                                 [['text'=>'на сегодня', 'callback_data' => 'today']]
-                                            ], 
+                                            ],
                         'one_time_keyboard' => true];
         $k = 1;
         $userlist = [];
@@ -57,8 +57,8 @@ class BotController extends Controller
             "chat_id" 	=> $data['message']['chat']['id'],
             "parse_mode" => "html",
         );
-          
-      
+
+
         if(!empty($message)) {
                 if($message == '/start' || $message == 'в начало'){
                     $getQuery['text'] =  'Введите пароль';
@@ -73,7 +73,7 @@ class BotController extends Controller
                     Storage::put($urlfile, print_r($json, true));
                 }
                 elseif($message == $pass){
-                    $getQuery['text'] =  'Вы ввели пароль правильно. Давайте выберем юриста.';  
+                    $getQuery['text'] =  'Вы ввели пароль правильно. Давайте выберем юриста.';
                     $getQuery['reply_markup'] = json_encode($keyboard);
                     $userchoise = ['pass' => $pass, 'userchoise' => 0, 'clientchoise' => 0];
                     $json = json_encode($userchoise);
@@ -81,7 +81,7 @@ class BotController extends Controller
                 }
                 elseif($clientchoise == '/client'){
                     $client = DB::table('clients_models')->where('tgid', $message)-> value('id');
-                    
+
                         if(!empty($client)){
                             $tasks = Tasks::where('clientid', $client)->where('status', '!=', 'выполнена')-> get();
                             $name = DB::table('clients_models')->where('tgid', $message)->value('name');
@@ -118,7 +118,7 @@ class BotController extends Controller
                         $json = json_encode($userchoise);
                         Storage::disk('local')->put($urlfile, print_r($json, true));
                     }
-                    
+
                     elseif(in_array($message, $tasklist)){
                         $userchoise = $obj->userchoise;
                         if($message == 'новые'){
@@ -140,9 +140,9 @@ class BotController extends Controller
                         else{
                             $getQuery['text'] =  'пропробуйте еще раз';
                         }
-                        
+
                         $textMessage = "";
-                        
+
                         if(count($tasks)){
                             foreach($tasks as $el){
                                 $textMessage .= '<b>'.$el -> name.'</b>'."\n";
@@ -172,7 +172,7 @@ class BotController extends Controller
                 }
 
         }
-            
+
         $ch = curl_init("https://api.telegram.org/bot". $token ."/sendMessage?" . http_build_query($getQuery));
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

@@ -28,6 +28,11 @@ return new class extends Migration
             $table->string('directionDevelopment');
             $table->string('recruiting');
             $table->string('companyAdmission');
+
+            $table->string('modifySeller');
+            $table->string('modifyAttraction');
+            $table->string('DeveloperSalary');
+
             $table->timestamps();
         });
 

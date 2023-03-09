@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\Task\TaskCompleted;
+use App\Events\Task\TaskCreated;
 use Illuminate\Http\Request;
 use App\Http\Requests\TasksRequest;
 use App\Models\Tasks;
@@ -42,11 +44,11 @@ use Illuminate\Support\Facades\DB;
 
             elseif($calendar == 'month'){
               if($addmonts = $request->input('months')){
-                $addmonts = ($request->input('months')); 
+                $addmonts = ($request->input('months'));
               }
               else{$addmonts = ((Carbon::now()->month)-1);
               }
-              //dd((Carbon::now()->month)-1);                           
+              //dd((Carbon::now()->month)-1);
               //$localmonth = $gettmonth->locale('ru_RU')->monthName;
               return view ('tasks/tasks', ['data' => Tasks::select("*")
               ->whereBetween('date', [Carbon::now()->startOfYear()->addMonth($addmonts), Carbon::now()->startOfYear()->addMonth($addmonts+1)])
@@ -90,6 +92,8 @@ use Illuminate\Support\Facades\DB;
 
             $task -> save();
 
+            TaskCreated::dispatch($task);
+
             return redirect()->back()-> with('success', 'Все в порядке, событие добавлено');
         }
 
@@ -129,9 +133,13 @@ use Illuminate\Support\Facades\DB;
 
           if($req -> hrftodcm){$task -> hrftodcm = $req -> hrftodcm;};
           if($req -> type){$task -> type = $req -> type;};
-          if($req -> clientidinput){$task -> clientid = $req -> clientidinput;};  
+          if($req -> clientidinput){$task -> clientid = $req -> clientidinput;};
 
           $task -> save();
+
+          if ($task->status === 'выполнена') {
+              TaskCompleted::dispatch($task);
+          }
 
           return redirect() -> route('showTaskById', $id) -> with('success', 'Все в порядке, событие обновлено');
         }

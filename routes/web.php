@@ -18,12 +18,14 @@ use App\Http\Controllers\TestController;
 use App\Http\Controllers\BotController;
 use App\Http\Controllers\CalendarController;
 
+Route::post('/bots/staff', \App\Http\Controllers\Bots\StaffController::class)->name('bots.staff');
+
 Route::post('/bot', [BotController::class, 'index'])->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class])->name('bot');
- 
+
   Route::get('/', function () {
       return redirect('/home');
   });
-  
+
   Route::get('/logout', function () {
       return redirect('/login');
   });
@@ -80,7 +82,7 @@ Route::post('/bot', [BotController::class, 'index'])->withoutMiddleware([\App\Ht
     Route::controller(TasksController::class)->group(function () {
       Route::get('/tasks', 'index')->name('tasks');
       Route::post('/tasks/add', 'create')->name('addtask');
-      Route::post('/tasks/add/tag', 'tag')->name('tag');      
+      Route::post('/tasks/add/tag', 'tag')->name('tag');
       Route::get('/tasks/{id}', 'showTaskById')->name('showTaskById');
       Route::post('/tasks/{id}/edit', 'editTaskById')->name('editTaskById');
       Route::get('/tasks/{id}/delete', 'TaskDelete')->name('TaskDelete');
@@ -126,5 +128,9 @@ Route::post('/bot', [BotController::class, 'index'])->withoutMiddleware([\App\Ht
         return back()->with('message', 'Ссылка для верификации отправлена');
     })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
+
+Route::get('phpinfo', function () {
+    phpinfo();
+});
 
   Auth::routes();
