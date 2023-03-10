@@ -49,7 +49,8 @@
         <div class="col-4">
             <div class="mb-2">
                 @if($user->tg_id)
-                    Бот-информер подключен.
+                    <a href="{{ config('app.bot_staff.link') }}?start={{ base64_encode($user->id) }}">
+                        Бот-информер подключен</a>.
                 @else
                     Для подключения бота-инфомера к своему аккаунту
                     <a href="{{ config('app.bot_staff.link') }}?start={{ base64_encode($user->id) }}">
