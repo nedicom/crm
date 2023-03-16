@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\ClientsModel;
 
@@ -31,6 +32,13 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'remember_token',
     ];
+
+    public function getAvatar(): ?string
+    {
+        return $this->avatar
+            ? Str::replaceFirst('/public/', '/', $this->avatar)
+            : $this->avatar;
+    }
 
     protected $casts = [
         'email_verified_at' => 'datetime',
