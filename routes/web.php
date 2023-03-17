@@ -20,6 +20,8 @@ use App\Http\Controllers\CalendarController;
 
 Route::post('/bots/staff', \App\Http\Controllers\Bots\StaffController::class)->name('bots.staff');
 
+Route::any('mail', \App\Http\Controllers\MailController::class)->name('mail');
+
 Route::post('/bot', [BotController::class, 'index'])->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class])->name('bot');
 
   Route::get('/', function () {
