@@ -29,7 +29,7 @@ class ClientsController extends Controller{
         }
         $value = rand(0, 1000000);
         $client -> tgid = $value;
-      
+
         $client -> save();
 
         return redirect() -> route('clients') -> with('success', 'Все в порядке, клиент добавлен');
@@ -43,24 +43,24 @@ class ClientsController extends Controller{
 
       if (!empty($req->statustask)){
       $statustask = $req->statustask;
-      return view ('clients/clients', ['data' => ClientsModel::whereHas('tasksFunc', function (Builder $query) use ($lawyertask, $statustask, $checkedlawyer) {      
+      return view ('clients/clients', ['data' => ClientsModel::whereHas('tasksFunc', function (Builder $query) use ($lawyertask, $statustask, $checkedlawyer) {
         $query->where('status', '=', $statustask)
               ->where($checkedlawyer, '=',  $lawyertask);
       }, '>=', 1)->get()],
         ['datalawyers' =>  User::all(), 'dataservices' =>  Services::all(), 'datatasks' => Tasks::all(),
-        'datasource' => Source::all(), 'datasource' => Source::all(),
+        'datasource' => Source::all(),
         'dataprosr' => DB::table('tasks')->where('lawyer', '=', Auth::id())->where('status', '=', 'просрочена')->count(),
         'datawaiting' => DB::table('tasks')->where('lawyer', '=', Auth::id())->where('status', '=', 'ожидает')->count(),
         'datainwork' => DB::table('tasks')->where('lawyer', '=', Auth::id())->where('status', '=', 'в работе')->count(),
         ]);
-      }      
+      }
       else{
           return view ('clients/clients', ['data' => ClientsModel::
           where('name', 'like', '%'.$req->findclient.'%')
           -> where($checkedlawyer, $req->checkedlawyer)
-          -> where($statusclient, $req->status)          
+          -> where($statusclient, $req->status)
           -> get()], ['datalawyers' =>  User::all(),
-          'dataservices' =>  Services::all(), 'dataprosr' => DB::table('tasks')->where('lawyer', '=', Auth::id())->where('status', '=', 'просрочена')->count(),
+          'dataservices' =>  Services::all(),
           'datasource' => Source::all(),
           'dataprosr' => DB::table('tasks')->where('lawyer', '=', Auth::id())->where('status', '=', 'просрочена')->count(),
           'datawaiting' => DB::table('tasks')->where('lawyer', '=', Auth::id())->where('status', '=', 'ожидает')->count(),
@@ -94,7 +94,7 @@ class ClientsController extends Controller{
         };
         $client -> lawyer = $req -> input('lawyer');
         if(!is_null($req -> input('address'))) {$client -> address = $req -> input('address');}
-        
+
         $client -> save();
 
         return redirect() -> route('showClientById', $id) -> with('success', 'Все в порядке, клиент обновлен');
