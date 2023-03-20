@@ -16,14 +16,15 @@ class Kernel extends ConsoleKernel
     {
 
         $schedule->call(function () {
-            
+
             DB::table('tasks')->where('date', '<', Carbon::now())
-            ->update(['status' => 'просрочена']);
-            
+                ->where('status', '!=', 'выполнена')
+                ->update(['status' => 'просрочена']);
+
             $users = USER::all();
             $myfile = fopen('test.txt', "w") or die("Unable to open file!");
             foreach ($users as $user){
-                
+
                         //$to = "m6132@yandex.ru";
                         //$topic = "Ваши задачи";
                         //$msg = $user -> name;
@@ -34,21 +35,21 @@ class Kernel extends ConsoleKernel
                         $id = $user -> id;
                         fwrite($myfile, $user -> name);
                         fwrite($myfile, 'исполнитель');
-                        
+
                         $tasks = Tasks::where('lawyer', $id)->get();
-                            foreach ($tasks as $task){                              
+                            foreach ($tasks as $task){
                                 fwrite($myfile, $task->name);
                             }
                             fwrite($myfile, 'соисполнитель');
                             $tasks = Tasks::where('soispolintel', $id)->get();
-                                foreach ($tasks as $task){                              
+                                foreach ($tasks as $task){
                                     fwrite($myfile, $task->name);
                                 }
                                 $tasks = Tasks::where('postanovshik', $id)->get();
-                                foreach ($tasks as $task){                              
+                                foreach ($tasks as $task){
                                     fwrite($myfile, $task->name);
                                 }
-                        
+
 
             }
             fclose($myfile);

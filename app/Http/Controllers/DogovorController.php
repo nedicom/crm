@@ -20,19 +20,19 @@ class DogovorController extends Controller{
     }
 
     public function showdogovorById($id){
-        return view ('dogovor/showdogovorById', ['data' => Dogovor::with('userFunc', 'clientFunc')->find($id)], ['datalawyers' =>  User::all()   
+        return view ('dogovor/showdogovorById', ['data' => Dogovor::with('userFunc', 'clientFunc')->find($id)], ['datalawyers' =>  User::all()
         ]);
       }
 
     public function adddogovor(Request $req){
         $Dogovor = new Dogovor();
             $name = $req -> input('name');
-            $clientname = $req -> input('client'); 
+            $clientname = $req -> input('client');
             $predoplata = $req -> input('predoplata');
             $today= Carbon::now()->toDateString(); // дата без времени
             $todaywithmin = Carbon::now();
             $ispolnitel = 'Адвокатский кабинет Мина Марк Анатольевич';
-            $adresispolnitelya = '295000, РФ, Респ. Крым, ул. Долгоруковская 13а'; 
+            $adresispolnitelya = '295000, РФ, Респ. Крым, ул. Долгоруковская 13а';
             $kontaktyispolnitelya ='+7978 8838 978';
             $adress = $req -> input('adress');
             $phone = $req -> input('phone');
@@ -44,9 +44,9 @@ class DogovorController extends Controller{
             $dogovorurldb = 'public/'.$dogovorurl;
 
                 $Dogovor -> name = $name;
-                $Dogovor -> allstoimost = $req -> input('allstoimost');    
-                $Dogovor -> preduslugi = $req -> input('preduslugi');    
-                $Dogovor -> predoplata = $req -> input('predoplata');               
+                $Dogovor -> allstoimost = $req -> input('allstoimost');
+                $Dogovor -> preduslugi = $req -> input('preduslugi');
+                $Dogovor -> predoplata = $req -> input('predoplata');
                 $Dogovor -> subject = $req -> input('subject');
                 $Dogovor -> client_id = $req -> input('clientidinput');
                 $Dogovor -> lawyer_id = Auth::id();
@@ -70,20 +70,22 @@ class DogovorController extends Controller{
             $today, $ispolnitel, $adresispolnitelya, $kontaktyispolnitelya, $clientname,
             $adress, $phone, $uslugi, $allstoimost, $preduslugi, $predoplata);
 
-       $psthxml = "dogovor/document.xml";
+       $psthxml = public_path('dogovor-template/document.xml');
+
+       $tmpFile = storage_path('app/public/dogovor/soglashenie.docx');
 
         $zip = new ZipArchive;//пакуем в архив наши переменные
-				if($zip->open('dogovor/soglashenie.docx') === TRUE) {
+				if($zip->open($tmpFile) === TRUE) {
 					$handle = fopen($psthxml, "r");
 					$content = fread($handle, filesize($psthxml));
 					fclose($handle);
 					$content = str_replace($Rekvizitydogovora, $Rekvizitydogovoravar, $content);
 					$zip->deleteName('word/document.xml');
 					$zip->addFromString('word/document.xml',$content);
-					$zip->close();                  
+					$zip->close();
 				}
 
-	        $file = ("dogovor/soglashenie.docx");	//мы уже заменили содержиое файла на сервере
+	        $file = ($tmpFile);	//мы уже заменили содержиое файла на сервере
             header ("Content-Type: application/octet-stream");
             header ("Accept-Ranges: bytes");
             header ("Content-Length: ".filesize($file));
@@ -92,6 +94,6 @@ class DogovorController extends Controller{
 
         copy($file, $dogovorurl);  //копируем обработанный договор в общую папку
         session()->flash('url', $dogovorurldb);
-        return redirect() -> route('dogovor') -> with('success', 'Все в порядке, договор добавлен '); 
+        return redirect() -> route('dogovor') -> with('success', 'Все в порядке, договор добавлен ');
     }
 }
