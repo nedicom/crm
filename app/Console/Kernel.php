@@ -15,6 +15,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
 
+        $schedule->command('telescope:prune')->hourly();
+
         $schedule->call(function () {
 
             DB::table('tasks')->where('date', '<', Carbon::now())
