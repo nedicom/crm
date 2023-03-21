@@ -231,7 +231,7 @@
             <table class="table table-sm">
               <tbody>
                   @foreach($all['alldogovors'] as $el)
-                  <tr class="my-3"><td><a href="public/{{$el->url}}" class="text-decoration-none" target="_blank">{{$el->name}}<i class="bi bi-cloud-download mx-3"> </i></a></td><td>{{$el->allstoimost}}</td></tr>
+                  <tr class="my-3"><td><a href="{{$el->url}}" class="text-decoration-none" target="_blank">{{$el->name}}<i class="bi bi-cloud-download mx-3"> </i></a></td><td>{{$el->allstoimost}}</td></tr>
                   @endforeach
               </tbody>
             </table>
