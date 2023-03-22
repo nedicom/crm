@@ -3,7 +3,7 @@
 @section('head')
 <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js" integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0=" crossorigin="anonymous"></script>
-<link rel="stylesheet" type="text/css" href="/resources/datetimepicker/jquery.datetimepicker.css"/ >
+<link rel="stylesheet" type="text/css" href="/resources/datetimepicker/jquery.datetimepicker.min.css"/ >
 
 <style>
   .task-toggle {
@@ -17,21 +17,21 @@
   }
   .task-placeholder {
     border-left: 2px solid red;
-    background-image: url('public/avatars/plus.png');
+    background-image: url('/avatars/plus.png');
     background-repeat: no-repeat;
-    background-position: center; 
+    background-position: center;
     background-size: contain;
     height: 100px;
   }
 
   .columncard:hover{
   }
-  
+
   </style>
 @endsection
 
   @section('footerscript')
-  <script src="/resources/datetimepicker/build/jquery.datetimepicker.full.min.js"></script>
+  <script src="/resources/datetimepicker/jquery.datetimepicker.min.js"></script>
   @endsection
 
 @section('title')
@@ -58,15 +58,15 @@
 
 @section('main')
 
-  <div class = "row">    
+  <div class = "row">
       <form class = "row" action="" method="GET">
         <h2 class="col-1 px-3">Задачи</h2>
         <div class="col-12 d-flex justify-content-evenly align-items-center">
-          <div class="">  
+          <div class="">
             <a href="{{route('tasks')}}?checkedlawyer={{ Auth::user()->id}}" class="btn btn-outline-primary btn-sm">мои задачи</a>
-          </div>  
+          </div>
 
-          <div class="">          
+          <div class="">
             <input type="radio" class="btn-check btn-sm" value="day" name="calendar" id="day"
               @if (app('request')->input('calendar') == 'day') checked @endif
               onchange="this.form.submit()">
@@ -90,7 +90,7 @@
                           <option value="0" @if (app('request')->input('months') == "0") selected @endif >январь</option>
                           <option value="1" @if (app('request')->input('months') == "1") selected @endif >февраль</option>
                           <option value="2" @if (app('request')->input('months') == "2") selected @endif >март</option>
-                          <option value="3" @if (app('request')->input('months') == "3") selected @endif >апрель</option>                      
+                          <option value="3" @if (app('request')->input('months') == "3") selected @endif >апрель</option>
                           <option value="4" @if (app('request')->input('months') == "4") selected @endif >май</option>
                           <option value="5" @if (app('request')->input('months') == "5") selected @endif >июнь</option>
                           <option value="5" @if (app('request')->input('months') == "6") selected @endif >июль</option>
@@ -102,7 +102,7 @@
                       </select>
               </div>
             @endif
-            
+
             <div>
               <select class="form-select" name="checkedlawyer" id="checkedlawyer">
                 <option value=''>не выбрано</option>
@@ -119,7 +119,7 @@
                         <option value="" @if (app('request')->input('type') == "") selected @endif >все типы</option>
                         <option value="задача" @if (app('request')->input('type') == "задача") selected @endif >задача</option>
                         <option value="заседание" @if (app('request')->input('type') == "заседание") selected @endif >заседание</option>
-                        <option value="допрос" @if (app('request')->input('type') == "допрос") selected @endif >допрос</option>                      
+                        <option value="допрос" @if (app('request')->input('type') == "допрос") selected @endif >допрос</option>
                         <option value="звонок" @if (app('request')->input('type') == "звонок") selected @endif >звонок</option>
                         <option value="консультация" @if (app('request')->input('type') == "консультация") selected @endif >консультация</option>
                     </select>
@@ -140,7 +140,7 @@
           $weekMap = [1 => 'Понедельник', 2 => 'Вторник', 3 => 'Среда', 4 => 'Четерг', 5 => 'Пятница', 6 => 'Суббота', 7 => 'Воскресенье'];
         @endphp
 
-       @if (app('request')->input('calendar') == '')        
+       @if (app('request')->input('calendar') == '')
         <div class="row pt-4">
 
         <div class="col-3 columncard text-center" id="timeleft">
@@ -150,7 +150,7 @@
                 @include('tasks.taskcard')
               @endif
             @endforeach
-          </div>  
+          </div>
 
           <div class="col-3 columncard text-center" id="waiting">
             <h5 class="page-title" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Тут задачи которые Вам поставили, но не принятые в работу">ожидает</h5>
@@ -162,7 +162,7 @@
           </div>
 
 
- 
+
 
           <div class="col-3 columncard text-center" id="inwork">
             <h5 class="page-title" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Здесь задачи с которыми вы работаете сейчас. Позже будет учитываться время потраченное на выполнение">в работе</h5>
@@ -171,7 +171,7 @@
                 @include('tasks.taskcard')
               @endif
             @endforeach
-          </div>     
+          </div>
 
           <div class="col-3 columncard text-center" id="finished">
               <h5 class="page-title" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Каждый день в 00.00 выполненные задачи будут пропадать из списка">выполнена</h5>
@@ -179,38 +179,38 @@
                 @if(($el -> status == "выполнена") && ($el -> donetime > Carbon\Carbon::today()))
                   @include('tasks.taskcard')
                 @endif
-              @endforeach            
+              @endforeach
           </div>
 
         </div>
       @endif
 
       @if (app('request')->input('calendar') == 'week')
-      <div class="mt-2" style="display: grid; grid-template-columns: 20% 20% 20% 20% 20%;"> 
-        @for ($i = 1; $i < 6; $i++)        
-          <div class="text-center"> <h1 class="badge bg-secondary">{{$weekMap[$i]}}</h1></div>        
+      <div class="mt-2" style="display: grid; grid-template-columns: 20% 20% 20% 20% 20%;">
+        @for ($i = 1; $i < 6; $i++)
+          <div class="text-center"> <h1 class="badge bg-secondary">{{$weekMap[$i]}}</h1></div>
         @endfor
-          @for ($i = 1; $i < 6; $i++)           
+          @for ($i = 1; $i < 6; $i++)
           <div class="columncard bg-white m-1" style="font-size:12px; min-height: 400px" dayofweek="{{$i}}">
-              <span class="px-2"> </span>  
-              @foreach($data as $el)              
+              <span class="px-2"> </span>
+              @foreach($data as $el)
                 @if($el['date']['day'] == $weekMap[$i])
-                  @include('tasks.taskcard')             
+                  @include('tasks.taskcard')
                 @endif
               @endforeach
-          
-      </div> 
+
+      </div>
           @endfor
       @endif
 
       @if (app('request')->input('calendar') == 'month')
           <div class="mt-2" style="display: grid; grid-template-columns: 14% 14% 14% 14% 14% 14% 14%;">
-            @for ($i = 1; $i < 8; $i++)  
-            <div class="text-center"> 
+            @for ($i = 1; $i < 8; $i++)
+            <div class="text-center">
               <h1 class="badge bg-secondary">{{$weekMap[$i]}}</h1>
             </div>
             @endfor
-            @php 
+            @php
               $time = mktime(0, 0, 0, date('n'), 1, date('Y'));
               $firstday = (date('w', $time) + 6) % 7; //воскресенье сделаем 7-м днем, а не первым
               $daycount = date('t', $time);
@@ -219,15 +219,15 @@
               <div class="my-3" style="min-height: 100px"></div>
             @endfor
 
-            @for ($i = 1; $i <= (cal_days_in_month(CAL_GREGORIAN, date('m'), date('Y'))); $i++)           
+            @for ($i = 1; $i <= (cal_days_in_month(CAL_GREGORIAN, date('m'), date('Y'))); $i++)
               <div class="columncard bg-white m-1 " style="min-height: 100px" dayofmonth="{{$i}}">
-                <span class="px-2">{{$i}}</span>                   
-                      @foreach($data as $el)                
+                <span class="px-2">{{$i}}</span>
+                      @foreach($data as $el)
                         @if($el['date']['currentDay'] == $i)
-                          @include('inc.calendar.task')                  
+                          @include('inc.calendar.task')
                         @endif
                     @endforeach
-                  
+
               </div>
             @endfor
           </div>
@@ -235,20 +235,20 @@
 
       @if (app('request')->input('calendar') == 'day')
         <h2 class=""></h2>
-            @for ($i = 8; $i < 22; $i++)  
-            <div class='row'> 
-              <div class='col-1 border-bottom py-1'> 
+            @for ($i = 8; $i < 22; $i++)
+            <div class='row'>
+              <div class='col-1 border-bottom py-1'>
                 <span class="w-20  badge bg-secondary">{{$i}}.00</span>
               </div>
               <div style="min-height: 200px;" class="col-11  bg-white my-3 columncard" hourofday="{{$i}}">
               @foreach($data as $el)
-              
-                @if($el['date']['currentHour'] == $i) 
-                  @include('tasks.taskcard') 
+
+                @if($el['date']['currentHour'] == $i)
+                  @include('tasks.taskcard')
                 @else
-                <div class="taskcard inline-block"></div> 
+                <div class="taskcard inline-block"></div>
                 @endif
-                
+
               @endforeach
               </div>
 
@@ -264,18 +264,18 @@
           <script>
           function mouseDown(clicked_id) {
             document.getElementById(clicked_id).style.border = "solid 1px #FF1493";
-            document.getElementById('status'+clicked_id).innerHTML = "изменен"; 
+            document.getElementById('status'+clicked_id).innerHTML = "изменен";
           }
 
           function mouseUp(clicked_id) {
             document.getElementById(clicked_id).style.border = "";
           }
           </script>
- 
 
 
-          <script> 
-          $( document ).ready(function() { 
+
+          <script>
+          $( document ).ready(function() {
             $( function() {
                 $( ".columncard" ).sortable({
                   connectWith: ".columncard",
@@ -283,7 +283,7 @@
                   cancel: ".task-toggle",
                   placeholder: "task-placeholder ui-corner-all",
                   opacity: 0.5,
-                  receive: function(event, ui) { 
+                  receive: function(event, ui) {
                     var id =  ui.item.attr("id");
 
                     if(this.id){var status =  this.id;}
@@ -295,30 +295,30 @@
                     if(ui.item.attr("date")){var date =  ui.item.attr("date");}
                     else{var date = 0;};
                     if($input.attr("hourofday")){var hourofday =  $input.attr("hourofday");}
-                    else{var hourofday = 0;};                    
+                    else{var hourofday = 0;};
                     if($input.attr( "dayofmonth" )){var dayofmonth =  $input.attr( "dayofmonth" );}
                     else{var dayofmonth = 0;};
-                    
+
                     $.ajax({
                       method:"POST",
                       url: "{{ route('setstatus') }}",
                       data: { id: id, status: status, date: date, hourofday: hourofday, dayofweek: dayofweek, dayofmonth: dayofmonth, _token: '{{csrf_token()}}' },
                       success: function(data) {
-                      }                  
+                      }
                     });
-                  } 
+                  }
                 });
-            
+
                 $( ".taskcard" )
                   .addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" )
                   .find( ".task-header" )
                     .addClass( "ui-widget-header ui-corner-all" )
                     .prepend( "<span class='ui-icon ui-icon-minusthick task-toggle'></span>");
-                 
+
                 $( ".task-toggle" ).on( "click", function() {
-                  var icon = $( this );                  
+                  var icon = $( this );
                   icon.toggleClass( "ui-icon-minusthick ui-icon-plusthick" );
-                  icon.closest( ".taskcard" ).find( ".task-content" ).toggle();    
+                  icon.closest( ".taskcard" ).find( ".task-content" ).toggle();
                 });
               });
            });
@@ -340,20 +340,20 @@
         </script>
 
         <script>
-            $( document ).ready(function() {   
+            $( document ).ready(function() {
                 $( ".changetags" ).click(function() {
-                        var $input = $( this );  
+                        var $input = $( this );
                         var id =  $input.attr( "tagName" )
                         var color =  $input.attr( "color" )
-                        var value =  this.value;  
-                        $('#tagspan'+id).css("color", color); 
+                        var value =  this.value;
+                        $('#tagspan'+id).css("color", color);
                             $.ajax({
                             url:"{{ route('tag') }}",
                             method:"POST",
                             data: { id: id, value: value, _token: '{{csrf_token()}}' },
-                              success:function(data){                              
-                              }                            
-                            });   
+                              success:function(data){
+                              }
+                            });
                   });
                 });
         </script>
@@ -361,19 +361,19 @@
         <script>
           function myTask(clicked_id) {
             var type = clicked_id;
-            document.getElementById("taskname").innerHTML = type;            
+            document.getElementById("taskname").innerHTML = type;
             document.getElementById("nameoftask").value = type;
             document.getElementById("duration").value = 1;
             var collection = document.getElementsByClassName("hideme")
               for (let i = 0; i < collection.length; i++) {
                 collection[i].style.display = "none";
-              }            
+              }
             document.getElementById("type").value = type;
             document.getElementById("lawyer").value = {{ Auth::user()->id}};
             document.getElementById("soispolintel").value = {{ Auth::user()->id}};
             var now = new Date();
             now.setHours(23);
-            now.setMinutes(00);          
+            now.setMinutes(00);
             document.getElementById("date").value = now.toISOString().slice(0,16);
           }
         </script>
@@ -381,19 +381,19 @@
         <script>
           function Task(clicked_id) {
             var type = clicked_id;
-            document.getElementById("taskname").innerHTML = type;  
+            document.getElementById("taskname").innerHTML = type;
             document.getElementById("nameoftask").value = '';
             document.getElementById("duration").value = 1;
             var collection = document.getElementsByClassName("hideme")
               for (let i = 0; i < collection.length; i++) {
                 collection[i].style.display = "block";
-              }            
+              }
             document.getElementById("type").value = type;
             document.getElementById("lawyer").value = {{ Auth::user()->id}};
             document.getElementById("soispolintel").value = {{ Auth::user()->id}};
             var now = new Date();
             now.setHours(23);
-            now.setMinutes(00);          
+            now.setMinutes(00);
             document.getElementById("date").value = now.toISOString().slice(0,16);
           }
         </script>
